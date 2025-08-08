@@ -14,27 +14,8 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QVBoxLayout" name="verticalLayout">
-    <item>
-     <widget class="QWidget" name="nav" native="true">
-      <property name="minimumSize">
-       <size>
-        <width>0</width>
-        <height>60</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>16777215</width>
-        <height>60</height>
-       </size>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-color: rgb(170, 255, 255)</string>
-      </property>
-     </widget>
-    </item>
-    <item>
+   <layout class="QGridLayout" name="gridLayout_3">
+    <item row="1" column="0">
      <widget class="QWidget" name="container" native="true">
       <property name="styleSheet">
        <string notr="true">background-color: rgb(0, 255, 255)</string>
@@ -43,7 +24,7 @@
        <item>
         <widget class="QStackedWidget" name="panelW">
          <property name="currentIndex">
-          <number>1</number>
+          <number>0</number>
          </property>
          <widget class="QWidget" name="playW">
           <property name="styleSheet">
@@ -55,38 +36,18 @@
              <property name="sizeConstraint">
               <enum>QLayout::SizeConstraint::SetMinAndMaxSize</enum>
              </property>
-             <item row="8" column="0" colspan="3">
-              <widget class="QScrollArea" name="scrollArea">
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255)</string>
-               </property>
-               <property name="widgetResizable">
-                <bool>true</bool>
-               </property>
-               <widget class="QWidget" name="scrollAreaWidgetContents">
-                <property name="geometry">
-                 <rect>
-                  <x>0</x>
-                  <y>0</y>
-                  <width>538</width>
-                  <height>329</height>
-                 </rect>
-                </property>
-               </widget>
-              </widget>
-             </item>
-             <item row="6" column="1">
-              <widget class="QLabel" name="forL">
+             <item row="3" column="2">
+              <widget class="QLabel" name="boardSize">
                <property name="styleSheet">
                 <string notr="true">QLabel {
     font-size: 26px;
     font-weight: bold;
-    color: #FFFFFF;
+    color: rgb(255, 0, 0);
 }
 </string>
                </property>
                <property name="text">
-                <string>X</string>
+                <string/>
                </property>
               </widget>
              </item>
@@ -105,8 +66,38 @@
                </property>
               </widget>
              </item>
-             <item row="1" column="0" colspan="3">
-              <widget class="QLineEdit" name="playersSize">
+             <item row="6" column="1">
+              <widget class="QLabel" name="forL">
+               <property name="styleSheet">
+                <string notr="true">QLabel {
+    font-size: 26px;
+    font-weight: bold;
+    color: #FFFFFF;
+}
+</string>
+               </property>
+               <property name="text">
+                <string>X</string>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="2">
+              <widget class="QLabel" name="columsL">
+               <property name="styleSheet">
+                <string notr="true">QLabel {
+    font-size: 26px;
+    font-weight: bold;
+    color: #FFFFFF;
+}
+</string>
+               </property>
+               <property name="text">
+                <string>Columnas</string>
+               </property>
+              </widget>
+             </item>
+             <item row="6" column="2">
+              <widget class="QLineEdit" name="columnSize">
                <property name="styleSheet">
                 <string notr="true">QLineEdit {
     background-color: #1E1E1E;
@@ -135,8 +126,37 @@
                </property>
               </widget>
              </item>
-             <item row="6" column="2">
-              <widget class="QLineEdit" name="columnSize">
+             <item row="2" column="0" colspan="3">
+              <widget class="QTableWidget" name="tableWidget">
+               <property name="styleSheet">
+                <string notr="true">QHeaderView::section {
+    background-color: #2c3e50;
+    color: white;
+    padding: 4px;
+    border: 1px solid #34495e;
+    font-weight: bold;
+}
+
+QTableWidget {
+    background-color: #ecf0f1;
+    alternate-background-color: #dfe6e9;
+    selection-background-color: #3498db;
+    selection-color: white;
+color: black;
+    border: 1px solid #95a5a6;
+    gridline-color: #bdc3c7;
+}
+
+QTableWidget QTableCornerButton::section {
+    background-color: #2c3e50;
+    border: 1px solid #34495e;
+}
+</string>
+               </property>
+              </widget>
+             </item>
+             <item row="6" column="0">
+              <widget class="QLineEdit" name="rowSize">
                <property name="styleSheet">
                 <string notr="true">QLineEdit {
     background-color: #1E1E1E;
@@ -150,7 +170,22 @@
                </property>
               </widget>
              </item>
-             <item row="7" column="2">
+             <item row="3" column="0" colspan="2">
+              <widget class="QLabel" name="sizeL">
+               <property name="styleSheet">
+                <string notr="true">QLabel {
+    font-size: 26px;
+    font-weight: bold;
+    color: #FFFFFF;
+}
+</string>
+               </property>
+               <property name="text">
+                <string>Tamaño de Tablero:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="2">
               <widget class="QPushButton" name="playersB">
                <property name="styleSheet">
                 <string notr="true">QPushButton {
@@ -177,70 +212,10 @@ QPushButton:pressed {
                </property>
               </widget>
              </item>
-             <item row="6" column="0">
-              <widget class="QLineEdit" name="rowSize">
-               <property name="styleSheet">
-                <string notr="true">QLineEdit {
-    background-color: #1E1E1E;
-    color: #00FFAA;
-    border: 2px solid #00FFAA;
-    border-radius: 6px;
-    padding: 6px;
-    font-size: 16px;
-}
-</string>
-               </property>
-              </widget>
-             </item>
-             <item row="5" column="2">
-              <widget class="QLabel" name="columsL">
-               <property name="styleSheet">
-                <string notr="true">QLabel {
-    font-size: 26px;
-    font-weight: bold;
-    color: #FFFFFF;
-}
-</string>
-               </property>
-               <property name="text">
-                <string>Columnas</string>
-               </property>
-              </widget>
-             </item>
-             <item row="3" column="0" colspan="2">
-              <widget class="QLabel" name="sizeL">
-               <property name="styleSheet">
-                <string notr="true">QLabel {
-    font-size: 26px;
-    font-weight: bold;
-    color: #FFFFFF;
-}
-</string>
-               </property>
-               <property name="text">
-                <string>Tamaño de Tablero:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="3" column="2">
-              <widget class="QLabel" name="boardSize">
-               <property name="styleSheet">
-                <string notr="true">QLabel {
-    font-size: 26px;
-    font-weight: bold;
-    color: rgb(255, 0, 0);
-}
-</string>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-              </widget>
-             </item>
             </layout>
            </item>
            <item row="1" column="0">
-            <widget class="QPushButton" name="player">
+            <widget class="QPushButton" name="play">
              <property name="styleSheet">
               <string notr="true">QPushButton {
     background-color: #007ACC;
@@ -330,6 +305,25 @@ QPushButton:pressed {
         </widget>
        </item>
       </layout>
+     </widget>
+    </item>
+    <item row="0" column="0">
+     <widget class="QWidget" name="nav" native="true">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>60</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>60</height>
+       </size>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(170, 255, 255)</string>
+      </property>
      </widget>
     </item>
    </layout>

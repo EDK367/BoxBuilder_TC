@@ -25,6 +25,9 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         ${PROJECT_SOURCES}
         utils/minBoardSize.cpp
         utils/minBoardSize.h
+        viewplay.h viewplay.cpp viewplay.ui
+        models/players.h models/players.cpp
+        rules/rulesgame.h rules/rulesgame.cpp
 
     )
 # Define target properties for Android with Qt 6 as:
