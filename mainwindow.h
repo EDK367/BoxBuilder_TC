@@ -1,6 +1,6 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
-#include "rules/rulesgame.h"
+#include "rules/GameRules.h"
 #include <QMainWindow>
 
 QT_BEGIN_NAMESPACE
@@ -24,9 +24,10 @@ private slots:
 
     void on_play_clicked();
 
+    void on_pushButton_clicked();
+
 private:
     Ui::MainWindow *ui;
-    RulesGame rulesGame;
     QDialog *popup;
     int minRow;
     int minColumn;

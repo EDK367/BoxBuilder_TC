@@ -12,8 +12,9 @@
 #include <QMessageBox>
 #include "utils/minBoardSize.h"
 #include "models/players.h"
-#include "rules/rulesgame.h"
-
+#include "rules/GameRules.h"
+#include "viewplay.h"
+#include <iostream>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent),
@@ -22,8 +23,7 @@ MainWindow::MainWindow(QWidget *parent)
     minColumn(3),
     rowAcept(false),
     columnAcept(false),
-    numberPlayers(2),
-    rulesGame(2)
+    numberPlayers(2)
 {
     ui->setupUi(this);
     int maxNumber = std::numeric_limits<int>::max();
@@ -53,7 +53,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->rowSize, &QLineEdit::textChanged, this, [this](const QString &text) {
         rowAcept = validationBoard(text.toInt(), minRow);
         int count = ui->tableWidget->rowCount();
-        if (rowAcept && columnAcept && count > 1) {
+        if (rowAcept && columnAcept && count > 1)
+        {
             ui->play->setEnabled(true);
         } else {
             ui->play->setEnabled(false);
@@ -65,7 +66,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->columnSize, &QLineEdit::textChanged, this, [this](const QString &text) {
         columnAcept = validationBoard(text.toInt(), minColumn);
         int count = ui->tableWidget->rowCount();
-        if (rowAcept && columnAcept && count > 1) {
+        if (rowAcept && columnAcept && count > 1)
+        {
             ui->play->setEnabled(true);
         } else {
             ui->play->setEnabled(false);
@@ -83,35 +85,47 @@ MainWindow::~MainWindow()
 void MainWindow::on_play_clicked()
 {
     int totalPlayers = ui->tableWidget->rowCount();
-    QString row = ui->rowSize->text();
-    QString column = ui->columnSize->text();
+    QString rowValue = ui->rowSize->text();
+    QString columnValue = ui->columnSize->text();
     bool okRow, okColumn;
 
-    int rowValue = row.toInt(&okRow);
-    int columnValue = column.toInt(&okColumn);
+    int row = rowValue.toInt(&okRow);
+    int column = columnValue.toInt(&okColumn);
 
-    if (!okRow || !validationBoard(rowValue, minRow)) {
+    if (!okRow || !validationBoard(row, minRow))
+    {
         QMessageBox::warning(this, "Error", "El tamaño de fila no es valido ");
         return;
     }
 
-    if (!okColumn || !validationBoard(columnValue, minColumn)) {
+    if (!okColumn || !validationBoard(column, minColumn))
+    {
         QMessageBox::warning(this, "Error", "El tamaño de columna no es valido ");
         return;
     }
 
-    RulesGame rulesGame(totalPlayers);
-    for (int i = 0; i < totalPlayers; ++i) {
+    GameRules &gameRules = GameRules::getInstance(totalPlayers);
+    Players *players = gameRules.getPlayersArray();
+
+    for (int i = 0; i < totalPlayers; ++i)
+    {
         QString letter = ui->tableWidget->item(i, 0)->text();
         QString color = ui->tableWidget->item(i, 1)->text();
         std::string colorHex = color.toStdString();
         char charLetter = letter.at(0).toLatin1();
-        Players player(charLetter, colorHex);
-        rulesGame.addPlayer(player);
-    }
 
-    //Players pl = rulesGame.getPlayer(0);
-    //QMessageBox::warning(this, "Error", QString("Min: %1 filas").arg(pl.getLetter()));
+        players[i] = Players(charLetter, colorHex);
+    }
+    gameRules.setRow(row);
+    gameRules.setColumn(column);
+
+    // ventana del juego
+    viewPlay *gameWindow = new viewPlay(this);
+    gameWindow->setWindowFlags(Qt::Window);
+    gameWindow->setAttribute(Qt::WA_DeleteOnClose);
+    gameWindow->show();
+
+    this->hide();
 
 }
 
@@ -150,26 +164,30 @@ void MainWindow::on_playersB_clicked()
     QColor selectedColor;
 
     // selecion del color
-    connect(buttonColor, &QPushButton::clicked, this, [&]() {
+    connect(buttonColor, &QPushButton::clicked, this, [&](){
         QColor color = QColorDialog::getColor(Qt::white, this, tr("Selecciona un color"));
-        if (color.isValid()) {
+        if (color.isValid())
+        {
             selectedColor = color;
             buttonColor->setStyleSheet("background-color: " + color.name() + ";");
         }
     });
 
     // ejecutar y aceptar el valor
-    if (dialog.exec() == QDialog::Accepted) {
+    if (dialog.exec() == QDialog::Accepted)
+    {
         QString letter = lineLetter->text();
         QString colorHex = selectedColor.name();
 
         // validaciones
-        if (letter.isEmpty() || !selectedColor.isValid()) {
+        if (letter.isEmpty() || !selectedColor.isValid())
+        {
             QMessageBox::warning(this, "Error", "No se ingreso el jugador, Faltan Datos");
             return;
         }
 
-        if (isDuplicate(letter, colorHex)) {
+        if (isDuplicate(letter, colorHex))
+        {
             QMessageBox::warning(this, "Error", "La letra o el color ya esta en uso.");
             return;
         }
@@ -192,15 +210,18 @@ void MainWindow::on_playersB_clicked()
             if (!btn) return;
 
             int index = -1;
-            for (int i = 0; i < ui->tableWidget->rowCount(); ++i) {
-                if (ui->tableWidget->cellWidget(i, 2) == btn) {
+            for (int i = 0; i < ui->tableWidget->rowCount(); ++i)
+            {
+                if (ui->tableWidget->cellWidget(i, 2) == btn)
+                {
                     index = i;
                     break;
                 }
             }
 
             // aca elimina
-            if (index != -1) {
+            if (index != -1)
+            {
                 ui->tableWidget->removeRow(index);
                 updateBoardRequirements();
             }
@@ -212,24 +233,29 @@ void MainWindow::on_playersB_clicked()
 
 }
 
-bool MainWindow::isDuplicate(const QString& letterNew, const QString& colorNew) {
+bool MainWindow::isDuplicate(const QString& letterNew, const QString& colorNew)
+{
     int rows = ui->tableWidget->rowCount();
-    for (int i = 0; i < rows; ++i) {
+    for (int i = 0; i < rows; ++i)
+    {
         QString letter = ui->tableWidget->item(i, 0)->text();
         QString color = ui->tableWidget->item(i, 1)->text();
 
         if (letter.compare(letterNew, Qt::CaseSensitive) == 0
-            || color.compare(colorNew, Qt::CaseSensitive) == 0) {
+            || color.compare(colorNew, Qt::CaseSensitive) == 0)
+        {
             return true;
         }
     }
     return false;
 }
 
-void MainWindow::updateBoardRequirements() {
+void MainWindow::updateBoardRequirements()
+{
 
     numberPlayers = ui->tableWidget->rowCount();
-    if (numberPlayers < 2) {
+    if (numberPlayers < 2)
+    {
         ui->play->setEnabled(false);
         ui->boardSize->setText("Falta al menos un jugador");
     } else {
@@ -241,4 +267,92 @@ void MainWindow::updateBoardRequirements() {
     }
 }
 
+
+/*
+ESTE METODO ES TEMPORAL, SE HIZO SOLO PARA
+PODER HACER TEST RAPIDOS SIN ESTAR INGRESANDO
+DATOS.
+SE ELIMINARA EN UN FUTURO
+att: EDK367
+*/
+void MainWindow::on_pushButton_clicked()
+{
+
+    {
+        QString letter = "A";
+        QColor color = Qt::red;
+        QString colorHex = color.name();
+
+        int row = ui->tableWidget->rowCount();
+        ui->tableWidget->insertRow(row);
+
+        ui->tableWidget->setItem(row, 0, new QTableWidgetItem(letter));
+
+        QTableWidgetItem *colorItem = new QTableWidgetItem(colorHex);
+        colorItem->setBackground(QBrush(color));
+        ui->tableWidget->setItem(row, 1, colorItem);
+
+        QPushButton *deleteBtn = new QPushButton("Eliminar");
+        ui->tableWidget->setCellWidget(row, 2, deleteBtn);
+
+        connect(deleteBtn, &QPushButton::clicked, this, [this]() {
+            QPushButton* btn = qobject_cast<QPushButton*>(sender());
+            if (!btn) return;
+
+            int index = -1;
+            for (int i = 0; i < ui->tableWidget->rowCount(); ++i) {
+                if (ui->tableWidget->cellWidget(i, 2) == btn) {
+                    index = i;
+                    break;
+                }
+            }
+
+            if (index != -1) {
+                ui->tableWidget->removeRow(index);
+                updateBoardRequirements();
+            }
+        });
+    }
+
+    {
+        QString letter = "B";
+        QColor color = Qt::blue;
+        QString colorHex = color.name();
+
+        int row = ui->tableWidget->rowCount();
+        ui->tableWidget->insertRow(row);
+
+        ui->tableWidget->setItem(row, 0, new QTableWidgetItem(letter));
+
+        QTableWidgetItem *colorItem = new QTableWidgetItem(colorHex);
+        colorItem->setBackground(QBrush(color));
+        ui->tableWidget->setItem(row, 1, colorItem);
+
+        QPushButton *deleteBtn = new QPushButton("Eliminar");
+        ui->tableWidget->setCellWidget(row, 2, deleteBtn);
+
+        connect(deleteBtn, &QPushButton::clicked, this, [this]() {
+            QPushButton* btn = qobject_cast<QPushButton*>(sender());
+            if (!btn) return;
+
+            int index = -1;
+            for (int i = 0; i < ui->tableWidget->rowCount(); ++i) {
+                if (ui->tableWidget->cellWidget(i, 2) == btn) {
+                    index = i;
+                    break;
+                }
+            }
+
+            if (index != -1) {
+                ui->tableWidget->removeRow(index);
+                updateBoardRequirements();
+            }
+        });
+    }
+
+    updateBoardRequirements();
+
+    ui->rowSize->setText("5");
+    ui->columnSize->setText("5");
+}
 

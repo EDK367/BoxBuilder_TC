@@ -1,6 +1,6 @@
 #include "players.h"
 
-// constructures
+// constructores
 Players::Players()
     : letter(' '), color(""), points(0) {}
 
@@ -12,33 +12,40 @@ Players::Players(char letter, const std::string& color, int points)
 
 
 // getters
-char Players::getLetter() const {
+char Players::getLetter() const
+{
     return letter;
 }
 
-std::string Players::getColor() const {
+std::string Players::getColor() const
+{
     return color;
 }
 
-int Players::getPoints() const {
+int Players::getPoints() const
+{
     return points;
 }
 
 // setters
-void Players::setLetter(char letter) {
+void Players::setLetter(char letter)
+{
     this->letter = letter;
 }
 
-void Players::setColor(const std::string& color) {
+void Players::setColor(const std::string& color)
+{
     this->color = color;
 }
 
-void Players::setPoints(int point) {
+void Players::setPoints(int point)
+{
     this->points = point;
 }
 
 
 // otros metodos
-void Players::addPoints(int point) {
+void Players::addPoints(int point)
+{
     this->points += point;
 }
