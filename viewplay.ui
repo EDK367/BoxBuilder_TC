@@ -94,6 +94,39 @@
         <property name="styleSheet">
          <string notr="true">background-color:rgb(255, 255, 127)</string>
         </property>
+        <widget class="QPushButton" name="pushButton">
+         <property name="geometry">
+          <rect>
+           <x>70</x>
+           <y>90</y>
+           <width>191</width>
+           <height>71</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+    background-color: #007ACC;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 10px;
+    padding: 12px 24px;
+    border: none;
+}
+
+QPushButton:hover {
+    background-color: #005F9E;
+}
+
+QPushButton:pressed {
+    background-color: #003F6B;
+}
+</string>
+         </property>
+         <property name="text">
+          <string>TEST</string>
+         </property>
+        </widget>
        </widget>
       </item>
      </layout>

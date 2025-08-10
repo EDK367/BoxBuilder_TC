@@ -35,8 +35,8 @@ public:
     int getTotalPlayers();
 
     // getter and setter
-    int getRow();
-    int getColumn();
+    int getRow() const;
+    int getColumn() const;
     void setRow(int row);
     void setColumn(int column);
 };

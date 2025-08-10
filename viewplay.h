@@ -19,6 +19,8 @@ public:
 private:
     Ui::viewPlay *ui;
     GameRules &gameRules;
+    int rows;
+    int columns;
     void chargeGameRules();
 
 
@@ -28,6 +30,7 @@ protected:
 
 private slots:
 
+    void on_pushButton_clicked();
 };
 
 #endif // VIEWPLAY_H

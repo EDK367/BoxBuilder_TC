@@ -61,12 +61,12 @@ int GameRules::getTotalPlayers()
 
 
 // getter and setter de row and column
-int GameRules::getRow()
+int GameRules::getRow() const
 {
     return row;
 }
 
-int GameRules::getColumn()
+int GameRules::getColumn() const
 {
     return column;
 }
