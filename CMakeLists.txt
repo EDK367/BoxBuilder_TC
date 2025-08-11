@@ -30,6 +30,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         rules/GameRules.h rules/GameRules.cpp
         models/node.h models/node.cpp
         models/nodeboard.h models/nodeboard.cpp
+        utils/clickgraphics.h utils/clickgraphics.cpp
 
 
     )
