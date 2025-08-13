@@ -6,6 +6,7 @@
 #include "rules/gameRules.h"
 #include "models/nodeboard.h"
 #include "methods/randomnative.h"
+#include "utils/clickgraphics.h"
 
 namespace Ui {
 class viewPlay;
@@ -37,8 +38,8 @@ protected:
 
 private slots:
     void on_pushButton_clicked();
-    void linkConnectorHorizontal(int row, int column);
-    void linkConnectorVertical(int row, int column);
+    void linkConnectorHorizontal(ClickGraphics *pointerConnector, int row, int column);
+    void linkConnectorVertical(ClickGraphics *pointerConnector, int row, int column);
 };
 
 #endif // VIEWPLAY_H

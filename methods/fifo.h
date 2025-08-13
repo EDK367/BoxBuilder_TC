@@ -26,7 +26,7 @@ public:
     // metodos
     void enqueue(Players *player);
     bool isEmpty();
-    void dequeue(Players *player);
+    void dequeue();
     Players *peak();
 
     // get

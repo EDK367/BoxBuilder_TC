@@ -34,18 +34,18 @@ bool FIFO::isEmpty()
     return !front;
 }
 
-void FIFO::dequeue(Players *player)
+void FIFO::dequeue()
 {
-    player = front->getPlayer();
-    NodoFIFO *aux = front;
 
+    NodoFIFO *aux = front;
+    Players *player = front->getPlayer();
     if (front == end)
     {
         front = nullptr;
         end = nullptr;
     } else {
         front = front->getNext();
-        enqueue(aux->getPlayer());
+        enqueue(player);
     }
 
     delete aux;

@@ -2,7 +2,7 @@
 
 ClickGraphics::ClickGraphics(int row, int column, qreal x, qreal y, qreal w, qreal h, QGraphicsItem *parent) : QObject(),
     QGraphicsRectItem(x, y, w, h, parent),
-    row(row), column(column)
+    row(row), column(column), color("")
 {
     setAcceptHoverEvents(true);
     setBrush(Qt::black);
@@ -15,18 +15,31 @@ void ClickGraphics::mousePressEvent(QGraphicsSceneMouseEvent *event)
     if (!clicked)
     {
         clicked = true;
-        updateClick();
+        updateColor();
         setEnabled(false);
-        emit clickNode(row, column);
+        emit clickNode(this, row, column);
         setAcceptHoverEvents(false);
     }
-
+    this->color = "";
     Q_UNUSED(event);
 
 }
 
 
-void ClickGraphics::updateClick()
+void ClickGraphics::setColor(std::string color)
 {
-    setBrush(clicked ? Qt::red : Qt::black);
+    this->color = color;
+}
+
+void ClickGraphics::updateColor()
+{
+    if (clicked)
+    {
+        QColor brushColor = QColor(QString::fromStdString(color));
+        setBrush(brushColor);
+    }
+    else
+    {
+        setBrush(Qt::lightGray);
+    }
 }

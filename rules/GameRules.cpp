@@ -65,9 +65,9 @@ void GameRules::enqueuePlayer(Players *player)
     playersQueue.enqueue(player);
 }
 
-void GameRules::dequeuePlayer(Players *player)
+void GameRules::dequeuePlayer()
 {
-    playersQueue.dequeue(player);
+    playersQueue.dequeue();
 }
 
 Players *GameRules::peekPlayer()

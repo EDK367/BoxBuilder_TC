@@ -164,26 +164,50 @@ void viewPlay::displayAllPlayers()
     }
 }
 
-void viewPlay::linkConnectorHorizontal(int row, int column)
+void viewPlay::linkConnectorHorizontal(ClickGraphics *pointerConnector, int row, int column)
 {
-    qDebug() << "Nodo clickeado en row - Fila:" << row << "Columna:" << column;
+    qDebug() << "Nodo clickeado en horizontal - Fila:" << row << "Columna:" << column;
+    Players *player = gameRules.peekPlayer();
+    if (player)
+    {
+        std::string color = player->getColor();
+        pointerConnector->setColor(color);
+        pointerConnector->updateColor();
+    }
+    gameRules.dequeuePlayer();
+
 }
 
-void viewPlay::linkConnectorVertical(int row, int column)
+void viewPlay::linkConnectorVertical(ClickGraphics *pointerConnector, int row, int column)
 {
-    qDebug() << "Nodo clickeado en column - Fila:" << row << "Columna:" << column;
+    qDebug() << "Nodo clickeado en vertical - Fila:" << row << "Columna:" << column;
+    Players *player = gameRules.peekPlayer();
+    if (player)
+    {
+        std::string color = player->getColor();
+        pointerConnector->setColor(color);
+        pointerConnector->updateColor();
+    }
+    gameRules.dequeuePlayer();
 }
 
 void viewPlay::on_pushButton_clicked()
 {
-    Players *players = gameRules.getPlayersArray();
-    int totalPlayers = gameRules.getTotalPlayers();
-    std::cout << "Jugadores" << std::endl;
 
-    for (int i = 0; i < totalPlayers; ++i)
+    NodoFIFO *current = gameRules.getFront();
+
+    while (current)
     {
-        std::cout << players[i].getLetter()<< std::endl;
+        Players *player = current->getPlayer();
+        if (player)
+        {
+            std::cout << player->getLetter() << std::endl;
+        }
+        current = current->getNext();
     }
 
+    random.setLimit(11);
+    unsigned int result = random();
+    std::cout << result << std::endl;
 }
 

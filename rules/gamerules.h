@@ -39,7 +39,7 @@ public:
 
     // operacion de cola
     void enqueuePlayer(Players *player);
-    void dequeuePlayer(Players *player);
+    void dequeuePlayer();
     Players *peekPlayer();
     NodoFIFO *getFront();
 
