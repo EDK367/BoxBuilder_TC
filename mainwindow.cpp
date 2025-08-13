@@ -12,7 +12,7 @@
 #include <QMessageBox>
 #include "utils/minBoardSize.h"
 #include "models/players.h"
-#include "rules/GameRules.h"
+#include "rules/gamerules.h"
 #include "viewplay.h"
 #include <iostream>
 
@@ -116,8 +116,8 @@ void MainWindow::on_play_clicked()
 
         players[i] = Players(charLetter, colorHex);
     }
-    gameRules.setRow(row);
-    gameRules.setColumn(column);
+    gameRules.setRows(row);
+    gameRules.setColumns(column);
 
     // ventana del juego
     viewPlay *gameWindow = new viewPlay(this);

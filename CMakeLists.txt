@@ -27,10 +27,14 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         utils/minBoardSize.h
         viewplay.h viewplay.cpp viewplay.ui
         models/players.h models/players.cpp
-        rules/GameRules.h rules/GameRules.cpp
+        rules/gamerules.h rules/gamerules.cpp
         models/node.h models/node.cpp
         models/nodeboard.h models/nodeboard.cpp
         utils/clickgraphics.h utils/clickgraphics.cpp
+        methods/randomnative.h methods/randomnative.cpp
+        methods/arraymess.h methods/arraymess.cpp
+        methods/fifo.h methods/fifo.cpp
+        models/nodofifo.h models/nodofifo.cpp
 
 
     )

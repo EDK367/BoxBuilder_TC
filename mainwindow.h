@@ -1,6 +1,6 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
-#include "rules/GameRules.h"
+#include "rules/gamerules.h"
 #include <QMainWindow>
 
 QT_BEGIN_NAMESPACE

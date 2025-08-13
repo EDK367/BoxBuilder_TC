@@ -1,4 +1,4 @@
-#include "GameRules.h"
+#include "gamerules.h"
 // para test
 #include <iostream>
 
@@ -59,26 +59,51 @@ int GameRules::getTotalPlayers()
     return sizePlayers;
 }
 
-
-// getter and setter de row and column
-int GameRules::getRow() const
+// implementacion de la cola para turnos
+void GameRules::enqueuePlayer(Players *player)
 {
-    return row;
+    playersQueue.enqueue(player);
 }
 
-int GameRules::getColumn() const
+void GameRules::dequeuePlayer(Players *player)
 {
-    return column;
+    playersQueue.dequeue(player);
 }
 
-void GameRules::setRow(int row)
+Players *GameRules::peekPlayer()
 {
-    this->row = row;
+    Players *temp = playersQueue.peak();
+    if (temp)
+    {
+        return temp;
+    }
+    return nullptr;
 }
 
-void GameRules::setColumn(int column)
+NodoFIFO *GameRules::getFront()
 {
-    this->column = column;
+    return playersQueue.getFront();
+}
+
+// getter and setter de rows and columns
+int GameRules::getRows() const
+{
+    return rows;
+}
+
+int GameRules::getColumns() const
+{
+    return columns;
+}
+
+void GameRules::setRows(int rows)
+{
+    this->rows = rows;
+}
+
+void GameRules::setColumns(int columns)
+{
+    this->columns = columns;
 }
 
 

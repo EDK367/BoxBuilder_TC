@@ -11,11 +11,14 @@
 #include "rules/gameRules.h"
 #include "models/nodeboard.h"
 #include "utils/clickgraphics.h"
+#include "methods/randomnative.h"
+#include "methods/arraymess.h"
 #include "mainwindow.h"
 
 viewPlay::viewPlay(QWidget *parent)
     : QFrame(parent)
     , ui(new Ui::viewPlay)
+    , random(2)
     , gameRules(GameRules::getInstance())
     , rows(3)
     , columns(3)
@@ -37,7 +40,7 @@ void viewPlay::showEvent(QShowEvent *event)
 }
 // regresar a la ventana principal
 void viewPlay::closeEvent(QCloseEvent *event) {
-
+    gameRules.deleteInstance();
     MainWindow *mainW = new MainWindow();
     mainW->show();
     event->accept();
@@ -45,22 +48,32 @@ void viewPlay::closeEvent(QCloseEvent *event) {
 
 void viewPlay::chargeGameRules()
 {
+    ArrayMess arrayMess;
     try {
 
         Players  *players = gameRules.getPlayersArray();
         int totalPlayers = gameRules.getTotalPlayers();
-        this->rows = gameRules.getRow();
-        this->columns = gameRules.getColumn();
+        arrayMess.shufflePlayers(players, totalPlayers);
+        this->rows = gameRules.getRows();
+        this->columns = gameRules.getColumns();
         std::cout << "Jugadores" << std::endl;
-        for (int i = 0; i < totalPlayers; ++i) {
-            std::cout << players[i].getLetter() << std::endl;
+
+        for (int i = 0; i < totalPlayers; ++i)
+        {
+            gameRules.enqueuePlayer(&players[i]);
         }
+
+        Players *firstPlayer = gameRules.peekPlayer();
+        if (firstPlayer)
+        {
+            std::cout << firstPlayer << std::endl;
+            std::cout << firstPlayer->getLetter() << std::endl;
+        }
+
+        displayAllPlayers();
         board = NodeBoard::createBoard(rows, columns);
-
-
         chargeBoard();
 
-        std::cout << this->rows << " " << this->columns << std::endl;
     } catch (const std::exception& e) {
         QMessageBox::critical(this, "Error", "Error en la carga de las reglas de juego");
     }
@@ -91,99 +104,86 @@ void viewPlay::chargeBoard()
             nodePointer->setPen(QPen(Qt::cyan, 2));
             sceneBoard->addItem(nodePointer);
 
+            // conexion de nodo en vertical
             if (i < rows - 1)
             {
                 ClickGraphics *verticalConnector = new ClickGraphics(
                     i, j,
                     j * (nodeSize + connectorNodeSize + spacing) + nodeSize / 2 - connectorNodeSize / 2,
                     i * (nodeSize + connectorNodeSize + spacing) + nodeSize,
-                    10, 80
+                    15, 82
                     );
-                verticalConnector->setBrush(Qt::blue);
+                verticalConnector->setBrush(Qt::lightGray);
                 sceneBoard->addItem(verticalConnector);
-                connect(verticalConnector, &ClickGraphics::clickNode, this, &viewPlay::linkNodeConnector);
+                connect(verticalConnector, &ClickGraphics::clickNode, this, &viewPlay::linkConnectorVertical);
             }
 
+            // conexiones de nodo en horizontal
             if (j < columns - 1)
             {
                 ClickGraphics *horizontalConnector = new ClickGraphics(
                     i, j,
-                    j * (nodeSize + connectorNodeSize + spacing) + nodeSize,
+                    j * (nodeSize + connectorNodeSize + spacing) + nodeSize + 1,
                     i * (nodeSize + connectorNodeSize + spacing) + nodeSize / 2 - connectorNodeSize / 2,
-                    80,
-                    10
+                    82, 15
                     );
-                horizontalConnector->setBrush(Qt::gray);
+                horizontalConnector->setBrush(Qt::lightGray);
                 sceneBoard->addItem(horizontalConnector);
-                connect(horizontalConnector, &ClickGraphics::clickNode, this, &viewPlay::linkNodeConnector);
+                connect(horizontalConnector, &ClickGraphics::clickNode, this, &viewPlay::linkConnectorHorizontal);
             }
 
+            // nodo donde se almacenara los poderes
             if (i < rows - 1 && j < columns - 1)
             {
                 QGraphicsRectItem  *boxPoint = new QGraphicsRectItem(
-                    j * (nodeSize + connectorNodeSize + spacing) + nodeSize + 2,
-                    i * (nodeSize + connectorNodeSize + spacing) + nodeSize,
+                    j * (nodeSize + connectorNodeSize + spacing) + nodeSize + 7,
+                    i * (nodeSize + connectorNodeSize + spacing) + nodeSize + 5,
                     70,
                     70
                     );
-                boxPoint->setBrush(Qt::darkGreen);
+                boxPoint->setPen(QPen(Qt::black, 2));
+                boxPoint->setBrush(Qt::white);
                 sceneBoard->addItem(boxPoint);
             }
         }
     }
 }
 
-void viewPlay::linkNodeConnector(int row, int column)
+// mostrar todos los jugadores en cola
+void viewPlay::displayAllPlayers()
 {
-    qDebug() << "Nodo clickeado - Fila:" << row << "Columna:" << column;
+    NodoFIFO *current = gameRules.getFront();
+    while (current)
+    {
+        Players *player = current->getPlayer();
+        if (player)
+        {
+            std::cout << player->getLetter() << std::endl;
+        }
+        current = current->getNext();
+    }
+}
+
+void viewPlay::linkConnectorHorizontal(int row, int column)
+{
+    qDebug() << "Nodo clickeado en row - Fila:" << row << "Columna:" << column;
+}
+
+void viewPlay::linkConnectorVertical(int row, int column)
+{
+    qDebug() << "Nodo clickeado en column - Fila:" << row << "Columna:" << column;
 }
 
 void viewPlay::on_pushButton_clicked()
 {
-    std::cout << "Entra" << std::endl;
-    try
+    Players *players = gameRules.getPlayersArray();
+    int totalPlayers = gameRules.getTotalPlayers();
+    std::cout << "Jugadores" << std::endl;
+
+    for (int i = 0; i < totalPlayers; ++i)
     {
-        NodeBoard ***board = NodeBoard::createBoard(rows, columns);
-        // test
-        for (int i = 0; i < rows; ++i) {
-            for (int j = 0; j < columns; ++j) {
-                std::cout << ". ";
-            }
-            std::cout << std::endl;
-        }
-
-
-        NodeBoard* node = board[2][2];
-        if(!node) {
-            std::cout << "Nodo nullptr" << std::endl;
-            return;
-        }
-
-        std::cout << "Nodo actual: (" << node->getX() << ", " << node->getY() << ")\n";
-
-        if(node->getUp()) {
-            std::cout << "Arriba: (" << node->getUp()->getX() << ", "
-                      << node->getUp()->getY() << ")\n";
-        }
-
-        if(node->getDown()) {
-            std::cout << "Abajo: (" << node->getDown()->getX() << ", "
-                      << node->getDown()->getY() << ")\n";
-        }
-
-        if(node->getLeft()) {
-            std::cout << "Izquierda: (" << node->getLeft()->getX() << ", "
-                      << node->getLeft()->getY() << ")\n";
-        }
-
-        if(node->getRight()) {
-            std::cout << "Derecha: (" << node->getRight()->getX() << ", "
-                      << node->getRight()->getY() << ")\n";
-        }
-
-        NodeBoard::deleteBoard(board, rows, columns);
-    } catch (const std::exception& e) {
-        QMessageBox::critical(this, "Error", "Error en el tablero");
+        std::cout << players[i].getLetter()<< std::endl;
     }
+
 }
 

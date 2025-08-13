@@ -5,6 +5,7 @@
 #include <QCloseEvent>
 #include "rules/gameRules.h"
 #include "models/nodeboard.h"
+#include "methods/randomnative.h"
 
 namespace Ui {
 class viewPlay;
@@ -21,11 +22,13 @@ public:
 private:
     Ui::viewPlay *ui;
     GameRules &gameRules;
+    RandomNative random;
     NodeBoard ***board;
     int rows;
     int columns;
     void chargeGameRules();
     void chargeBoard();
+    void displayAllPlayers();
 
 
 protected:
@@ -34,7 +37,8 @@ protected:
 
 private slots:
     void on_pushButton_clicked();
-    void linkNodeConnector(int row, int column);
+    void linkConnectorHorizontal(int row, int column);
+    void linkConnectorVertical(int row, int column);
 };
 
 #endif // VIEWPLAY_H
