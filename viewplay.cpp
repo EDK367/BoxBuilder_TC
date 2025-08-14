@@ -166,16 +166,23 @@ void viewPlay::displayAllPlayers()
 
 void viewPlay::linkConnectorHorizontal(ClickGraphics *pointerConnector, int row, int column)
 {
-    qDebug() << "Nodo clickeado en horizontal - Fila:" << row << "Columna:" << column;
+    //qDebug() << "Nodo clickeado en horizontal - Fila:" << row << "Columna:" << column;
     Players *player = gameRules.peekPlayer();
     if (player)
     {
         std::string color = player->getColor();
         pointerConnector->setColor(color);
         pointerConnector->updateColor();
-    }
-    gameRules.dequeuePlayer();
 
+        // creacion de enlaces
+        NodeBoard *nodeS = board[row][column];
+        Node *nodeStart = nodeS;
+        NodeBoard* nodeE = board[row][column + 1];
+        Node *nodeEnd = nodeE;
+
+        gameRules.addNodeLinked(nodeStart, nodeEnd, true);
+    }
+    gameRules.dequeuePlayer(); 
 }
 
 void viewPlay::linkConnectorVertical(ClickGraphics *pointerConnector, int row, int column)
@@ -187,6 +194,14 @@ void viewPlay::linkConnectorVertical(ClickGraphics *pointerConnector, int row, i
         std::string color = player->getColor();
         pointerConnector->setColor(color);
         pointerConnector->updateColor();
+
+        // creacion de enlaces
+        NodeBoard *nodeS = board[row][column];
+        Node *nodeStart = nodeS;
+        NodeBoard* nodeE = board[row + 1][column];
+        Node *nodeEnd = nodeE;
+
+        gameRules.addNodeLinked(nodeStart, nodeEnd, true);
     }
     gameRules.dequeuePlayer();
 }
@@ -201,13 +216,61 @@ void viewPlay::on_pushButton_clicked()
         Players *player = current->getPlayer();
         if (player)
         {
-            std::cout << player->getLetter() << std::endl;
+           // std::cout << player->getLetter() << std::endl;
         }
         current = current->getNext();
     }
 
     random.setLimit(11);
     unsigned int result = random();
-    std::cout << result << std::endl;
+    //std::cout << result << std::endl;
+
+
+    // vista de nodods enlazados
+    for (int i = 0; i < gameRules.getSizeNodeLinked(); ++i) {
+        NodeLinked* link = gameRules.getNodeLinked(i);
+        if (link) {
+            Node* start = link->getStartLinked();
+            Node* end = link->getEndLinked();
+            bool power = link->getPower();
+
+            qDebug() << "Conexion";
+            qDebug() << "  Desde: (" << start->getX() << "," << start->getY() << ")";
+            qDebug() << "  Hasta: (" << end->getX() << "," << end->getY() << ")";
+            qDebug() << "  Power: " << power;
+        }
+    }
+
+    NodeLinked *link = gameRules.getNodeLinked(0);
+    Node* start = link->getStartLinked();
+    Node* end = link->getEndLinked();
+    bool power = link->getPower();
+
+    NodeBoard *node = board[start->getX()][end->getY()];
+    if (!node) {
+        qDebug() << "Error: El nodo es nullptr";
+        return;
+    }
+
+    qDebug() << "--------------------------------------------------";
+    qDebug() << "Debug de Nodo en posición (" << node->getX() << "," << node->getY() << ")";
+    qDebug() << "--------------------------------------------------";
+
+    // Debug de conexiones
+    qDebug() << "Conexión UP   :" << (node->getUp() ?
+                                          QString("(%1,%2)").arg(node->getUp()->getX()).arg(node->getUp()->getY()) : "NULL");
+
+    qDebug() << "Conexión DOWN :" << (node->getDown() ?
+                                          QString("(%1,%2)").arg(node->getDown()->getX()).arg(node->getDown()->getY()) : "NULL");
+
+    qDebug() << "Conexión LEFT :" << (node->getLeft() ?
+                                          QString("(%1,%2)").arg(node->getLeft()->getX()).arg(node->getLeft()->getY()) : "NULL");
+
+    qDebug() << "Conexión RIGHT:" << (node->getRight() ?
+                                          QString("(%1,%2)").arg(node->getRight()->getX()).arg(node->getRight()->getY()) : "NULL");
+
+    qDebug() << "--------------------------------------------------";
+
+
 }
 

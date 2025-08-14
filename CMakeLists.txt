@@ -35,6 +35,9 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         methods/arraymess.h methods/arraymess.cpp
         methods/fifo.h methods/fifo.cpp
         models/nodofifo.h models/nodofifo.cpp
+        models/nodelinked.h models/nodelinked.cpp
+        methods/nodevector.h methods/nodevector.cpp
+
 
 
     )

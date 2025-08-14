@@ -18,9 +18,9 @@ GameRules::~GameRules()
     if (arrayPlayers != nullptr)
     {
         delete[] arrayPlayers;
-        arrayPlayers = nullptr;;
-    }
+        arrayPlayers = nullptr;
 
+    }
 }
 
 // obtener instancia
@@ -47,6 +47,13 @@ void GameRules::deleteInstance()
     }
 }
 
+// uso de arreglo de enlace
+void GameRules::addNodeLinked(Node *start, Node *end, bool power)
+{
+    NodeLinked *newLink = new NodeLinked();
+    newLink->setLinked(start, end, power);
+    nodeVectors.push(newLink);
+}
 
 // metodos del juego
 Players *GameRules::getPlayersArray() const
@@ -85,6 +92,16 @@ NodoFIFO *GameRules::getFront()
     return playersQueue.getFront();
 }
 
+// getter y setter de nodeLinked
+NodeLinked *GameRules::getNodeLinked(int index) const
+{
+    return nodeVectors.getNode(index);
+}
+
+int GameRules::getSizeNodeLinked() const
+{
+    return nodeVectors.getSize();
+}
 // getter and setter de rows and columns
 int GameRules::getRows() const
 {

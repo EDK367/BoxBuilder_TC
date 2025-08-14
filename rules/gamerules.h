@@ -2,6 +2,9 @@
 #define GAMERULES_H
 #include "../models/players.h"
 #include "../methods/fifo.h"
+#include "../models/nodelinked.h"
+#include "../methods/nodevector.h"
+#include "../models/node.h"
 
 class GameRules
 {
@@ -12,6 +15,8 @@ private:
     // variables
     int sizePlayers = 0;
     Players *arrayPlayers = nullptr;
+    NodeVector nodeVectors;
+
     int rows = 0;
     int columns = 0;
 
@@ -36,6 +41,10 @@ public:
     // metodos extras
     Players* getPlayersArray() const;
     int getTotalPlayers();
+    void addNodeLinked(Node* start, Node* end, bool power);
+    NodeLinked *getNodeLinked(int index) const;
+    int getSizeNodeLinked() const;
+
 
     // operacion de cola
     void enqueuePlayer(Players *player);

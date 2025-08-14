@@ -3,7 +3,7 @@
 
 ArrayMess::ArrayMess() {}
 
-void ArrayMess::shufflePlayers(Players *playersInput, int size)
+void ArrayMess::shufflePlayers(Players playersInput[], int size)
 {
     for (int i = size - 1; i > 0; --i)
     {
