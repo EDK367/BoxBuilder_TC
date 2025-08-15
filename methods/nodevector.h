@@ -5,13 +5,13 @@
 class NodeVector
 {
 private:
-    NodeLinked** nodeLinked;
+    NodeLinked **nodeLinked;
     int size;
     void resize();
 
 public:
     NodeVector();
-    void push(NodeLinked* newNodeLinked);
+    void push(NodeLinked *newNodeLinked);
     NodeLinked *getNode(int index) const;
     int getSize() const;
     // destructor

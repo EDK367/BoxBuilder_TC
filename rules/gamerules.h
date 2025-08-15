@@ -5,17 +5,21 @@
 #include "../models/nodelinked.h"
 #include "../methods/nodevector.h"
 #include "../models/node.h"
+#include "../models/enum/powermanager.h"
 
 class GameRules
 {
 private:
     static GameRules *instance;
-    FIFO playersQueue;
 
+    // metodos
+    FIFO playersQueue;
+    NodeVector nodeVectors;
     // variables
     int sizePlayers = 0;
     Players *arrayPlayers = nullptr;
-    NodeVector nodeVectors;
+
+    PowerManager powersList;
 
     int rows = 0;
     int columns = 0;
@@ -45,6 +49,8 @@ public:
     NodeLinked *getNodeLinked(int index) const;
     int getSizeNodeLinked() const;
 
+    // operaciones de poder
+    std::string getPower(int numberPower) const;
 
     // operacion de cola
     void enqueuePlayer(Players *player);

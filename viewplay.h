@@ -6,6 +6,7 @@
 #include "rules/gameRules.h"
 #include "models/nodeboard.h"
 #include "methods/randomnative.h"
+#include "methods/probability.h"
 #include "utils/clickgraphics.h"
 
 namespace Ui {
@@ -24,6 +25,7 @@ private:
     Ui::viewPlay *ui;
     GameRules &gameRules;
     RandomNative random;
+    Probability probability;
     NodeBoard ***board;
     int rows;
     int columns;

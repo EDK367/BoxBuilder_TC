@@ -37,6 +37,9 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         models/nodofifo.h models/nodofifo.cpp
         models/nodelinked.h models/nodelinked.cpp
         methods/nodevector.h methods/nodevector.cpp
+        utils/boxgraphics.h utils/boxgraphics.cpp
+        models/enum/powermanager.h models/enum/powermanager.cpp
+        methods/probability.h methods/probability.cpp
 
 
 

@@ -11,7 +11,9 @@
 #include "rules/gameRules.h"
 #include "models/nodeboard.h"
 #include "utils/clickgraphics.h"
+#include "utils/boxgraphics.h"
 #include "methods/randomnative.h"
+#include "methods/probability.h"
 #include "methods/arraymess.h"
 #include "mainwindow.h"
 
@@ -19,6 +21,7 @@ viewPlay::viewPlay(QWidget *parent)
     : QFrame(parent)
     , ui(new Ui::viewPlay)
     , random(2)
+    , probability()
     , gameRules(GameRules::getInstance())
     , rows(3)
     , columns(3)
@@ -63,14 +66,8 @@ void viewPlay::chargeGameRules()
             gameRules.enqueuePlayer(&players[i]);
         }
 
-        Players *firstPlayer = gameRules.peekPlayer();
-        if (firstPlayer)
-        {
-            std::cout << firstPlayer << std::endl;
-            std::cout << firstPlayer->getLetter() << std::endl;
-        }
 
-        displayAllPlayers();
+        //displayAllPlayers();
         board = NodeBoard::createBoard(rows, columns);
         chargeBoard();
 
@@ -135,14 +132,20 @@ void viewPlay::chargeBoard()
             // nodo donde se almacenara los poderes
             if (i < rows - 1 && j < columns - 1)
             {
-                QGraphicsRectItem  *boxPoint = new QGraphicsRectItem(
+                BoxGraphics  *boxPoint = new BoxGraphics(
                     j * (nodeSize + connectorNodeSize + spacing) + nodeSize + 7,
                     i * (nodeSize + connectorNodeSize + spacing) + nodeSize + 5,
                     70,
                     70
                     );
-                boxPoint->setPen(QPen(Qt::black, 2));
-                boxPoint->setBrush(Qt::white);
+
+                if (probability.powerChance())
+                {
+                    random.setLimit(11);
+                    unsigned int numberPower = random();
+                    std::string power = gameRules.getPower(numberPower);
+                    boxPoint->insertPower(power);
+                }
                 sceneBoard->addItem(boxPoint);
             }
         }
@@ -187,7 +190,7 @@ void viewPlay::linkConnectorHorizontal(ClickGraphics *pointerConnector, int row,
 
 void viewPlay::linkConnectorVertical(ClickGraphics *pointerConnector, int row, int column)
 {
-    qDebug() << "Nodo clickeado en vertical - Fila:" << row << "Columna:" << column;
+    //qDebug() << "Nodo clickeado en vertical - Fila:" << row << "Columna:" << column;
     Players *player = gameRules.peekPlayer();
     if (player)
     {
@@ -241,35 +244,12 @@ void viewPlay::on_pushButton_clicked()
         }
     }
 
-    NodeLinked *link = gameRules.getNodeLinked(0);
-    Node* start = link->getStartLinked();
-    Node* end = link->getEndLinked();
-    bool power = link->getPower();
+    //NodeLinked *link = gameRules.getNodeLinked(0);
+    //Node* start = link->getStartLinked();
+    //Node* end = link->getEndLinked();
+    //bool power = link->getPower();
 
-    NodeBoard *node = board[start->getX()][end->getY()];
-    if (!node) {
-        qDebug() << "Error: El nodo es nullptr";
-        return;
-    }
-
-    qDebug() << "--------------------------------------------------";
-    qDebug() << "Debug de Nodo en posición (" << node->getX() << "," << node->getY() << ")";
-    qDebug() << "--------------------------------------------------";
-
-    // Debug de conexiones
-    qDebug() << "Conexión UP   :" << (node->getUp() ?
-                                          QString("(%1,%2)").arg(node->getUp()->getX()).arg(node->getUp()->getY()) : "NULL");
-
-    qDebug() << "Conexión DOWN :" << (node->getDown() ?
-                                          QString("(%1,%2)").arg(node->getDown()->getX()).arg(node->getDown()->getY()) : "NULL");
-
-    qDebug() << "Conexión LEFT :" << (node->getLeft() ?
-                                          QString("(%1,%2)").arg(node->getLeft()->getX()).arg(node->getLeft()->getY()) : "NULL");
-
-    qDebug() << "Conexión RIGHT:" << (node->getRight() ?
-                                          QString("(%1,%2)").arg(node->getRight()->getX()).arg(node->getRight()->getY()) : "NULL");
-
-    qDebug() << "--------------------------------------------------";
+    //NodeBoard *node = board[start->getX()][end->getY()];
 
 
 }

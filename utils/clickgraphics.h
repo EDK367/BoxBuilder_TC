@@ -11,7 +11,7 @@ class ClickGraphics : public QObject, public QGraphicsRectItem
 {
     Q_OBJECT
 public:
-    ClickGraphics(int row, int column, qreal x, qreal y, qreal w, qreal h, QGraphicsItem *parent= nullptr);
+    ClickGraphics(int row, int column, qreal x, qreal y, qreal w, qreal h, QGraphicsItem *parent = nullptr);
     void setColor(std::string color);
     void updateColor();
 

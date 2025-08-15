@@ -10,11 +10,11 @@ NodeVector::~NodeVector() {
     delete[] nodeLinked;
 }
 
-void NodeVector::push(NodeLinked* newNodeLinked)
+void NodeVector::push(NodeLinked *newNodeLinked)
 {
     resize();
 
-    NodeLinked **newArray= new NodeLinked*[size];
+    NodeLinked **newArray = new NodeLinked*[size];
     for (int i = 0; i < size; ++i)
     {
         if (nodeLinked) {

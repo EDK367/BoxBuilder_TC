@@ -66,6 +66,13 @@ int GameRules::getTotalPlayers()
     return sizePlayers;
 }
 
+// poderes
+std::string GameRules::getPower(int numberPower) const
+{
+    return powersList.getPower(numberPower);
+}
+
+
 // implementacion de la cola para turnos
 void GameRules::enqueuePlayer(Players *player)
 {
