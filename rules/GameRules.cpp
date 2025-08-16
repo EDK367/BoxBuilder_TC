@@ -55,6 +55,16 @@ void GameRules::addNodeLinked(Node *start, Node *end, bool power)
     nodeVectors.push(newLink);
 }
 
+void GameRules::deleteNodeLinked(int index)
+{
+    nodeVectors.pop(index);
+}
+
+void GameRules::sortByStart()
+{
+    nodeVectors.sortByStart();
+}
+
 // metodos del juego
 Players *GameRules::getPlayersArray() const
 {

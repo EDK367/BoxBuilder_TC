@@ -45,7 +45,12 @@ public:
     // metodos extras
     Players* getPlayersArray() const;
     int getTotalPlayers();
+
+    // nodos enlazados
     void addNodeLinked(Node* start, Node* end, bool power);
+    void deleteNodeLinked(int index);
+    void sortByStart();
+
     NodeLinked *getNodeLinked(int index) const;
     int getSizeNodeLinked() const;
 

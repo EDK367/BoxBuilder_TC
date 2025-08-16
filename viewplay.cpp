@@ -187,6 +187,10 @@ void viewPlay::linkConnectorHorizontal(ClickGraphics *pointerConnector, int row,
 
         nodeS->getInfo()->setIsConnectedRight(true);
         nodeE->getInfo()->setIsConnectedLeft(true);
+        if (verifyBoxCompletion())
+        {
+            std::cout << "Si se gano el cuadrado horizontal" << std::endl;
+        }
     }
     gameRules.dequeuePlayer(); 
 }
@@ -204,14 +208,78 @@ void viewPlay::linkConnectorVertical(ClickGraphics *pointerConnector, int row, i
         // creacion de enlaces
         NodeBoard *nodeS = board[row][column];
         Node *nodeStart = nodeS;
-        NodeBoard* nodeE = board[row + 1][column];
-        Node *nodeEnd = nodeE;
+        NodeBoard* nodeF = board[row + 1][column];
+        Node *nodeEnd = nodeF;
 
         gameRules.addNodeLinked(nodeStart, nodeEnd, true);
         nodeS->getInfo()->setIsConnectedDown(true);
-        nodeE->getInfo()->setIsConnectedUp(true);
+        nodeF->getInfo()->setIsConnectedUp(true);
+
+        if (verifyBoxCompletion())
+        {
+            std::cout << "Si se gano el cuadrado" << std::endl;
+        }
     }
     gameRules.dequeuePlayer();
+}
+
+// verificacion si se obtuvo un win en un enlace
+bool viewPlay::verifyBoxCompletion()
+{
+    gameRules.sortByStart();
+    int nodeDelete[4] = {-1, -1, -1, -1};
+    int deleteCount = 0;
+    Node *lastFoundNode = nullptr;
+
+    for (int i = 0; i < gameRules.getSizeNodeLinked(); ++i)
+    {
+        NodeLinked *links = gameRules.getNodeLinked(i);
+        if (!links) {
+            nodeDelete[deleteCount++] = i;
+            continue;
+        }
+
+        Node *startLinked = links->getStartLinked();
+        if (!startLinked) {
+            nodeDelete[deleteCount++] = i;
+            continue;
+        }
+
+        if (lastFoundNode &&
+            lastFoundNode->getX() == startLinked->getX() &&
+            lastFoundNode->getY() == startLinked->getY())
+        {
+            nodeDelete[deleteCount++] = i;
+            continue;
+        }
+
+        NodeBoard *nodeStart = board[startLinked->getX()][startLinked->getY()];
+        NodeBoard *nodeFinal = nullptr;
+        if (!(startLinked->getX() + 1 > this->rows - 1)) {
+            nodeFinal = board[startLinked->getX() + 1][startLinked->getY() + 1];
+        }
+
+        if (nodeFinal && nodeStart->isConnectedRightAndDown() && nodeFinal->isConnectedLeftAndUp())
+        {
+            nodeDelete[deleteCount++] = i;
+            lastFoundNode = startLinked;
+
+            std::cout << "Box completado en (" << startLinked->getX()
+                      << "," << startLinked->getY() << ")" << std::endl;
+
+            if (deleteCount >= 4) break;
+        }
+    }
+
+    // Eliminamos en orden inverso
+    for (int i = deleteCount - 1; i >= 0; i--)
+    {
+        if (nodeDelete[i] != -1)
+            gameRules.deleteNodeLinked(nodeDelete[i]);
+    }
+
+    return deleteCount > 0;
+
 }
 
 void viewPlay::on_pushButton_clicked()
@@ -224,7 +292,7 @@ void viewPlay::on_pushButton_clicked()
         Players *player = current->getPlayer();
         if (player)
         {
-           // std::cout << player->getLetter() << std::endl;
+            // std::cout << player->getLetter() << std::endl;
         }
         current = current->getNext();
     }
@@ -235,7 +303,7 @@ void viewPlay::on_pushButton_clicked()
 
 
     // vista de nodods enlazados
-    /*for (int i = 0; i < gameRules.getSizeNodeLinked(); ++i) {
+    for (int i = 0; i < gameRules.getSizeNodeLinked(); ++i) {
         NodeLinked* link = gameRules.getNodeLinked(i);
         if (link) {
             Node* start = link->getStartLinked();
@@ -245,9 +313,9 @@ void viewPlay::on_pushButton_clicked()
             qDebug() << "Conexion";
             qDebug() << "  Desde: (" << start->getX() << "," << start->getY() << ")";
             qDebug() << "  Hasta: (" << end->getX() << "," << end->getY() << ")";
-            qDebug() << "  Power: " << power;
+            qDebug() << "  indice: " << i;
         }
-    }*/
+    }
 
     //NodeLinked *link = gameRules.getNodeLinked(0);
     //Node* start = link->getStartLinked();

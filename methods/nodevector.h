@@ -7,15 +7,21 @@ class NodeVector
 private:
     NodeLinked **nodeLinked;
     int size;
-    void resize();
 
 public:
     NodeVector();
-    void push(NodeLinked *newNodeLinked);
-    NodeLinked *getNode(int index) const;
-    int getSize() const;
+
     // destructor
     ~NodeVector();
+
+    void push(NodeLinked *newNodeLinked);
+    void pop(int index);
+    void sortByStart();
+
+    // getter y setter
+    NodeLinked *getNode(int index) const;
+    int getSize() const;
+
 };
 
 #endif // NODEVECTOR_H
