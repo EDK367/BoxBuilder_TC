@@ -40,6 +40,8 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         utils/boxgraphics.h utils/boxgraphics.cpp
         models/enum/powermanager.h models/enum/powermanager.cpp
         methods/probability.h methods/probability.cpp
+        models/nodoinfo.h models/nodoinfo.cpp
+
 
 
 

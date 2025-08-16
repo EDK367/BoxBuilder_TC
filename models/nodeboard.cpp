@@ -4,7 +4,14 @@
 NodeBoard::NodeBoard(int x, int y) : Node(x, y),
     up(nullptr),  down(nullptr),
     left(nullptr), right(nullptr)
-{}
+{
+    info = new NodoInfo;
+}
+
+NodeBoard::~NodeBoard()
+{
+    delete info;
+}
 
 NodeBoard ***NodeBoard::createBoard(int rows, int columns)
 {
@@ -53,6 +60,24 @@ void NodeBoard::deleteBoard(NodeBoard ***board, int rows, int columns)
     delete[] board;
 }
 
+// metodos
+bool NodeBoard::isConnectedRightAndDown()
+{
+    if (info->getIsConnectedRight() && info->getIsConnectedDown())
+    {
+        return true;
+    }
+    return false;
+}
+
+bool NodeBoard::isConnectedLeftAndUp()
+{
+    if (info->getIsConnectedLeft() && info->getIsConnectedUp())
+    {
+        return true;
+    }
+    return false;
+}
 // getter y setter
 NodeBoard *NodeBoard::getUp() const
 {
@@ -74,25 +99,35 @@ NodeBoard *NodeBoard::getRight() const
     return right;
 }
 
+NodoInfo *NodeBoard::getInfo() const
+{
+    return info;
+}
+
 void NodeBoard::setUp(NodeBoard *node)
 {
-    up = node;
+    this->up = node;
 }
 
 
 void NodeBoard::setDown(NodeBoard *node)
 {
-    down = node;
+    this->down = node;
 }
 
 
 void NodeBoard::setLeft(NodeBoard *node)
 {
-    left = node;
+    this->left = node;
 }
 
 
 void NodeBoard::setRight(NodeBoard *node)
 {
-    right = node;
+    this->right = node;
+}
+
+void NodeBoard::setInfo(NodoInfo *info)
+{
+    this->info = info;
 }

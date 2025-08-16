@@ -33,6 +33,7 @@ private:
     void chargeBoard();
     void displayAllPlayers();
 
+    bool verifyBoxCompletion();
 
 protected:
     void closeEvent(QCloseEvent *event) override;

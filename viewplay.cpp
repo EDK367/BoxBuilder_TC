@@ -184,6 +184,9 @@ void viewPlay::linkConnectorHorizontal(ClickGraphics *pointerConnector, int row,
         Node *nodeEnd = nodeE;
 
         gameRules.addNodeLinked(nodeStart, nodeEnd, true);
+
+        nodeS->getInfo()->setIsConnectedRight(true);
+        nodeE->getInfo()->setIsConnectedLeft(true);
     }
     gameRules.dequeuePlayer(); 
 }
@@ -205,6 +208,8 @@ void viewPlay::linkConnectorVertical(ClickGraphics *pointerConnector, int row, i
         Node *nodeEnd = nodeE;
 
         gameRules.addNodeLinked(nodeStart, nodeEnd, true);
+        nodeS->getInfo()->setIsConnectedDown(true);
+        nodeE->getInfo()->setIsConnectedUp(true);
     }
     gameRules.dequeuePlayer();
 }
@@ -230,7 +235,7 @@ void viewPlay::on_pushButton_clicked()
 
 
     // vista de nodods enlazados
-    for (int i = 0; i < gameRules.getSizeNodeLinked(); ++i) {
+    /*for (int i = 0; i < gameRules.getSizeNodeLinked(); ++i) {
         NodeLinked* link = gameRules.getNodeLinked(i);
         if (link) {
             Node* start = link->getStartLinked();
@@ -242,7 +247,7 @@ void viewPlay::on_pushButton_clicked()
             qDebug() << "  Hasta: (" << end->getX() << "," << end->getY() << ")";
             qDebug() << "  Power: " << power;
         }
-    }
+    }*/
 
     //NodeLinked *link = gameRules.getNodeLinked(0);
     //Node* start = link->getStartLinked();
