@@ -31,6 +31,16 @@ PowerManager::PowerEnum *LIFO::pop()
     return power;
 }
 
+// trae el primer elemento
+PowerManager::PowerEnum *LIFO::peek() const
+{
+    if (isEmpty())
+    {
+        return nullptr;
+    }
+    return top->getPower();
+}
+
 bool LIFO::isEmpty() const
 {
     return top == nullptr;

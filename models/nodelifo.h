@@ -17,6 +17,7 @@ public:
 
     void setPower(PowerManager::PowerEnum *power);
     void setNext(NodeLIFO *next);
+
 };
 
 #endif // NODELIFO_H

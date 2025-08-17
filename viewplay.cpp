@@ -28,6 +28,18 @@ viewPlay::viewPlay(QWidget *parent)
     , board(nullptr)
 {
     ui->setupUi(this);
+
+    // creacion de la tabla
+    ui->tablePlayers->setColumnCount(4);
+    QStringList header;
+    header << "Letra" << "Color" << "Puntos" <<  "Primer Poder";
+    ui->tablePlayers->resizeColumnsToContents();
+
+    ui->tablePlayers->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+    ui->tablePlayers->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+
+    ui->tablePlayers->setHorizontalHeaderLabels(header);
+    ui->tablePlayers->horizontalHeader()->setStretchLastSection(true);
 }
 
 viewPlay::~viewPlay()
@@ -59,15 +71,13 @@ void viewPlay::chargeGameRules()
         arrayMess.shufflePlayers(players, totalPlayers);
         this->rows = gameRules.getRows();
         this->columns = gameRules.getColumns();
-        std::cout << "Jugadores" << std::endl;
-
         for (int i = 0; i < totalPlayers; ++i)
         {
             gameRules.enqueuePlayer(&players[i]);
         }
 
 
-        //displayAllPlayers();
+        displayAllPlayers();
         board = NodeBoard::createBoard(rows, columns);
         chargeBoard();
 
@@ -108,9 +118,9 @@ void viewPlay::chargeBoard()
                     i, j,
                     j * (nodeSize + connectorNodeSize + spacing) + nodeSize / 2 - connectorNodeSize / 2,
                     i * (nodeSize + connectorNodeSize + spacing) + nodeSize,
-                    15, 82
+                    15, 85
                     );
-                verticalConnector->setBrush(Qt::lightGray);
+
                 sceneBoard->addItem(verticalConnector);
                 connect(verticalConnector, &ClickGraphics::clickNode, this, &viewPlay::linkConnectorVertical);
             }
@@ -122,9 +132,9 @@ void viewPlay::chargeBoard()
                     i, j,
                     j * (nodeSize + connectorNodeSize + spacing) + nodeSize + 1,
                     i * (nodeSize + connectorNodeSize + spacing) + nodeSize / 2 - connectorNodeSize / 2,
-                    82, 15
+                    85, 15
                     );
-                horizontalConnector->setBrush(Qt::lightGray);
+
                 sceneBoard->addItem(horizontalConnector);
                 connect(horizontalConnector, &ClickGraphics::clickNode, this, &viewPlay::linkConnectorHorizontal);
             }
@@ -160,15 +170,40 @@ void viewPlay::chargeBoard()
 // mostrar todos los jugadores en cola
 void viewPlay::displayAllPlayers()
 {
-    NodeFIFO *current = gameRules.getFront();
-    while (current)
+    ui->tablePlayers->clearContents();
+    ui->tablePlayers->setRowCount(0);
+    NodeFIFO *currentFifo = gameRules.getFront();
+    int row = 0;
+
+    while (currentFifo)
     {
-        Players *player = current->getPlayer();
+        Players *player = currentFifo->getPlayer();
         if (player)
         {
-            std::cout << player->getLetter() << std::endl;
+            PowerManager::PowerEnum *power = player->getPowerStack().peek();
+            // agregar para fila
+            ui->tablePlayers->insertRow(row);
+            QString color = QString::fromStdString(player->getColor());
+
+            // ingreso de datos
+            // letra
+            ui->tablePlayers->setItem(row, 0, new QTableWidgetItem(QString(player->getLetter())));
+
+            // color
+            QTableWidgetItem *colorItem = new QTableWidgetItem(color);
+            colorItem->setBackground(QBrush(QColor(color)));
+            ui->tablePlayers->setItem(row, 1, colorItem);
+
+            ui->tablePlayers->setItem(row, 2, new QTableWidgetItem(QString::number(player->getPoints())));
+
+            if (power)
+            {
+                std::string powerName = PowerManager::getPowerString(*power);
+                ui->tablePlayers->setItem(row, 3, new QTableWidgetItem(QString::fromStdString(powerName)));
+            }
+            row++;
         }
-        current = current->getNext();
+        currentFifo = currentFifo->getNext();
     }
 }
 
@@ -193,11 +228,12 @@ void viewPlay::linkConnectorHorizontal(ClickGraphics *pointerConnector, int row,
         nodeS->getInfo()->setIsConnectedRight(true);
         nodeE->getInfo()->setIsConnectedLeft(true);
         if (verifyBoxCompletion())
-        {
+        {    displayAllPlayers();
             return;
         }
     }
-    gameRules.dequeuePlayer(); 
+    gameRules.dequeuePlayer();
+    displayAllPlayers();
 }
 
 void viewPlay::linkConnectorVertical(ClickGraphics *pointerConnector, int row, int column)
@@ -222,10 +258,12 @@ void viewPlay::linkConnectorVertical(ClickGraphics *pointerConnector, int row, i
 
         if (verifyBoxCompletion())
         {
+            displayAllPlayers();
             return;
         }
     }
     gameRules.dequeuePlayer();
+    displayAllPlayers();
 }
 
 // verificacion si se obtuvo un win en un enlace
@@ -275,17 +313,17 @@ bool viewPlay::verifyBoxCompletion()
             BoxGraphics *boxWin = nodeStart->getInfo()->getSquare();
             boxWin->insertPlayer(gameRules.peekPlayer()->getLetter(), gameRules.peekPlayer()->getColor());
 
-            // poderes
+            // poderes y puntos
+            Players *player = gameRules.peekPlayer();
             if (nodeStart->getInfo()->getPower())
             {
-                Players *player = gameRules.peekPlayer();
                 if (player)
                 {
                     PowerManager::PowerEnum *power = nodeStart->getInfo()->getPower();
                     player->addPower(power);
                 }
             }
-
+            player->addPoints(1);
             if (deleteCount >= 4)
             {
                 break;
@@ -306,7 +344,7 @@ bool viewPlay::verifyBoxCompletion()
 void viewPlay::on_pushButton_clicked()
 {
 
-   /*NodeFIFO *current = gameRules.getFront();
+    /*NodeFIFO *current = gameRules.getFront();
 
     while (current)
     {

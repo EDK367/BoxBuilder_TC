@@ -154,7 +154,7 @@ void MainWindow::on_playersB_clicked()
     QValidator *validator = new QRegularExpressionValidator(regex, this);
     lineLetter->setValidator(validator);
 
-
+    // dialogo de acpetar o rechazhar
     QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, &dialog);
     layout->addWidget(buttonBox);
 
@@ -263,7 +263,7 @@ void MainWindow::updateBoardRequirements()
         minBoard(numberPlayers, minRow, minColumn);
         ui->boardSize->setText(
             QString("Min: %1 filas, %2 columnas").arg(minRow).arg(minColumn)
-        );
+            );
     }
 }
 
@@ -280,7 +280,7 @@ void MainWindow::on_pushButton_clicked()
 
     {
         QString letter = "A";
-        QColor color = Qt::red;
+        QColor color = Qt::white;
         QString colorHex = color.name();
 
         int row = ui->tableWidget->rowCount();
@@ -316,7 +316,7 @@ void MainWindow::on_pushButton_clicked()
 
     {
         QString letter = "B";
-        QColor color = Qt::blue;
+        QColor color = Qt::black;
         QString colorHex = color.name();
 
         int row = ui->tableWidget->rowCount();

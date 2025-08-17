@@ -17,6 +17,7 @@ public:
     // metodos de fila
     void push(PowerManager::PowerEnum *power);
     PowerManager::PowerEnum *pop();
+    PowerManager::PowerEnum *peek() const;
     bool isEmpty() const;
 };
 

@@ -5,8 +5,7 @@ ClickGraphics::ClickGraphics(int row, int column, qreal x, qreal y, qreal w, qre
     row(row), column(column), color("")
 {
     setAcceptHoverEvents(true);
-    setBrush(Qt::black);
-    setPen(QPen(Qt::cyan, 2));
+    setPen(QPen(Qt::gray, 1));
 }
 
 void ClickGraphics::mousePressEvent(QGraphicsSceneMouseEvent *event)
@@ -37,6 +36,7 @@ void ClickGraphics::updateColor()
     {
         QColor brushColor = QColor(QString::fromStdString(color));
         setBrush(brushColor);
+        setPen(QPen(Qt::white, 4));
     }
     else
     {
