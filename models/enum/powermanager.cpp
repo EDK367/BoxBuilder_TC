@@ -2,24 +2,22 @@
 
 PowerManager::PowerManager() {}
 
-std::string PowerManager::getPower(int numberPower)
+std::string PowerManager::getPowerString(PowerEnum power)
 {
-    static const std::string powers[] = {"DL",
-                                         "TS",
-                                         "BL",
-                                         "PS",
-                                         "LS",
-                                         "ES",
-                                         "UF",
-                                         "AC",
-                                         "NT",
-                                         "EX"};
+    static const std::string powers[] = {
+    "DL",   "TS",   "BL",   "PS",   "LS",
+    "ES",   "UF",   "AC",   "NT",   "EX"
+                                        };
 
 
-    if(numberPower < 0 && (numberPower > 9))
+    return powers[static_cast<int>(power)];
+}
+
+PowerManager::PowerEnum *PowerManager::getPowerEnum(int numberPower)
+{
+    if (numberPower < 0 || (numberPower > 9))
     {
-        return "";
+        return 0;
     }
-
-    return powers[numberPower];
+    return new PowerEnum(static_cast<PowerEnum>(numberPower));
 }

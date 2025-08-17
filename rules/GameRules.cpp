@@ -19,7 +19,6 @@ GameRules::~GameRules()
     {
         delete[] arrayPlayers;
         arrayPlayers = nullptr;
-
     }
 }
 
@@ -77,9 +76,9 @@ int GameRules::getTotalPlayers()
 }
 
 // poderes
-std::string GameRules::getPower(int numberPower) const
+PowerManager::PowerEnum *GameRules::getPower(int numberPower) const
 {
-    return powersList.getPower(numberPower);
+    return powersList.getPowerEnum(numberPower);
 }
 
 
@@ -104,7 +103,7 @@ Players *GameRules::peekPlayer()
     return nullptr;
 }
 
-NodoFIFO *GameRules::getFront()
+NodeFIFO *GameRules::getFront()
 {
     return playersQueue.getFront();
 }

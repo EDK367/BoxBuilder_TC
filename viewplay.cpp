@@ -141,12 +141,17 @@ void viewPlay::chargeBoard()
 
                 if (probability.powerChance())
                 {
-                    random.setLimit(11);
+                    random.setLimit(10);
                     unsigned int numberPower = random();
-                    std::string power = gameRules.getPower(numberPower);
-                    boxPoint->insertPower(power);
+                    PowerManager::PowerEnum *power = gameRules.getPower(numberPower);
+                    if (power != nullptr) {
+                        std::string powerStr = PowerManager::getPowerString(*power);
+                        boxPoint->insertPower(powerStr);
+                        board[i][j]->getInfo()->setPower(power);
+                    }
                 }
                 sceneBoard->addItem(boxPoint);
+                board[i][j]->getInfo()->setSquare(boxPoint);
             }
         }
     }
@@ -155,7 +160,7 @@ void viewPlay::chargeBoard()
 // mostrar todos los jugadores en cola
 void viewPlay::displayAllPlayers()
 {
-    NodoFIFO *current = gameRules.getFront();
+    NodeFIFO *current = gameRules.getFront();
     while (current)
     {
         Players *player = current->getPlayer();
@@ -189,7 +194,7 @@ void viewPlay::linkConnectorHorizontal(ClickGraphics *pointerConnector, int row,
         nodeE->getInfo()->setIsConnectedLeft(true);
         if (verifyBoxCompletion())
         {
-            std::cout << "Si se gano el cuadrado horizontal" << std::endl;
+            return;
         }
     }
     gameRules.dequeuePlayer(); 
@@ -217,7 +222,7 @@ void viewPlay::linkConnectorVertical(ClickGraphics *pointerConnector, int row, i
 
         if (verifyBoxCompletion())
         {
-            std::cout << "Si se gano el cuadrado" << std::endl;
+            return;
         }
     }
     gameRules.dequeuePlayer();
@@ -233,18 +238,19 @@ bool viewPlay::verifyBoxCompletion()
 
     for (int i = 0; i < gameRules.getSizeNodeLinked(); ++i)
     {
+        // validaciones
         NodeLinked *links = gameRules.getNodeLinked(i);
         if (!links) {
             nodeDelete[deleteCount++] = i;
             continue;
         }
-
         Node *startLinked = links->getStartLinked();
         if (!startLinked) {
             nodeDelete[deleteCount++] = i;
             continue;
         }
 
+        // validacion del ultimo nodo si es igual al anterior
         if (lastFoundNode &&
             lastFoundNode->getX() == startLinked->getX() &&
             lastFoundNode->getY() == startLinked->getY())
@@ -253,8 +259,10 @@ bool viewPlay::verifyBoxCompletion()
             continue;
         }
 
+        // creacion de nodos para los enlaces
         NodeBoard *nodeStart = board[startLinked->getX()][startLinked->getY()];
         NodeBoard *nodeFinal = nullptr;
+        // si no es mayor a su fila
         if (!(startLinked->getX() + 1 > this->rows - 1)) {
             nodeFinal = board[startLinked->getX() + 1][startLinked->getY() + 1];
         }
@@ -264,14 +272,27 @@ bool viewPlay::verifyBoxCompletion()
             nodeDelete[deleteCount++] = i;
             lastFoundNode = startLinked;
 
-            std::cout << "Box completado en (" << startLinked->getX()
-                      << "," << startLinked->getY() << ")" << std::endl;
+            BoxGraphics *boxWin = nodeStart->getInfo()->getSquare();
+            boxWin->insertPlayer(gameRules.peekPlayer()->getLetter(), gameRules.peekPlayer()->getColor());
 
-            if (deleteCount >= 4) break;
+            // poderes
+            if (nodeStart->getInfo()->getPower())
+            {
+                Players *player = gameRules.peekPlayer();
+                if (player)
+                {
+                    PowerManager::PowerEnum *power = nodeStart->getInfo()->getPower();
+                    player->addPower(power);
+                }
+            }
+
+            if (deleteCount >= 4)
+            {
+                break;
+            }
         }
     }
 
-    // Eliminamos en orden inverso
     for (int i = deleteCount - 1; i >= 0; i--)
     {
         if (nodeDelete[i] != -1)
@@ -285,14 +306,14 @@ bool viewPlay::verifyBoxCompletion()
 void viewPlay::on_pushButton_clicked()
 {
 
-    NodoFIFO *current = gameRules.getFront();
+   /*NodeFIFO *current = gameRules.getFront();
 
     while (current)
     {
         Players *player = current->getPlayer();
         if (player)
         {
-            // std::cout << player->getLetter() << std::endl;
+             std::cout << player->getLetter() << std::endl;
         }
         current = current->getNext();
     }
@@ -315,7 +336,7 @@ void viewPlay::on_pushButton_clicked()
             qDebug() << "  Hasta: (" << end->getX() << "," << end->getY() << ")";
             qDebug() << "  indice: " << i;
         }
-    }
+    }*/
 
     //NodeLinked *link = gameRules.getNodeLinked(0);
     //Node* start = link->getStartLinked();
@@ -323,7 +344,6 @@ void viewPlay::on_pushButton_clicked()
     //bool power = link->getPower();
 
     //NodeBoard *node = board[start->getX()][end->getY()];
-
 
 }
 

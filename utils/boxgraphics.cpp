@@ -30,3 +30,24 @@ void BoxGraphics::insertPower(const std::string &text)
 
     textItem->setPos(xPos, yPos);
 }
+
+void BoxGraphics::insertPlayer(const char &name, const std::string &color)
+{
+    QString qtText(name);
+    textItem->setPlainText(qtText);
+
+    QColor qColor(QString::fromStdString(color));
+
+    setBrush(QBrush(qColor));
+
+    QColor textColor = (qColor == Qt::black ? Qt::white : Qt::black);
+    textItem->setDefaultTextColor(textColor);
+
+    QRectF boxRect = rect();
+    QRectF textRect = textItem->boundingRect();
+
+    qreal xPos = boxRect.left() + (boxRect.width() - textRect.width()) / 2;
+    qreal yPos = boxRect.top() + (boxRect.height() - textRect.height()) / 2;
+
+    textItem->setPos(xPos, yPos);
+}

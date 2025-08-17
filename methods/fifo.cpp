@@ -5,7 +5,7 @@ FIFO::FIFO() : front(nullptr), end(nullptr)
 
 FIFO::~FIFO() {
     while (!isEmpty()) {
-        NodoFIFO *temp = front;
+        NodeFIFO *temp = front;
         front = front->getNext();
         delete temp;
     }
@@ -14,19 +14,19 @@ FIFO::~FIFO() {
 
 void FIFO::enqueue(Players *player)
 {
-    NodoFIFO *newNodoFIFO = new NodoFIFO();
+    NodeFIFO *newNodeFIFO = new NodeFIFO();
 
-    newNodoFIFO->setPlayer(player);
-    newNodoFIFO->setNext(nullptr);
+    newNodeFIFO->setPlayer(player);
+    newNodeFIFO->setNext(nullptr);
 
     if (isEmpty())
     {
-        front = newNodoFIFO;
+        front = newNodeFIFO;
     } else {
-        end->setNext(newNodoFIFO);
+        end->setNext(newNodeFIFO);
     }
 
-    end = newNodoFIFO;
+    end = newNodeFIFO;
 }
 
 bool FIFO::isEmpty()
@@ -37,7 +37,7 @@ bool FIFO::isEmpty()
 void FIFO::dequeue()
 {
 
-    NodoFIFO *aux = front;
+    NodeFIFO *aux = front;
     Players *player = front->getPlayer();
     if (front == end)
     {
@@ -60,7 +60,7 @@ Players *FIFO::peak()
     return nullptr;
 }
 
-NodoFIFO *FIFO::getFront()
+NodeFIFO *FIFO::getFront()
 {
     return front;
 }

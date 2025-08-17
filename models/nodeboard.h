@@ -1,7 +1,7 @@
 #ifndef NODEBOARD_H
 #define NODEBOARD_H
 #include "node.h"
-#include "nodoinfo.h"
+#include "nodeinfo.h"
 
 class NodeBoard : public Node
 {
@@ -10,7 +10,7 @@ private:
     NodeBoard *down;
     NodeBoard *left;
     NodeBoard *right;
-    NodoInfo *info;
+    NodeInfo *info;
 
 public:
     // constructor
@@ -33,13 +33,13 @@ public:
     NodeBoard *getDown() const;
     NodeBoard *getLeft() const;
     NodeBoard *getRight() const;
-    NodoInfo *getInfo() const;
+    NodeInfo *getInfo() const;
 
     void setUp(NodeBoard *node);
     void setDown(NodeBoard *node);
     void setLeft(NodeBoard *node);
     void setRight(NodeBoard *node);
-    void setInfo(NodoInfo *infO);
+    void setInfo(NodeInfo *infO);
 };
 
 #endif // NODEBOARD_H

@@ -18,7 +18,7 @@ private:
 public:
     BoxGraphics(qreal x, qreal y, qreal w, qreal h, QGraphicsItem *parent = nullptr);
     void insertPower(const std::string &text);
-    void insertPlayer();
+    void insertPlayer(const char &name, const std::string &color);
 };
 
 #endif // BOXGRAPHICS_H

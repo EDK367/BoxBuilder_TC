@@ -5,7 +5,7 @@ NodeBoard::NodeBoard(int x, int y) : Node(x, y),
     up(nullptr),  down(nullptr),
     left(nullptr), right(nullptr)
 {
-    info = new NodoInfo;
+    info = new NodeInfo;
 }
 
 NodeBoard::~NodeBoard()
@@ -99,7 +99,7 @@ NodeBoard *NodeBoard::getRight() const
     return right;
 }
 
-NodoInfo *NodeBoard::getInfo() const
+NodeInfo *NodeBoard::getInfo() const
 {
     return info;
 }
@@ -127,7 +127,7 @@ void NodeBoard::setRight(NodeBoard *node)
     this->right = node;
 }
 
-void NodeBoard::setInfo(NodoInfo *info)
+void NodeBoard::setInfo(NodeInfo *info)
 {
     this->info = info;
 }

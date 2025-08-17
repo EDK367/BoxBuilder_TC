@@ -27,6 +27,10 @@ int Players::getPoints() const
     return points;
 }
 
+LIFO &Players::getPowerStack() {
+    return powerStack;
+}
+
 // setters
 void Players::setLetter(char letter)
 {
@@ -48,4 +52,19 @@ void Players::setPoints(int point)
 void Players::addPoints(int point)
 {
     this->points += point;
+}
+
+void Players::addPower(PowerManager::PowerEnum *power)
+{
+    powerStack.push(power);
+}
+
+PowerManager::PowerEnum *Players::usePower()
+{
+    powerStack.pop();
+}
+
+bool Players::isPowerStack() const
+{
+    return !powerStack.isEmpty();
 }

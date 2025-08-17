@@ -55,13 +55,13 @@ public:
     int getSizeNodeLinked() const;
 
     // operaciones de poder
-    std::string getPower(int numberPower) const;
+    PowerManager::PowerEnum *getPower(int numberPower) const;
 
     // operacion de cola
     void enqueuePlayer(Players *player);
     void dequeuePlayer();
     Players *peekPlayer();
-    NodoFIFO *getFront();
+    NodeFIFO *getFront();
 
     // getter and setter
     int getRows() const;

@@ -34,13 +34,15 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         methods/randomnative.h methods/randomnative.cpp
         methods/arraymess.h methods/arraymess.cpp
         methods/fifo.h methods/fifo.cpp
-        models/nodofifo.h models/nodofifo.cpp
+        models/nodefifo.h models/nodefifo.cpp
         models/nodelinked.h models/nodelinked.cpp
         methods/nodevector.h methods/nodevector.cpp
         utils/boxgraphics.h utils/boxgraphics.cpp
         models/enum/powermanager.h models/enum/powermanager.cpp
         methods/probability.h methods/probability.cpp
-        models/nodoinfo.h models/nodoinfo.cpp
+        models/nodeinfo.h models/nodeinfo.cpp
+        methods/lifo.h methods/lifo.cpp
+        models/nodelifo.h models/nodelifo.cpp
 
 
 

@@ -1,20 +1,15 @@
 #ifndef FIFO_H
 #define FIFO_H
 #include "../models/players.h"
-#include "../models/nodofifo.h"
+#include "../models/nodefifo.h"
 
 class FIFO
 {
 private:
     Players *players;
     // enlaces
-    NodoFIFO *front;
-    NodoFIFO *end;
-
-    // elemento insertado
-    int rear;
-    // total de elementos
-    int count;
+    NodeFIFO *front;
+    NodeFIFO *end;
 
 public:
     // constructor
@@ -30,7 +25,7 @@ public:
     Players *peak();
 
     // get
-    NodoFIFO *getFront();
+    NodeFIFO *getFront();
 
 };
 
