@@ -47,7 +47,7 @@ public:
     int getTotalPlayers();
 
     // nodos enlazados
-    void addNodeLinked(Node* start, Node* end, bool power);
+    void addNodeLinked(Node* start, Node* end, PowerManager::PowerEnum power);
     void deleteNodeLinked(int index);
     void sortByStart();
 
@@ -55,7 +55,7 @@ public:
     int getSizeNodeLinked() const;
 
     // operaciones de poder
-    PowerManager::PowerEnum *getPower(int numberPower) const;
+    PowerManager::PowerEnum getPower(int numberPower) const;
 
     // operacion de cola
     void enqueuePlayer(Players *player);

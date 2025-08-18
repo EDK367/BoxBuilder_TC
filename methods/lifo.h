@@ -6,7 +6,7 @@
 class LIFO
 {
 private:
-    PowerManager::PowerEnum *power;
+    PowerManager::PowerEnum power;
     NodeLIFO *top;
 
 public:
@@ -15,9 +15,9 @@ public:
     ~LIFO();
 
     // metodos de fila
-    void push(PowerManager::PowerEnum *power);
-    PowerManager::PowerEnum *pop();
-    PowerManager::PowerEnum *peek() const;
+    void push(PowerManager::PowerEnum power);
+    PowerManager::PowerEnum pop();
+    PowerManager::PowerEnum peek() const;
     bool isEmpty() const;
 };
 

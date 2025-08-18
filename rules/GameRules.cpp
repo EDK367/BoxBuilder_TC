@@ -47,7 +47,7 @@ void GameRules::deleteInstance()
 }
 
 // uso de arreglo de enlace
-void GameRules::addNodeLinked(Node *start, Node *end, bool power)
+void GameRules::addNodeLinked(Node *start, Node *end, PowerManager::PowerEnum power)
 {
     NodeLinked *newLink = new NodeLinked();
     newLink->setLinked(start, end, power);
@@ -76,7 +76,7 @@ int GameRules::getTotalPlayers()
 }
 
 // poderes
-PowerManager::PowerEnum *GameRules::getPower(int numberPower) const
+PowerManager::PowerEnum GameRules::getPower(int numberPower) const
 {
     return powersList.getPowerEnum(numberPower);
 }

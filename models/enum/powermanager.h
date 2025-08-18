@@ -6,6 +6,7 @@ class PowerManager {
 public:
     PowerManager();
     enum class PowerEnum {
+        NONE = -1,
         DL = 0, // 0
         TS = 1, // 1
         BL = 2, // 2
@@ -18,9 +19,8 @@ public:
         EX = 9  // 9
     };
 
-    static PowerEnum *getPowerEnum(int numberPower);
-
     static std::string getPowerString(PowerEnum power);
+    static PowerEnum getPowerEnum(int numberPower);
 
 };
 

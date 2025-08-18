@@ -2,12 +2,12 @@
 
 NodeInfo::NodeInfo() : isConnectedUp(false), isConnectedDown(false),
     isConnectedLeft(false), isConnectedRight(false), square(nullptr),
-    power(nullptr)
+    power(PowerManager::PowerEnum::NONE)
 {}
 
 // destructor
 NodeInfo::~NodeInfo() {
-    delete power;
+
 }
 
 // getter y setter
@@ -31,7 +31,7 @@ bool NodeInfo::getIsConnectedRight() const
     return isConnectedRight;
 }
 
-PowerManager::PowerEnum *NodeInfo::getPower() const
+PowerManager::PowerEnum NodeInfo::getPower() const
 {
     return power;
 }
@@ -61,9 +61,8 @@ void NodeInfo::setIsConnectedRight(bool value)
     this->isConnectedRight = value;
 }
 
-void NodeInfo::setPower(PowerManager::PowerEnum *power)
+void NodeInfo::setPower(PowerManager::PowerEnum power)
 {
-    delete this->power;
     this->power = power;
 }
 

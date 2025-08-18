@@ -10,7 +10,7 @@ LIFO::~LIFO() {
 }
 
 // insertar datos
-void LIFO::push(PowerManager::PowerEnum *power)
+void LIFO::push(PowerManager::PowerEnum power)
 {
     NodeLIFO *newNode = new NodeLIFO();
     newNode->setPower(power);
@@ -19,24 +19,24 @@ void LIFO::push(PowerManager::PowerEnum *power)
 }
 
 // eliminar el princio de la pila
-PowerManager::PowerEnum *LIFO::pop()
+PowerManager::PowerEnum LIFO::pop()
 {
     if (isEmpty())
     {
-        return nullptr;
+        return PowerManager::PowerEnum::NONE;
     }
     NodeLIFO *temp = top;
-    PowerManager::PowerEnum *power = temp->getPower();
+    PowerManager::PowerEnum power = temp->getPower();
     top = top->getNext();
     return power;
 }
 
 // trae el primer elemento
-PowerManager::PowerEnum *LIFO::peek() const
+PowerManager::PowerEnum LIFO::peek() const
 {
     if (isEmpty())
     {
-        return nullptr;
+        return PowerManager::PowerEnum::NONE;
     }
     return top->getPower();
 }

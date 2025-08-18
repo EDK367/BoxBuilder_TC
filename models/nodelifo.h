@@ -5,17 +5,17 @@
 class NodeLIFO
 {
 private:
-    PowerManager::PowerEnum *power;
+    PowerManager::PowerEnum power;
     NodeLIFO *next;
 
 public:
     NodeLIFO();
     ~NodeLIFO();
 
-    PowerManager::PowerEnum *getPower() const;
+    PowerManager::PowerEnum getPower() const;
     NodeLIFO *getNext() const;
 
-    void setPower(PowerManager::PowerEnum *power);
+    void setPower(PowerManager::PowerEnum power);
     void setNext(NodeLIFO *next);
 
 };

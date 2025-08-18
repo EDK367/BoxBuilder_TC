@@ -1,9 +1,10 @@
 #include "nodelinked.h"
 
-NodeLinked::NodeLinked() {}
+NodeLinked::NodeLinked() : power(PowerManager::PowerEnum::NONE)
+{}
 
 
-void NodeLinked::setLinked(Node *startLinked, Node *endLinked, bool power)
+void NodeLinked::setLinked(Node *startLinked, Node *endLinked, PowerManager::PowerEnum power)
 {
     this->startLinked = startLinked;
     this->endLinked = endLinked;
@@ -15,11 +16,13 @@ Node *NodeLinked::getStartLinked() const
 {
     return startLinked;
 }
+
 Node *NodeLinked::getEndLinked() const
 {
     return endLinked;
 }
-bool NodeLinked::getPower() const
+
+PowerManager::PowerEnum NodeLinked::getPower() const
 {
     return power;
 }
@@ -28,11 +31,13 @@ void NodeLinked::setStartLinked(Node *startLinked)
 {
     this->startLinked = startLinked;
 }
+
 void NodeLinked::seEndLinked(Node *endLinked)
 {
     this->endLinked = endLinked;
 }
-bool NodeLinked::setPower(bool power)
+
+void NodeLinked::setPower(PowerManager::PowerEnum power)
 {
     this->power = power;
 }

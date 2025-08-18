@@ -54,12 +54,12 @@ void Players::addPoints(int point)
     this->points += point;
 }
 
-void Players::addPower(PowerManager::PowerEnum *power)
+void Players::addPower(PowerManager::PowerEnum power)
 {
     powerStack.push(power);
 }
 
-PowerManager::PowerEnum *Players::usePower()
+PowerManager::PowerEnum Players::usePower()
 {
     powerStack.pop();
 }

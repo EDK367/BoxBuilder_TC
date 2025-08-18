@@ -26,6 +26,8 @@ viewPlay::viewPlay(QWidget *parent)
     , rows(3)
     , columns(3)
     , board(nullptr)
+    , applyFirstPower()
+
 {
     ui->setupUi(this);
 
@@ -153,9 +155,9 @@ void viewPlay::chargeBoard()
                 {
                     random.setLimit(10);
                     unsigned int numberPower = random();
-                    PowerManager::PowerEnum *power = gameRules.getPower(numberPower);
-                    if (power != nullptr) {
-                        std::string powerStr = PowerManager::getPowerString(*power);
+                    PowerManager::PowerEnum power = gameRules.getPower(3); // aca se usa el poder akeatoriuo ahora esta en 0 para test
+                    if (power != PowerManager::PowerEnum::NONE) {
+                        std::string powerStr = PowerManager::getPowerString(power);
                         boxPoint->insertPower(powerStr);
                         board[i][j]->getInfo()->setPower(power);
                     }
@@ -170,6 +172,8 @@ void viewPlay::chargeBoard()
 // mostrar todos los jugadores en cola
 void viewPlay::displayAllPlayers()
 {
+    // eliminar el puntero del poder al recargar jugadores
+    this->applyFirstPower = PowerManager::PowerEnum::NONE;
     ui->tablePlayers->clearContents();
     ui->tablePlayers->setRowCount(0);
     NodeFIFO *currentFifo = gameRules.getFront();
@@ -180,7 +184,7 @@ void viewPlay::displayAllPlayers()
         Players *player = currentFifo->getPlayer();
         if (player)
         {
-            PowerManager::PowerEnum *power = player->getPowerStack().peek();
+            PowerManager::PowerEnum power = player->getPowerStack().peek();
             // agregar para fila
             ui->tablePlayers->insertRow(row);
             QString color = QString::fromStdString(player->getColor());
@@ -196,9 +200,9 @@ void viewPlay::displayAllPlayers()
 
             ui->tablePlayers->setItem(row, 2, new QTableWidgetItem(QString::number(player->getPoints())));
 
-            if (power)
+            if (power != PowerManager::PowerEnum::NONE)
             {
-                std::string powerName = PowerManager::getPowerString(*power);
+                std::string powerName = PowerManager::getPowerString(power);
                 ui->tablePlayers->setItem(row, 3, new QTableWidgetItem(QString::fromStdString(powerName)));
             }
             row++;
@@ -207,6 +211,8 @@ void viewPlay::displayAllPlayers()
     }
 }
 
+// enlaces de nodos
+// enlace horizontal
 void viewPlay::linkConnectorHorizontal(ClickGraphics *pointerConnector, int row, int column)
 {
     //qDebug() << "Nodo clickeado en horizontal - Fila:" << row << "Columna:" << column;
@@ -223,7 +229,7 @@ void viewPlay::linkConnectorHorizontal(ClickGraphics *pointerConnector, int row,
         NodeBoard* nodeE = board[row][column + 1];
         Node *nodeEnd = nodeE;
 
-        gameRules.addNodeLinked(nodeStart, nodeEnd, true);
+        gameRules.addNodeLinked(nodeStart, nodeEnd, applyFirstPower);
 
         nodeS->getInfo()->setIsConnectedRight(true);
         nodeE->getInfo()->setIsConnectedLeft(true);
@@ -236,9 +242,11 @@ void viewPlay::linkConnectorHorizontal(ClickGraphics *pointerConnector, int row,
     displayAllPlayers();
 }
 
+// enlace vertical
 void viewPlay::linkConnectorVertical(ClickGraphics *pointerConnector, int row, int column)
 {
     //qDebug() << "Nodo clickeado en vertical - Fila:" << row << "Columna:" << column;
+
     Players *player = gameRules.peekPlayer();
     if (player)
     {
@@ -252,7 +260,7 @@ void viewPlay::linkConnectorVertical(ClickGraphics *pointerConnector, int row, i
         NodeBoard* nodeF = board[row + 1][column];
         Node *nodeEnd = nodeF;
 
-        gameRules.addNodeLinked(nodeStart, nodeEnd, true);
+        gameRules.addNodeLinked(nodeStart, nodeEnd, this->applyFirstPower);
         nodeS->getInfo()->setIsConnectedDown(true);
         nodeF->getInfo()->setIsConnectedUp(true);
 
@@ -315,11 +323,11 @@ bool viewPlay::verifyBoxCompletion()
 
             // poderes y puntos
             Players *player = gameRules.peekPlayer();
-            if (nodeStart->getInfo()->getPower())
+            if (nodeStart->getInfo()->getPower() != PowerManager::PowerEnum::NONE)
             {
                 if (player)
                 {
-                    PowerManager::PowerEnum *power = nodeStart->getInfo()->getPower();
+                    PowerManager::PowerEnum power = nodeStart->getInfo()->getPower();
                     player->addPower(power);
                 }
             }
@@ -331,6 +339,19 @@ bool viewPlay::verifyBoxCompletion()
         }
     }
 
+    // aca se usa los poderes de bajo nivel
+    switch (this->applyFirstPower) {
+    // doble linea
+    case PowerManager::PowerEnum::DL:
+        if(deleteCount == 0)
+        {
+            return true;
+        }
+        break;
+    default:
+        break;
+    }
+
     for (int i = deleteCount - 1; i >= 0; i--)
     {
         if (nodeDelete[i] != -1)
@@ -338,7 +359,46 @@ bool viewPlay::verifyBoxCompletion()
     }
 
     return deleteCount > 0;
+}
 
+// poderes de alto nivel
+void viewPlay::usePower()
+{
+    switch (this->applyFirstPower) {
+    case PowerManager::PowerEnum::PS:
+        gameRules.dequeuePlayer();
+        break;
+    default:
+        break;
+    }
+}
+
+// boton de uso de poderes
+void viewPlay::on_usePowerB_clicked()
+{
+    Players *currentPlayer = gameRules.getFront()->getPlayer();
+
+    if (!currentPlayer)
+    {
+        return;
+    }
+    PowerManager::PowerEnum firstPower = currentPlayer->getPowerStack().pop();
+
+    if (firstPower == PowerManager::PowerEnum::NONE)
+    {
+        return;
+    }
+
+    this->applyFirstPower = firstPower;
+
+    switch (this->applyFirstPower) {
+    case PowerManager::PowerEnum::PS:
+        gameRules.dequeuePlayer();
+        displayAllPlayers();
+        break;
+    default:
+        break;
+    }
 }
 
 void viewPlay::on_pushButton_clicked()

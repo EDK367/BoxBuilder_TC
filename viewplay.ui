@@ -155,90 +155,6 @@ QScrollArea#scrollBoard QScrollBar::handle:horizontal:hover {
 }</string>
         </property>
         <layout class="QGridLayout" name="gridLayout_2">
-         <item row="3" column="0">
-          <widget class="QWidget" name="moreOption" native="true">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">QWidget#moreOption {
-    background-color: #12121f;
-    border: 2px solid #ffaa00;
-    border-radius: 6px;
-}</string>
-           </property>
-           <widget class="QPushButton" name="pushButton">
-            <property name="geometry">
-             <rect>
-              <x>0</x>
-              <y>40</y>
-              <width>300</width>
-              <height>72</height>
-             </rect>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QPushButton {
-    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, 
-                                      stop:0 #1a1a2e, stop:0.5 #16213e, stop:1 #0f3460);
-    color: #FFD700;
-    font-size: 16px;
-    font-weight: bold;
-    font-family: 'Segoe UI', sans-serif;
-    border-radius: 12px;
-    padding: 14px 28px;
-    border: 2px solid #FFD700;
-    min-width: 120px;
-    min-height: 40px;
-}
-
-QPushButton:hover {
-    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, 
-                                      stop:0 #2a2a4e, stop:0.5 #1e3a5f, stop:1 #134074);
-    color: #fffacd;
-    border: 2px solid #fffacd;
-}
-
-QPushButton:pressed {
-    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, 
-                                      stop:0 #FFD700, stop:1 #ffcc00);
-    color: #0f3460;
-    border: 2px solid #0f3460;
-    padding: 15px 27px 13px 29px;
-}
-
-QPushButton:disabled {
-    background-color: #2c3e50;
-    color: #7f8c8d;
-    border: 2px solid #7f8c8d;
-}
-</string>
-            </property>
-            <property name="text">
-             <string>TEST</string>
-            </property>
-           </widget>
-          </widget>
-         </item>
-         <item row="2" column="0">
-          <widget class="QWidget" name="powersW" native="true">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">QWidget#powersW {
-    background-color: #12121f;
-    border: 2px solid #ffaa00;
-    border-radius: 6px;
-}</string>
-           </property>
-          </widget>
-         </item>
          <item row="1" column="0">
           <widget class="QTableWidget" name="tablePlayers">
            <property name="styleSheet">
@@ -314,6 +230,147 @@ QScrollBar::handle:horizontal:hover {
 }
 </string>
            </property>
+          </widget>
+         </item>
+         <item row="3" column="0">
+          <widget class="QWidget" name="moreOption" native="true">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QWidget#moreOption {
+    background-color: #12121f;
+    border: 2px solid #ffaa00;
+    border-radius: 6px;
+}</string>
+           </property>
+           <layout class="QGridLayout" name="gridLayout_5">
+            <item row="0" column="0">
+             <widget class="QPushButton" name="pushButton">
+              <property name="styleSheet">
+               <string notr="true">QPushButton {
+    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, 
+                                      stop:0 #1a1a2e, stop:0.5 #16213e, stop:1 #0f3460);
+    color: #FFD700;
+    font-size: 16px;
+    font-weight: bold;
+    font-family: 'Segoe UI', sans-serif;
+    border-radius: 12px;
+    padding: 14px 28px;
+    border: 2px solid #FFD700;
+    min-width: 120px;
+    min-height: 40px;
+}
+
+QPushButton:hover {
+    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, 
+                                      stop:0 #2a2a4e, stop:0.5 #1e3a5f, stop:1 #134074);
+    color: #fffacd;
+    border: 2px solid #fffacd;
+}
+
+QPushButton:pressed {
+    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, 
+                                      stop:0 #FFD700, stop:1 #ffcc00);
+    color: #0f3460;
+    border: 2px solid #0f3460;
+    padding: 15px 27px 13px 29px;
+}
+
+QPushButton:disabled {
+    background-color: #2c3e50;
+    color: #7f8c8d;
+    border: 2px solid #7f8c8d;
+}
+</string>
+              </property>
+              <property name="text">
+               <string>TEST</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item row="2" column="0">
+          <widget class="QWidget" name="powersW" native="true">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QWidget#powersW {
+    background-color: #12121f;
+    border: 2px solid #ffaa00;
+    border-radius: 6px;
+}</string>
+           </property>
+           <layout class="QGridLayout" name="gridLayout_4">
+            <item row="0" column="0">
+             <layout class="QGridLayout" name="containerPowerW">
+              <item row="1" column="1">
+               <widget class="QPushButton" name="usePowerB">
+                <property name="styleSheet">
+                 <string notr="true">QPushButton {
+    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, 
+                                      stop:0 #1a1a2e, stop:0.5 #16213e, stop:1 #0f3460);
+    color: #FFD700;
+    font-size: 16px;
+    font-weight: bold;
+    font-family: 'Segoe UI', sans-serif;
+    border-radius: 12px;
+    padding: 14px 28px;
+    border: 2px solid #FFD700;
+    min-width: 120px;
+    min-height: 40px;
+}
+
+QPushButton:hover {
+    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, 
+                                      stop:0 #2a2a4e, stop:0.5 #1e3a5f, stop:1 #134074);
+    color: #fffacd;
+    border: 2px solid #fffacd;
+}
+
+QPushButton:pressed {
+    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, 
+                                      stop:0 #FFD700, stop:1 #ffcc00);
+    color: #0f3460;
+    border: 2px solid #0f3460;
+    padding: 15px 27px 13px 29px;
+}
+
+QPushButton:disabled {
+    background-color: #2c3e50;
+    color: #7f8c8d;
+    border: 2px solid #7f8c8d;
+}
+</string>
+                </property>
+                <property name="text">
+                 <string>Usar Poder</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QWidget" name="widget" native="true">
+                <property name="styleSheet">
+                 <string notr="true">QWidget#moreOption {
+    background-color: #12121f;
+    border: 2px solid #ffaa00;
+    border-radius: 6px;
+}</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
           </widget>
          </item>
         </layout>

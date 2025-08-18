@@ -1,11 +1,11 @@
 #include "nodelifo.h"
 
-NodeLIFO::NodeLIFO() : power(nullptr), next(nullptr)
+NodeLIFO::NodeLIFO() : power(PowerManager::PowerEnum::NONE), next(nullptr)
 {}
 
 NodeLIFO::~NodeLIFO() {}
 
-PowerManager::PowerEnum *NodeLIFO::getPower() const
+PowerManager::PowerEnum NodeLIFO::getPower() const
 {
     return power;
 }
@@ -15,7 +15,7 @@ NodeLIFO *NodeLIFO::getNext() const
     return next;
 }
 
-void NodeLIFO::setPower(PowerManager::PowerEnum *power)
+void NodeLIFO::setPower(PowerManager::PowerEnum power)
 {
     this->power = power;
 }

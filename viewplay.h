@@ -27,13 +27,14 @@ private:
     RandomNative random;
     Probability probability;
     NodeBoard ***board;
+    PowerManager::PowerEnum applyFirstPower;
     int rows;
     int columns;
     void chargeGameRules();
     void chargeBoard();
     void displayAllPlayers();
-
     bool verifyBoxCompletion();
+    void usePower();
 
 protected:
     void closeEvent(QCloseEvent *event) override;
@@ -43,6 +44,7 @@ private slots:
     void on_pushButton_clicked();
     void linkConnectorHorizontal(ClickGraphics *pointerConnector, int row, int column);
     void linkConnectorVertical(ClickGraphics *pointerConnector, int row, int column);
+    void on_usePowerB_clicked();
 };
 
 #endif // VIEWPLAY_H

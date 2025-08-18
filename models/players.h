@@ -31,8 +31,8 @@ public:
 
     // metodos
     void addPoints(int point);
-    void addPower(PowerManager::PowerEnum* power);
-    PowerManager::PowerEnum* usePower();
+    void addPower(PowerManager::PowerEnum power);
+    PowerManager::PowerEnum usePower();
     bool isPowerStack() const;
 };
 

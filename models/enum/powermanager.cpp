@@ -9,15 +9,25 @@ std::string PowerManager::getPowerString(PowerEnum power)
     "ES",   "UF",   "AC",   "NT",   "EX"
                                         };
 
+    if(power == PowerEnum::NONE)
+    {
+        return "NONE";
+    }
 
-    return powers[static_cast<int>(power)];
+    int index = static_cast<int>(power);
+    if (index >= 0 && index < 10)
+    {
+        return powers[index];
+    }
+
+    return "NONE";
 }
 
-PowerManager::PowerEnum *PowerManager::getPowerEnum(int numberPower)
+PowerManager::PowerEnum PowerManager::getPowerEnum(int numberPower)
 {
     if (numberPower < 0 || (numberPower > 9))
     {
-        return 0;
+        return PowerEnum::NONE;
     }
-    return new PowerEnum(static_cast<PowerEnum>(numberPower));
+    return static_cast<PowerEnum>(numberPower);
 }

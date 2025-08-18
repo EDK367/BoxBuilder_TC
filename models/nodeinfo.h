@@ -11,7 +11,7 @@ private:
     bool isConnectedLeft;
     bool isConnectedRight;
     // si posee un poder
-    PowerManager::PowerEnum *power;
+    PowerManager::PowerEnum power;
     BoxGraphics *square;
 
 
@@ -26,7 +26,7 @@ public:
     bool getIsConnectedLeft() const;
     bool getIsConnectedRight() const;
 
-    PowerManager::PowerEnum *getPower() const;
+    PowerManager::PowerEnum getPower() const;
     BoxGraphics *getSquare() const;
 
     void setIsConnectedUp(bool value);
@@ -34,7 +34,7 @@ public:
     void setIsConnectedLeft(bool value);
     void setIsConnectedRight(bool value);
 
-    void setPower(PowerManager::PowerEnum *power);
+    void setPower(PowerManager::PowerEnum power);
     void setSquare(BoxGraphics *square);
 };
 
