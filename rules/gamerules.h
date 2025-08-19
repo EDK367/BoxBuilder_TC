@@ -18,9 +18,8 @@ private:
     // variables
     int sizePlayers = 0;
     Players *arrayPlayers = nullptr;
-
+    // manejador de los podres
     PowerManager powersList;
-
     int rows = 0;
     int columns = 0;
 

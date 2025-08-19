@@ -15,6 +15,7 @@
 #include "methods/randomnative.h"
 #include "methods/probability.h"
 #include "methods/arraymess.h"
+#include "powers/fourthclass.h"
 #include "mainwindow.h"
 
 viewPlay::viewPlay(QWidget *parent)
@@ -27,9 +28,15 @@ viewPlay::viewPlay(QWidget *parent)
     , columns(3)
     , board(nullptr)
     , applyFirstPower()
+    , classD()
+    , classC()
+    , classB()
+    , classA()
 
 {
     ui->setupUi(this);
+
+    // llamada de clases auxiliares a poderes
 
     // creacion de la tabla
     ui->tablePlayers->setColumnCount(4);
@@ -234,7 +241,8 @@ void viewPlay::linkConnectorHorizontal(ClickGraphics *pointerConnector, int row,
         nodeS->getInfo()->setIsConnectedRight(true);
         nodeE->getInfo()->setIsConnectedLeft(true);
         if (verifyBoxCompletion())
-        {    displayAllPlayers();
+        {
+            displayAllPlayers();
             return;
         }
     }
@@ -339,17 +347,10 @@ bool viewPlay::verifyBoxCompletion()
         }
     }
 
-    // aca se usa los poderes de bajo nivel
-    switch (this->applyFirstPower) {
-    // doble linea
-    case PowerManager::PowerEnum::DL:
-        if(deleteCount == 0)
-        {
-            return true;
-        }
-        break;
-    default:
-        break;
+    // llamada a poderes de cuarta clase "D"
+    if(deleteCount == 0 && classD.getFourthClass(this->applyFirstPower))
+    {
+        return true;
     }
 
     for (int i = deleteCount - 1; i >= 0; i--)
@@ -359,18 +360,6 @@ bool viewPlay::verifyBoxCompletion()
     }
 
     return deleteCount > 0;
-}
-
-// poderes de alto nivel
-void viewPlay::usePower()
-{
-    switch (this->applyFirstPower) {
-    case PowerManager::PowerEnum::PS:
-        gameRules.dequeuePlayer();
-        break;
-    default:
-        break;
-    }
 }
 
 // boton de uso de poderes
@@ -391,13 +380,9 @@ void viewPlay::on_usePowerB_clicked()
 
     this->applyFirstPower = firstPower;
 
-    switch (this->applyFirstPower) {
-    case PowerManager::PowerEnum::PS:
-        gameRules.dequeuePlayer();
+    if (classC.getThirdClass(gameRules, this->applyFirstPower))
+    {
         displayAllPlayers();
-        break;
-    default:
-        break;
     }
 }
 

@@ -43,6 +43,10 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         models/nodeinfo.h models/nodeinfo.cpp
         methods/lifo.h methods/lifo.cpp
         models/nodelifo.h models/nodelifo.cpp
+        powers/firstclass.h powers/firstclass.cpp
+        powers/fourthclass.h powers/fourthclass.cpp
+        powers/thirdclass.h powers/thirdclass.cpp
+        powers/secondclass.h powers/secondclass.cpp
 
 
 

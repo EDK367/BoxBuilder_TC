@@ -8,6 +8,10 @@
 #include "methods/randomnative.h"
 #include "methods/probability.h"
 #include "utils/clickgraphics.h"
+#include "powers/fourthclass.h"
+#include "powers/thirdclass.h"
+#include "powers/secondclass.h"
+#include "powers/firstclass.h"
 
 namespace Ui {
 class viewPlay;
@@ -28,6 +32,10 @@ private:
     Probability probability;
     NodeBoard ***board;
     PowerManager::PowerEnum applyFirstPower;
+    FourthClass classD;
+    ThirdClass classC;
+    SecondClass classB;
+    FirstClass classA;
     int rows;
     int columns;
     void chargeGameRules();
