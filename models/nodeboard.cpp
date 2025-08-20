@@ -1,5 +1,7 @@
 #include "nodeboard.h"
 #include <stdexcept>
+#include "nodeinfo.h"
+#include "nodelinked.h"
 
 NodeBoard::NodeBoard(int x, int y) : Node(x, y),
     up(nullptr),  down(nullptr),
@@ -10,7 +12,11 @@ NodeBoard::NodeBoard(int x, int y) : Node(x, y),
 
 NodeBoard::~NodeBoard()
 {
-    delete info;
+    if (info)
+    {
+        delete info;
+        info = nullptr;
+    }
 }
 
 NodeBoard ***NodeBoard::createBoard(int rows, int columns)

@@ -16,6 +16,7 @@
 #include "methods/probability.h"
 #include "methods/arraymess.h"
 #include "powers/fourthclass.h"
+#include "models/nodeinfo.h"
 #include "mainwindow.h"
 
 viewPlay::viewPlay(QWidget *parent)
@@ -162,7 +163,7 @@ void viewPlay::chargeBoard()
                 {
                     random.setLimit(10);
                     unsigned int numberPower = random();
-                    PowerManager::PowerEnum power = gameRules.getPower(3); // aca se usa el poder akeatoriuo ahora esta en 0 para test
+                    PowerManager::PowerEnum power = gameRules.getPower(1); // aca se usa el poder akeatoriuo ahora esta en 0 para test
                     if (power != PowerManager::PowerEnum::NONE) {
                         std::string powerStr = PowerManager::getPowerString(power);
                         boxPoint->insertPower(powerStr);
@@ -236,10 +237,15 @@ void viewPlay::linkConnectorHorizontal(ClickGraphics *pointerConnector, int row,
         NodeBoard* nodeE = board[row][column + 1];
         Node *nodeEnd = nodeE;
 
-        gameRules.addNodeLinked(nodeStart, nodeEnd, applyFirstPower);
+        NodeLinked *nodeLink = gameRules.addNodeLinked(nodeStart, nodeEnd, this->applyFirstPower, player);
+        //gameRules.addNodeLinked(nodeStart, nodeEnd, applyFirstPower);
 
         nodeS->getInfo()->setIsConnectedRight(true);
+        nodeS->getInfo()->setLinkRight(nodeLink);
+
         nodeE->getInfo()->setIsConnectedLeft(true);
+        nodeE->getInfo()->setLinkLeft(nodeLink);
+
         if (verifyBoxCompletion())
         {
             displayAllPlayers();
@@ -265,12 +271,16 @@ void viewPlay::linkConnectorVertical(ClickGraphics *pointerConnector, int row, i
         // creacion de enlaces
         NodeBoard *nodeS = board[row][column];
         Node *nodeStart = nodeS;
-        NodeBoard* nodeF = board[row + 1][column];
-        Node *nodeEnd = nodeF;
+        NodeBoard* nodeE = board[row + 1][column];
+        Node *nodeEnd = nodeE;
 
-        gameRules.addNodeLinked(nodeStart, nodeEnd, this->applyFirstPower);
+        NodeLinked *nodeLink = gameRules.addNodeLinked(nodeStart, nodeEnd, this->applyFirstPower, player);
+
         nodeS->getInfo()->setIsConnectedDown(true);
-        nodeF->getInfo()->setIsConnectedUp(true);
+        nodeS->getInfo()->setLinkDown(nodeLink);
+
+        nodeE->getInfo()->setIsConnectedUp(true);
+        nodeE->getInfo()->setLinkUp(nodeLink);
 
         if (verifyBoxCompletion())
         {
@@ -326,10 +336,8 @@ bool viewPlay::verifyBoxCompletion()
             nodeDelete[deleteCount++] = i;
             lastFoundNode = startLinked;
 
-            BoxGraphics *boxWin = nodeStart->getInfo()->getSquare();
-            boxWin->insertPlayer(gameRules.peekPlayer()->getLetter(), gameRules.peekPlayer()->getColor());
-
             // poderes y puntos
+            BoxGraphics *boxWin = nodeStart->getInfo()->getSquare();
             Players *player = gameRules.peekPlayer();
             if (nodeStart->getInfo()->getPower() != PowerManager::PowerEnum::NONE)
             {
@@ -339,7 +347,12 @@ bool viewPlay::verifyBoxCompletion()
                     player->addPower(power);
                 }
             }
-            player->addPoints(1);
+
+            if(!classB.getPowerTS(gameRules, nodeStart, player))
+            {
+                boxWin->insertPlayer(player->getLetter(), player->getColor());
+                player->addPoints(1);
+            }
             if (deleteCount >= 4)
             {
                 break;

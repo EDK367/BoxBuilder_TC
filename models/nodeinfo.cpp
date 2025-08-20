@@ -2,7 +2,8 @@
 
 NodeInfo::NodeInfo() : isConnectedUp(false), isConnectedDown(false),
     isConnectedLeft(false), isConnectedRight(false), square(nullptr),
-    power(PowerManager::PowerEnum::NONE)
+    power(PowerManager::PowerEnum::NONE),
+    linkUp(nullptr), linkDown(nullptr), linkLeft(nullptr), linkRight(nullptr)
 {}
 
 // destructor
@@ -41,6 +42,26 @@ BoxGraphics *NodeInfo::getSquare() const
     return square;
 }
 
+NodeLinked *NodeInfo::getLinkUp() const
+{
+    return linkUp;
+}
+
+NodeLinked *NodeInfo::getLinkDown() const
+{
+    return linkDown;
+}
+
+NodeLinked *NodeInfo::getLinkLeft() const
+{
+    return linkLeft;
+}
+
+NodeLinked *NodeInfo::getLinkRight() const
+{
+    return linkRight;
+}
+
 void NodeInfo::setIsConnectedUp(bool value)
 {
     this->isConnectedUp = value;
@@ -69,4 +90,24 @@ void NodeInfo::setPower(PowerManager::PowerEnum power)
 void NodeInfo::setSquare(BoxGraphics *square)
 {
     this->square = square;
+}
+
+void NodeInfo::setLinkUp(NodeLinked *linkUp)
+{
+    this->linkUp = linkUp;
+}
+
+void NodeInfo::setLinkDown(NodeLinked *linkDown)
+{
+    this->linkDown = linkDown;
+}
+
+void NodeInfo::setLinkLeft(NodeLinked *linkLeft)
+{
+    this->linkLeft = linkLeft;
+}
+
+void NodeInfo::setLinkRight(NodeLinked *linkRight)
+{
+    this->linkRight = linkRight;
 }

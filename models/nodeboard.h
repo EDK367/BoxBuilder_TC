@@ -1,7 +1,10 @@
 #ifndef NODEBOARD_H
 #define NODEBOARD_H
 #include "node.h"
-#include "nodeinfo.h"
+
+
+class NodeInfo;
+class NodeLinked;
 
 class NodeBoard : public Node
 {
@@ -11,6 +14,7 @@ private:
     NodeBoard *left;
     NodeBoard *right;
     NodeInfo *info;
+
 
 public:
     // constructor

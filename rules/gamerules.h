@@ -46,7 +46,7 @@ public:
     int getTotalPlayers();
 
     // nodos enlazados
-    void addNodeLinked(Node* start, Node* end, PowerManager::PowerEnum power);
+    NodeLinked *addNodeLinked(Node* start, Node* end, PowerManager::PowerEnum power, Players *player);
     void deleteNodeLinked(int index);
     void sortByStart();
 

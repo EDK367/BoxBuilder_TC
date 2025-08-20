@@ -47,11 +47,12 @@ void GameRules::deleteInstance()
 }
 
 // uso de arreglo de enlace
-void GameRules::addNodeLinked(Node *start, Node *end, PowerManager::PowerEnum power)
+NodeLinked *GameRules::addNodeLinked(Node *start, Node *end, PowerManager::PowerEnum power, Players *player)
 {
     NodeLinked *newLink = new NodeLinked();
-    newLink->setLinked(start, end, power);
+    newLink->setLinked(start, end, power, player);
     nodeVectors.push(newLink);
+    return newLink;
 }
 
 void GameRules::deleteNodeLinked(int index)

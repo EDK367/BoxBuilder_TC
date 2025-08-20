@@ -1,0 +1,89 @@
+[33mcommit f27c200dbadb7e829134b3af2f25832e625d1c0f[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mpowers[m[33m, [m[1;31morigin/powers[m[33m)[m
+Author: EDK367 <denilmonterroso22@gmail.com>
+Date:   Tue Aug 19 11:47:00 2025 -0600
+
+    Powers: creacion de la estructura para los poderes, clase B y C realizado
+
+[33mcommit db9257c7f2323a6acbf6d3ca31f65573b609a0bc[m[33m ([m[1;31morigin/victory[m[33m, [m[1;32mvictory[m[33m)[m
+Author: EDK367 <denilmonterroso22@gmail.com>
+Date:   Sun Aug 17 19:58:17 2025 -0600
+
+    Victory: se arreglo estructura y se esta realizando los poderes
+
+[33mcommit 0b6890516a9b35a266be2749d0b109250323eae5[m
+Author: EDK367 <denilmonterroso22@gmail.com>
+Date:   Sun Aug 17 11:54:39 2025 -0600
+
+    Victory: implementacion de lifo junto a ello se realizo el WUI para que se vea mejor
+
+[33mcommit f3b56da69fe6fcbf15e7d476bcd719faee0c56d8[m
+Author: EDK367 <denilmonterroso22@gmail.com>
+Date:   Sat Aug 16 22:38:42 2025 -0600
+
+    Victory: implemnetacion de pila de poderes para jugadores
+
+[33mcommit 3bbf713e6e0017b905b98f3acf5a35d772df6099[m
+Author: EDK367 <denilmonterroso22@gmail.com>
+Date:   Sat Aug 16 15:52:49 2025 -0600
+
+    Victory: implementacion de logica de si se completo un cuadrado
+
+[33mcommit e6cbe7ec2c84ac34071d37c79c5542a43efadd2b[m[33m ([m[1;31morigin/rules[m[33m, [m[1;32mrules[m[33m)[m
+Author: EDK367 <denilmonterroso22@gmail.com>
+Date:   Sat Aug 16 12:43:05 2025 -0600
+
+    Rules: se definio las reglas y se esta definiendo de ganador de turno
+
+[33mcommit 7b47442ffef88031e9d492d27fe345bf341ed68a[m
+Author: EDK367 <denilmonterroso22@gmail.com>
+Date:   Fri Aug 15 13:29:52 2025 -0600
+
+    Rules: se agrego los poderes en el tablero de forma aleatoria
+
+[33mcommit 339d78f0cd528796ec38264985740b99e33657ff[m
+Author: EDK367 <denilmonterroso22@gmail.com>
+Date:   Thu Aug 14 15:32:21 2025 -0600
+
+    Rules: se realizo los enlaces de nodo, de manera nativa y dinamica
+
+[33mcommit e5b131789d5a135dd6270a93f13ceef99e9aaff5[m
+Author: EDK367 <denilmonterroso22@gmail.com>
+Date:   Wed Aug 13 13:54:08 2025 -0600
+
+    Rules: implementacion de turnos para coloreo
+
+[33mcommit ff90924ef4514a58e0b6812411ada7619856055d[m
+Author: EDK367 <denilmonterroso22@gmail.com>
+Date:   Wed Aug 13 13:16:40 2025 -0600
+
+    Rules: Implementacion de la cola para turnos y metodos necesarios para este
+
+[33mcommit 0eb8da7c389732ac8fd50b86b4d024324e133e92[m
+Author: EDK367 <denilmonterroso22@gmail.com>
+Date:   Mon Aug 11 12:32:21 2025 -0600
+
+    Se realizo el dibujo del tablero, construccion de la logica de juego
+
+[33mcommit 63e0c020a1e6a8cbd9dc3f119106f471f525e0f0[m
+Author: EDK367 <denilmonterroso22@gmail.com>
+Date:   Sat Aug 9 22:07:13 2025 -0600
+
+    Creacion de la logica para el tablero y el nodo padre
+
+[33mcommit cf015196a893ea8a67518751bc75212833808452[m
+Author: EDK367 <denilmonterroso22@gmail.com>
+Date:   Sat Aug 9 20:13:12 2025 -0600
+
+    Se agrego la estructura base para las reglas de juego
+
+[33mcommit bd1d12a719e028ef4fc100b6e57aa757a6181971[m[33m ([m[1;31morigin/main[m[33m, [m[1;32mmain[m[33m)[m
+Author: EDK367 <denilmonterroso22@gmail.com>
+Date:   Fri Aug 8 17:29:44 2025 -0600
+
+    Validaciones de jugadores y atributos
+
+[33mcommit 751f75d953f2b3ca008f929cea68ac9f37d75785[m
+Author: EDK367 <denilmonterroso22@gmail.com>
+Date:   Thu Aug 7 17:26:32 2025 -0600
+
+    Diseño principal del juego junto con pequeñas validaciones
