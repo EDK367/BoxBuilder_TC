@@ -12,9 +12,16 @@
 // segunda clase de poderes, classe B
 class SecondClass
 {
+private:
+    PowerManager::PowerEnum newPower = PowerManager::PowerEnum::NONE;
+
 public:
     SecondClass();
     bool getPowerTS(GameRules &gameRules, NodeBoard *board, Players *playerCurrent);
+    bool getPowerUF(GameRules &gameRules, NodeBoard *board, Players *playerCurrent);
+    bool getPowerAC(GameRules &gameRules, NodeBoard *board, Players *playerCurrent);
+
+    void resetTurns(GameRules &gameRules, Players *playerLink);
 };
 
 #endif // SECONDCLASS_H

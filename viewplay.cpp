@@ -163,7 +163,7 @@ void viewPlay::chargeBoard()
                 {
                     random.setLimit(10);
                     unsigned int numberPower = random();
-                    PowerManager::PowerEnum power = gameRules.getPower(1); // aca se usa el poder akeatoriuo ahora esta en 0 para test
+                    PowerManager::PowerEnum power = gameRules.getPower(numberPower); // aca se usa el poder akeatoriuo ahora esta en 0 para test
                     if (power != PowerManager::PowerEnum::NONE) {
                         std::string powerStr = PowerManager::getPowerString(power);
                         boxPoint->insertPower(powerStr);
@@ -350,8 +350,11 @@ bool viewPlay::verifyBoxCompletion()
 
             if(!classB.getPowerTS(gameRules, nodeStart, player))
             {
-                boxWin->insertPlayer(player->getLetter(), player->getColor());
-                player->addPoints(1);
+                if (!classB.getPowerUF(gameRules, nodeStart, player) && !classB.getPowerAC(gameRules, nodeStart, player))
+                {
+                    boxWin->insertPlayer(player->getLetter(), player->getColor());
+                    player->addPoints(1);
+                }
             }
             if (deleteCount >= 4)
             {

@@ -5,11 +5,11 @@ Probability::Probability() {}
 
 bool Probability::powerChance()
 {
-    random.setLimit(3);
+    random.setLimit(4);
 
     unsigned int result = random();
 
-    if (result == 1)
+    if (result == 1 || result == 2)
     {
         return true;
     }
