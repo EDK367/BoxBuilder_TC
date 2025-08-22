@@ -10,7 +10,9 @@
 #include "utils/clickgraphics.h"
 #include "powers/fourthclass.h"
 #include "powers/thirdclass.h"
+#include "methods/controller/controllerVector.h"
 #include "powers/secondclass.h"
+#include "models/controller/controllerBL.h"
 #include "powers/firstclass.h"
 
 namespace Ui {
@@ -38,11 +40,11 @@ private:
     FirstClass classA;
     int rows;
     int columns;
+    bool isBlockade;
     void chargeGameRules();
     void chargeBoard();
     void displayAllPlayers();
     bool verifyBoxCompletion();
-    void usePower();
 
 protected:
     void closeEvent(QCloseEvent *event) override;

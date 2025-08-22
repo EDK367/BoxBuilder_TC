@@ -17,6 +17,7 @@
 #include "methods/arraymess.h"
 #include "powers/fourthclass.h"
 #include "models/nodeinfo.h"
+#include "methods/controller/controllerVector.h"
 #include "mainwindow.h"
 
 viewPlay::viewPlay(QWidget *parent)
@@ -27,13 +28,13 @@ viewPlay::viewPlay(QWidget *parent)
     , gameRules(GameRules::getInstance())
     , rows(3)
     , columns(3)
+    , isBlockade(false)
     , board(nullptr)
     , applyFirstPower()
     , classD()
     , classC()
     , classB()
     , classA()
-
 {
     ui->setupUi(this);
 
@@ -163,7 +164,7 @@ void viewPlay::chargeBoard()
                 {
                     random.setLimit(10);
                     unsigned int numberPower = random();
-                    PowerManager::PowerEnum power = gameRules.getPower(numberPower); // aca se usa el poder akeatoriuo ahora esta en 0 para test
+                    PowerManager::PowerEnum power = gameRules.getPower(2); // aca se usa el poder akeatoriuo ahora esta en 0 para test
                     if (power != PowerManager::PowerEnum::NONE) {
                         std::string powerStr = PowerManager::getPowerString(power);
                         boxPoint->insertPower(powerStr);
@@ -226,7 +227,7 @@ void viewPlay::linkConnectorHorizontal(ClickGraphics *pointerConnector, int row,
     //qDebug() << "Nodo clickeado en horizontal - Fila:" << row << "Columna:" << column;
     Players *player = gameRules.peekPlayer();
     if (player)
-    {
+    {   
         std::string color = player->getColor();
         pointerConnector->setColor(color);
         pointerConnector->updateColor();
@@ -238,7 +239,14 @@ void viewPlay::linkConnectorHorizontal(ClickGraphics *pointerConnector, int row,
         Node *nodeEnd = nodeE;
 
         NodeLinked *nodeLink = gameRules.addNodeLinked(nodeStart, nodeEnd, this->applyFirstPower, player);
-        //gameRules.addNodeLinked(nodeStart, nodeEnd, applyFirstPower);
+        if (this->applyFirstPower == PowerManager::PowerEnum::BL)
+        {
+            ControllerBL *controller = new ControllerBL;;
+            controller->setNodeLinkedController(nodeLink);
+            controller->setCount(gameRules.getTotalPlayers());
+
+            gameRules.pushVector(controller);
+        }
 
         nodeS->getInfo()->setIsConnectedRight(true);
         nodeS->getInfo()->setLinkRight(nodeLink);
@@ -248,6 +256,21 @@ void viewPlay::linkConnectorHorizontal(ClickGraphics *pointerConnector, int row,
 
         if (verifyBoxCompletion())
         {
+            if (this->isBlockade)
+            {
+                nodeS->getInfo()->setIsConnectedRight(false);
+                nodeS->getInfo()->setLinkRight(nullptr);
+
+                nodeE->getInfo()->setIsConnectedLeft(false);
+                nodeE->getInfo()->setLinkLeft(nullptr);
+
+                gameRules.deleteNodeLinked(gameRules.getSizeNodeLinked() - 1);
+
+                pointerConnector->resetClick();
+                this->isBlockade = false;
+                displayAllPlayers();
+                return;
+            }
             displayAllPlayers();
             return;
         }
@@ -260,7 +283,6 @@ void viewPlay::linkConnectorHorizontal(ClickGraphics *pointerConnector, int row,
 void viewPlay::linkConnectorVertical(ClickGraphics *pointerConnector, int row, int column)
 {
     //qDebug() << "Nodo clickeado en vertical - Fila:" << row << "Columna:" << column;
-
     Players *player = gameRules.peekPlayer();
     if (player)
     {
@@ -275,6 +297,14 @@ void viewPlay::linkConnectorVertical(ClickGraphics *pointerConnector, int row, i
         Node *nodeEnd = nodeE;
 
         NodeLinked *nodeLink = gameRules.addNodeLinked(nodeStart, nodeEnd, this->applyFirstPower, player);
+        if (this->applyFirstPower == PowerManager::PowerEnum::BL)
+        {
+            ControllerBL *controller = new ControllerBL;;
+            controller->setNodeLinkedController(nodeLink);
+            controller->setCount(gameRules.getTotalPlayers());
+
+            gameRules.pushVector(controller);
+        }
 
         nodeS->getInfo()->setIsConnectedDown(true);
         nodeS->getInfo()->setLinkDown(nodeLink);
@@ -284,6 +314,20 @@ void viewPlay::linkConnectorVertical(ClickGraphics *pointerConnector, int row, i
 
         if (verifyBoxCompletion())
         {
+            if (this->isBlockade)
+            {
+                nodeS->getInfo()->setIsConnectedDown(false);
+                nodeS->getInfo()->setLinkDown(nullptr);
+
+                nodeE->getInfo()->setIsConnectedUp(false);
+                nodeE->getInfo()->setLinkUp(nullptr);
+
+                gameRules.deleteNodeLinked(gameRules.getSizeNodeLinked() - 1);
+                pointerConnector->resetClick();
+                this->isBlockade = false;
+                displayAllPlayers();
+                return;
+            }
             displayAllPlayers();
             return;
         }
@@ -292,9 +336,11 @@ void viewPlay::linkConnectorVertical(ClickGraphics *pointerConnector, int row, i
     displayAllPlayers();
 }
 
+
 // verificacion si se obtuvo un win en un enlace
 bool viewPlay::verifyBoxCompletion()
 {
+
     gameRules.sortByStart();
     int nodeDelete[4] = {-1, -1, -1, -1};
     int deleteCount = 0;
@@ -339,30 +385,48 @@ bool viewPlay::verifyBoxCompletion()
             // poderes y puntos
             BoxGraphics *boxWin = nodeStart->getInfo()->getSquare();
             Players *player = gameRules.peekPlayer();
-            if (nodeStart->getInfo()->getPower() != PowerManager::PowerEnum::NONE)
-            {
-                if (player)
-                {
-                    PowerManager::PowerEnum power = nodeStart->getInfo()->getPower();
-                    player->addPower(power);
-                }
-            }
 
-            if(!classB.getPowerTS(gameRules, nodeStart, player))
+            // verificacion de bloqueo
+            if (classA.getPowerBL(gameRules, nodeStart, player))
             {
-                if (!classB.getPowerUF(gameRules, nodeStart, player) && !classB.getPowerAC(gameRules, nodeStart, player))
-                {
-                    boxWin->insertPlayer(player->getLetter(), player->getColor());
-                    player->addPoints(1);
-                }
-            }
-            if (deleteCount >= 4)
-            {
+                this->isBlockade = true;
                 break;
+            }
+            if (!this->isBlockade) {
+                if (nodeStart->getInfo()->getPower() != PowerManager::PowerEnum::NONE)
+                {
+                    if (player)
+                    {
+                        PowerManager::PowerEnum power = nodeStart->getInfo()->getPower();
+                        player->addPower(power);
+                    }
+                }
+
+                if(!classB.getPowerTS(gameRules, nodeStart, player))
+                {
+                    if (!classB.getPowerUF(gameRules, nodeStart, player) && !classB.getPowerAC(gameRules, nodeStart, player))
+                    {
+                        boxWin->insertPlayer(player->getLetter(), player->getColor());
+                        player->addPoints(1);
+                    }
+                }
+                if (deleteCount >= 4)
+                {
+                    break;
+                }
             }
         }
     }
 
+    if (this->isBlockade)
+    {
+        QMessageBox::information(
+            this,
+            "Turno Bloqueado",
+            "Oh no, intentaste completar en un bloqueo"
+            );
+        return true;
+    }
     // llamada a poderes de cuarta clase "D"
     if(deleteCount == 0 && classD.getFourthClass(this->applyFirstPower))
     {
@@ -375,6 +439,7 @@ bool viewPlay::verifyBoxCompletion()
             gameRules.deleteNodeLinked(nodeDelete[i]);
     }
 
+    classA.resetPowerBL(gameRules);
     return deleteCount > 0;
 }
 
@@ -445,4 +510,3 @@ void viewPlay::on_pushButton_clicked()
     //NodeBoard *node = board[start->getX()][end->getY()];
 
 }
-

@@ -277,7 +277,7 @@ att: EDK367
 */
 void MainWindow::on_pushButton_clicked()
 {
-
+    // Jugador A
     {
         QString letter = "A";
         QColor color = Qt::white;
@@ -314,9 +314,84 @@ void MainWindow::on_pushButton_clicked()
         });
     }
 
+    // Jugador B
     {
         QString letter = "B";
         QColor color = Qt::black;
+        QString colorHex = color.name();
+
+        int row = ui->tableWidget->rowCount();
+        ui->tableWidget->insertRow(row);
+
+        ui->tableWidget->setItem(row, 0, new QTableWidgetItem(letter));
+
+        QTableWidgetItem *colorItem = new QTableWidgetItem(colorHex);
+        colorItem->setBackground(QBrush(color));
+        ui->tableWidget->setItem(row, 1, colorItem);
+
+        QPushButton *deleteBtn = new QPushButton("Eliminar");
+        ui->tableWidget->setCellWidget(row, 2, deleteBtn);
+
+        connect(deleteBtn, &QPushButton::clicked, this, [this]() {
+            QPushButton* btn = qobject_cast<QPushButton*>(sender());
+            if (!btn) return;
+
+            int index = -1;
+            for (int i = 0; i < ui->tableWidget->rowCount(); ++i) {
+                if (ui->tableWidget->cellWidget(i, 2) == btn) {
+                    index = i;
+                    break;
+                }
+            }
+
+            if (index != -1) {
+                ui->tableWidget->removeRow(index);
+                updateBoardRequirements();
+            }
+        });
+    }
+
+    // Jugador C
+    {
+        QString letter = "C";
+        QColor color = Qt::red;  // Color rojo
+        QString colorHex = color.name();
+
+        int row = ui->tableWidget->rowCount();
+        ui->tableWidget->insertRow(row);
+
+        ui->tableWidget->setItem(row, 0, new QTableWidgetItem(letter));
+
+        QTableWidgetItem *colorItem = new QTableWidgetItem(colorHex);
+        colorItem->setBackground(QBrush(color));
+        ui->tableWidget->setItem(row, 1, colorItem);
+
+        QPushButton *deleteBtn = new QPushButton("Eliminar");
+        ui->tableWidget->setCellWidget(row, 2, deleteBtn);
+
+        connect(deleteBtn, &QPushButton::clicked, this, [this]() {
+            QPushButton* btn = qobject_cast<QPushButton*>(sender());
+            if (!btn) return;
+
+            int index = -1;
+            for (int i = 0; i < ui->tableWidget->rowCount(); ++i) {
+                if (ui->tableWidget->cellWidget(i, 2) == btn) {
+                    index = i;
+                    break;
+                }
+            }
+
+            if (index != -1) {
+                ui->tableWidget->removeRow(index);
+                updateBoardRequirements();
+            }
+        });
+    }
+
+    // Jugador D
+    {
+        QString letter = "D";
+        QColor color = Qt::blue;  // Color azul
         QString colorHex = color.name();
 
         int row = ui->tableWidget->rowCount();

@@ -14,6 +14,7 @@ public:
     ClickGraphics(int row, int column, qreal x, qreal y, qreal w, qreal h, QGraphicsItem *parent = nullptr);
     void setColor(std::string color);
     void updateColor();
+    void resetClick();
 
 signals:
     void clickNode(ClickGraphics *pointer, int row, int column);

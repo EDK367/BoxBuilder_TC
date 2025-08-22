@@ -6,6 +6,8 @@
 #include "../methods/nodevector.h"
 #include "../models/node.h"
 #include "../models/enum/powermanager.h"
+#include "../models/controller/controllerBL.h"
+#include "../methods/controller/controllerVector.h"
 
 class GameRules
 {
@@ -20,6 +22,8 @@ private:
     Players *arrayPlayers = nullptr;
     // manejador de los podres
     PowerManager powersList;
+    // control de los bloqueos que pueden existir
+    ControllerVector<ControllerBL> controllerVector;
     int rows = 0;
     int columns = 0;
 
@@ -44,6 +48,12 @@ public:
     // metodos extras
     Players* getPlayersArray() const;
     int getTotalPlayers();
+
+    // uso de los vectores de poder
+    void pushVector(ControllerBL *controllerBL);
+    void popVector(int index);
+    int getSizeVector() const;
+    ControllerBL *getVectorElement(int index) const;
 
     // nodos enlazados
     NodeLinked *addNodeLinked(Node* start, Node* end, PowerManager::PowerEnum power, Players *player);

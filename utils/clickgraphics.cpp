@@ -30,6 +30,20 @@ void ClickGraphics::setColor(std::string color)
     this->color = color;
 }
 
+void ClickGraphics::resetClick()
+{
+    if (clicked)
+    {
+        clicked = false;
+        setEnabled(true);
+        emit clickNode(this, row, column);
+        setAcceptHoverEvents(true);
+
+        setBrush(Qt::NoBrush);
+        setPen(QPen(Qt::gray, 1));
+    }
+}
+
 void ClickGraphics::updateColor()
 {
     if (clicked)

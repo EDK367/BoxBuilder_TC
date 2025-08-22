@@ -65,6 +65,27 @@ void GameRules::sortByStart()
     nodeVectors.sortByStart();
 }
 
+// uso del vector para el Bloqueo
+void GameRules::pushVector(ControllerBL *controllerBL)
+{
+    controllerVector.push(controllerBL);
+}
+
+void GameRules::popVector(int index)
+{
+    controllerVector.pop(index);
+}
+
+int GameRules::getSizeVector() const
+{
+    return controllerVector.getSize();
+}
+
+ControllerBL *GameRules::getVectorElement(int index) const
+{
+    return controllerVector.getElement(index);
+}
+
 // metodos del juego
 Players *GameRules::getPlayersArray() const
 {
