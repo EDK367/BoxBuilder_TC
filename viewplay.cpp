@@ -164,7 +164,7 @@ void viewPlay::chargeBoard()
                 {
                     random.setLimit(10);
                     unsigned int numberPower = random();
-                    PowerManager::PowerEnum power = gameRules.getPower(2); // aca se usa el poder akeatoriuo ahora esta en 0 para test
+                    PowerManager::PowerEnum power = gameRules.getPower(numberPower); // aca se usa el poder akeatoriuo ahora esta en 0 para test
                     if (power != PowerManager::PowerEnum::NONE) {
                         std::string powerStr = PowerManager::getPowerString(power);
                         boxPoint->insertPower(powerStr);
@@ -340,7 +340,6 @@ void viewPlay::linkConnectorVertical(ClickGraphics *pointerConnector, int row, i
 // verificacion si se obtuvo un win en un enlace
 bool viewPlay::verifyBoxCompletion()
 {
-
     gameRules.sortByStart();
     int nodeDelete[4] = {-1, -1, -1, -1};
     int deleteCount = 0;
@@ -372,7 +371,6 @@ bool viewPlay::verifyBoxCompletion()
         // creacion de nodos para los enlaces
         NodeBoard *nodeStart = board[startLinked->getX()][startLinked->getY()];
         NodeBoard *nodeFinal = nullptr;
-        // si no es mayor a su fila
         if (!(startLinked->getX() + 1 > this->rows - 1)) {
             nodeFinal = board[startLinked->getX() + 1][startLinked->getY() + 1];
         }
@@ -387,10 +385,13 @@ bool viewPlay::verifyBoxCompletion()
             Players *player = gameRules.peekPlayer();
 
             // verificacion de bloqueo
-            if (classA.getPowerBL(gameRules, nodeStart, player))
+            if (!classB.getPowerLS(this->applyFirstPower))
             {
-                this->isBlockade = true;
-                break;
+                if (classA.getPowerBL(gameRules, nodeStart, player))
+                {
+                    this->isBlockade = true;
+                    break;
+                }
             }
             if (!this->isBlockade) {
                 if (nodeStart->getInfo()->getPower() != PowerManager::PowerEnum::NONE)
@@ -420,13 +421,14 @@ bool viewPlay::verifyBoxCompletion()
 
     if (this->isBlockade)
     {
-        QMessageBox::information(
+        QMessageBox::warning(
             this,
             "Turno Bloqueado",
             "Oh no, intentaste completar en un bloqueo"
             );
         return true;
     }
+
     // llamada a poderes de cuarta clase "D"
     if(deleteCount == 0 && classD.getFourthClass(this->applyFirstPower))
     {
@@ -465,6 +467,7 @@ void viewPlay::on_usePowerB_clicked()
     {
         displayAllPlayers();
     }
+    displayAllPlayers();
 }
 
 void viewPlay::on_pushButton_clicked()

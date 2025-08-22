@@ -297,6 +297,16 @@ bool SecondClass::getPowerAC(GameRules &gameRules, NodeBoard *board, Players *pl
     return false;
 }
 
+// poder maldito Clase B Llave maestra
+bool SecondClass::getPowerLS(PowerManager::PowerEnum power)
+{
+    if (power == PowerManager::PowerEnum::LS)
+    {
+        return true;
+    }
+    return false;
+}
+
 // funcion para resetear turno
 void SecondClass::resetTurns(GameRules &gameRules, Players *playerLink)
 {

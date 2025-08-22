@@ -20,6 +20,7 @@ public:
     bool getPowerTS(GameRules &gameRules, NodeBoard *board, Players *playerCurrent);
     bool getPowerUF(GameRules &gameRules, NodeBoard *board, Players *playerCurrent);
     bool getPowerAC(GameRules &gameRules, NodeBoard *board, Players *playerCurrent);
+    bool getPowerLS(PowerManager::PowerEnum power);
 
     void resetTurns(GameRules &gameRules, Players *playerLink);
 };

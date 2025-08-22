@@ -85,6 +85,7 @@ bool FirstClass::getPowerBL(GameRules &gameRules, NodeBoard *board, Players *pla
     return false;
 }
 
+// reset de poder maldio Clase A bloqueo
 void FirstClass::resetPowerBL(GameRules &gameRules)
 {
     for (int i = 0; i < gameRules.getSizeVector(); i++)
@@ -93,13 +94,10 @@ void FirstClass::resetPowerBL(GameRules &gameRules)
         if (controller)
         {
 
-            if (controller->getCount() > 0)
+            if (controller->getCount() > 0 && (gameRules.getFront()->getPlayer() != controller->getNodeLinkedController()->getPlayerLink()))
             {
                 controller->setCount(-1);
             }
-            std::cout << "aca " << std::endl;
-            std::cout << controller->getCount() << std::endl;
-
             if (controller->getCount() < 1) {
                 controller->getNodeLinkedController()->setPower(PowerManager::PowerEnum::NONE);
                 gameRules.popVector(i);
