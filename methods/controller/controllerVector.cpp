@@ -1,9 +1,12 @@
 #include "controllervector.h"
 #include "../../models/controller/controllerBL.h"
+#include "../../models/controller/powercontroller.h"
 
+// clase generica para generar un vector dinamico
 template <typename T>
 ControllerVector<T>::ControllerVector() : array(nullptr), size(0) {}
 
+// destructor generico
 template <typename T>
 ControllerVector<T>::~ControllerVector() {
     for (int i = 0; i < size; ++i) {
@@ -12,6 +15,7 @@ ControllerVector<T>::~ControllerVector() {
     delete[] array;
 }
 
+// push para vector generico
 template <typename T>
 void ControllerVector<T>::push(T* newElement) {
     T** newArray = new T*[size + 1];
@@ -28,6 +32,8 @@ void ControllerVector<T>::push(T* newElement) {
     size++;
 }
 
+
+// por para vector generico
 template <typename T>
 void ControllerVector<T>::pop(int index) {
     if (index < 0 || index >= size)
@@ -57,16 +63,22 @@ void ControllerVector<T>::pop(int index) {
     size--;
 }
 
+// get element para vector generico
 template <typename T>
 T* ControllerVector<T>::getElement(int index) const {
-    if (index < 0 || index >= size) return nullptr;
+    if (index < 0 || index >= size)
+    {
+        return nullptr;
+    }
     return array[index];
 }
 
+// verificar tamaño del vector generico
 template <typename T>
 int ControllerVector<T>::getSize() const {
     return size;
 }
 
-// uso de clase
+// controll de los vectores
 template class ControllerVector<ControllerBL>;
+template class ControllerVector<PowerController>;

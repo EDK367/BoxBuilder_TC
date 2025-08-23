@@ -7,6 +7,7 @@
 #include "../models/node.h"
 #include "../models/enum/powermanager.h"
 #include "../models/controller/controllerBL.h"
+#include "../models/controller/powercontroller.h"
 #include "../methods/controller/controllerVector.h"
 
 class GameRules
@@ -24,6 +25,7 @@ private:
     PowerManager powersList;
     // control de los bloqueos que pueden existir
     ControllerVector<ControllerBL> controllerVector;
+    ControllerVector<PowerController> controllerPower;
     int rows = 0;
     int columns = 0;
 
@@ -49,11 +51,18 @@ public:
     Players* getPlayersArray() const;
     int getTotalPlayers();
 
-    // uso de los vectores de poder
+    // uso de los vectores genericos
+    // uso de vector para el poder maldito clase A bloqueo
     void pushVector(ControllerBL *controllerBL);
     void popVector(int index);
     int getSizeVector() const;
     ControllerBL *getVectorElement(int index) const;
+
+    // uso de vector para guardar los elementos del pintado
+    void pushViewPower(PowerController *powerController);
+    void popViewPower(int index);
+    int getSizeViewPower() const;
+    PowerController *getElementPower(int index) const;
 
     // nodos enlazados
     NodeLinked *addNodeLinked(Node* start, Node* end, PowerManager::PowerEnum power, Players *player);

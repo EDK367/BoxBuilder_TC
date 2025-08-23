@@ -57,3 +57,21 @@ void ClickGraphics::updateColor()
         setBrush(Qt::lightGray);
     }
 }
+
+void ClickGraphics::revealPower()
+{
+    if (!clicked) return;
+
+    setBrush(QColor(QString::fromStdString(color)));
+
+    QLinearGradient penGradient(0, 0, boundingRect().width(), 0);
+    penGradient.setColorAt(0.0, QColor("#FFD700"));
+    penGradient.setColorAt(0.5, QColor("#FFC300"));
+    penGradient.setColorAt(1.0, QColor("#FFA500"));
+
+    QPen pen(QBrush(penGradient), 2);
+    pen.setJoinStyle(Qt::RoundJoin);
+    pen.setCapStyle(Qt::RoundCap);
+
+    setPen(pen);
+}

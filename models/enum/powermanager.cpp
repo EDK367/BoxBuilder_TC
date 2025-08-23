@@ -5,9 +5,9 @@ PowerManager::PowerManager() {}
 std::string PowerManager::getPowerString(PowerEnum power)
 {
     static const std::string powers[] = {
-    "DL",   "TS",   "BL",   "PS",   "LS",
-    "ES",   "UF",   "AC",   "NT",   "EX"
-                                        };
+        "DL",   "TS",   "BL",   "PS",   "LS",
+        "ES",   "UF",   "AC",   "NT",   "EX"
+    };
 
     if(power == PowerEnum::NONE)
     {
@@ -21,6 +21,34 @@ std::string PowerManager::getPowerString(PowerEnum power)
     }
 
     return "NONE";
+}
+
+std::string PowerManager::getPowerColor(PowerEnum power)
+{
+    static const std::string colors[] = {
+        "#808080", // gris
+        "#FF0000", // rojo
+        "#0000FF", // azul
+        "#00FFFF", // cyan
+        "#00FF00", // verde
+        "#800080", // morado
+        "#98FB98", // verde
+        "#FF69B4", // rosa
+        "#8A2BE2", // azul violeta
+        "#FF4500", // rojo naranja
+    };
+    if(power == PowerEnum::NONE)
+    {
+        return "#000000";
+    }
+
+    int index = static_cast<int>(power);
+    if (index >= 0 && index < 10)
+    {
+        return colors[index];
+    }
+
+    return "#000000";
 }
 
 PowerManager::PowerEnum PowerManager::getPowerEnum(int numberPower)

@@ -55,6 +55,8 @@ private slots:
     void linkConnectorHorizontal(ClickGraphics *pointerConnector, int row, int column);
     void linkConnectorVertical(ClickGraphics *pointerConnector, int row, int column);
     void on_usePowerB_clicked();
+    void on_activiteButton_clicked();
+    void on_desactiveteButton_clicked();
 };
 
 #endif // VIEWPLAY_H

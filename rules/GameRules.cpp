@@ -86,6 +86,28 @@ ControllerBL *GameRules::getVectorElement(int index) const
     return controllerVector.getElement(index);
 }
 
+// uso del vector para pintar los podres
+void GameRules::pushViewPower(PowerController *powerController)
+{
+    controllerPower.push(powerController);
+}
+
+void GameRules::popViewPower(int index)
+{
+    controllerPower.pop(index);
+}
+
+int GameRules::getSizeViewPower() const
+{
+    return controllerPower.getSize();
+}
+
+PowerController *GameRules::getElementPower(int index) const
+{
+    return controllerPower.getElement(index);
+}
+
+
 // metodos del juego
 Players *GameRules::getPlayersArray() const
 {

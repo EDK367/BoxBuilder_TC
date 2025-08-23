@@ -112,7 +112,6 @@ bool SecondClass::getPowerUF(GameRules &gameRules, NodeBoard *board, Players *pl
     {
         return false;
     }
-
     NodeInfo *info = board->getInfo();
     NodeBoard *boardDown = board->getDown();
 
@@ -139,7 +138,7 @@ bool SecondClass::getPowerUF(GameRules &gameRules, NodeBoard *board, Players *pl
                             boxWin->insertPlayer(playerLink->getLetter(), playerLink->getColor());
                         }
                         linkUp->setPower(this->newPower);
-                        playerLink->addPoints(2);
+                        playerCurrent->addPoints(2);
                         return true;
                     }
                 }
@@ -156,7 +155,7 @@ bool SecondClass::getPowerUF(GameRules &gameRules, NodeBoard *board, Players *pl
                             boxWin->insertPlayer(playerLink->getLetter(), playerLink->getColor());
                         }
                         linkLeft->setPower(this->newPower);
-                        playerLink->addPoints(2);
+                        playerCurrent->addPoints(2);
                         return true;
                     }
                 }
@@ -175,7 +174,7 @@ bool SecondClass::getPowerUF(GameRules &gameRules, NodeBoard *board, Players *pl
                     boxWin->insertPlayer(playerLink->getLetter(), playerLink->getColor());
                 }
                 linkDown->setPower(this->newPower);
-                playerLink->addPoints(2);
+                playerCurrent->addPoints(2);
                 return true;
             }
         }

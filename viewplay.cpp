@@ -239,6 +239,15 @@ void viewPlay::linkConnectorHorizontal(ClickGraphics *pointerConnector, int row,
         Node *nodeEnd = nodeE;
 
         NodeLinked *nodeLink = gameRules.addNodeLinked(nodeStart, nodeEnd, this->applyFirstPower, player);
+
+        // enlazar con el vector de poder de dibujo
+        PowerController *powerController = PowerController::createController(
+            this->applyFirstPower,
+            player,
+            pointerConnector
+            );
+        gameRules.pushViewPower(powerController);
+
         if (this->applyFirstPower == PowerManager::PowerEnum::BL)
         {
             ControllerBL *controller = new ControllerBL;;
@@ -297,6 +306,15 @@ void viewPlay::linkConnectorVertical(ClickGraphics *pointerConnector, int row, i
         Node *nodeEnd = nodeE;
 
         NodeLinked *nodeLink = gameRules.addNodeLinked(nodeStart, nodeEnd, this->applyFirstPower, player);
+
+        // enlazar con el vector de poder de dibujo
+        PowerController *powerController = PowerController::createController(
+            this->applyFirstPower,
+            player,
+            pointerConnector
+            );
+        gameRules.pushViewPower(powerController);
+
         if (this->applyFirstPower == PowerManager::PowerEnum::BL)
         {
             ControllerBL *controller = new ControllerBL;;
@@ -353,6 +371,7 @@ bool viewPlay::verifyBoxCompletion()
             nodeDelete[deleteCount++] = i;
             continue;
         }
+
         Node *startLinked = links->getStartLinked();
         if (!startLinked) {
             nodeDelete[deleteCount++] = i;
@@ -467,7 +486,6 @@ void viewPlay::on_usePowerB_clicked()
     {
         displayAllPlayers();
     }
-    displayAllPlayers();
 }
 
 void viewPlay::on_pushButton_clicked()
@@ -488,7 +506,7 @@ void viewPlay::on_pushButton_clicked()
     random.setLimit(11);
     unsigned int result = random();
     //std::cout << result << std::endl;
-
+*/
 
     // vista de nodods enlazados
     for (int i = 0; i < gameRules.getSizeNodeLinked(); ++i) {
@@ -496,14 +514,15 @@ void viewPlay::on_pushButton_clicked()
         if (link) {
             Node* start = link->getStartLinked();
             Node* end = link->getEndLinked();
-            bool power = link->getPower();
 
             qDebug() << "Conexion";
             qDebug() << "  Desde: (" << start->getX() << "," << start->getY() << ")";
             qDebug() << "  Hasta: (" << end->getX() << "," << end->getY() << ")";
+            std::string powerName = PowerManager::getPowerString(link->getPower());
+            qDebug() << " PODER ( " <<  powerName;
             qDebug() << "  indice: " << i;
         }
-    }*/
+    }
 
     //NodeLinked *link = gameRules.getNodeLinked(0);
     //Node* start = link->getStartLinked();
@@ -513,3 +532,34 @@ void viewPlay::on_pushButton_clicked()
     //NodeBoard *node = board[start->getX()][end->getY()];
 
 }
+
+void viewPlay::on_activiteButton_clicked()
+{
+    for (int i = 0; i < gameRules.getSizeViewPower(); ++i) {
+
+        PowerController *controller = gameRules.getElementPower(i);
+        ClickGraphics *clickPointer = controller->getPointerClick();
+
+        PowerManager::PowerEnum power = controller->getPower();
+        std::string colorPower = PowerManager::getPowerColor(power);
+
+        clickPointer->setColor(colorPower);
+        clickPointer->revealPower();
+    }
+}
+
+
+void viewPlay::on_desactiveteButton_clicked()
+{
+    for (int i = 0; i < gameRules.getSizeViewPower(); ++i) {
+
+        PowerController *controller = gameRules.getElementPower(i);
+        ClickGraphics *clickPointer = controller->getPointerClick();
+        Players *player = controller->getPlayerLink();
+        std::string color = player->getColor();
+
+        clickPointer->setColor(color);
+        clickPointer->updateColor();
+    }
+}
+

@@ -85,6 +85,16 @@ bool FirstClass::getPowerBL(GameRules &gameRules, NodeBoard *board, Players *pla
     return false;
 }
 
+// poder maldito Clase A Escurridizo
+bool FirstClass::getPowerES(PowerManager::PowerEnum power)
+{
+    if (power == PowerManager::PowerEnum::ES)
+    {
+        return true;
+    }
+    return false;
+}
+
 // reset de poder maldio Clase A bloqueo
 void FirstClass::resetPowerBL(GameRules &gameRules)
 {

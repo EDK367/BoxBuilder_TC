@@ -19,8 +19,9 @@ public:
         EX = 9  // 9
     };
 
-    static std::string getPowerString(PowerEnum power);
     static PowerEnum getPowerEnum(int numberPower);
+    static std::string getPowerString(PowerEnum power);
+    static std::string getPowerColor(PowerEnum power);
 
 };
 

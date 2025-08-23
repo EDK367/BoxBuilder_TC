@@ -21,6 +21,8 @@ public:
     FirstClass();
 
     bool getPowerBL(GameRules &gameRules, NodeBoard *board, Players *playerCurrent);
+    bool getPowerES(PowerManager::PowerEnum power);
+
     void resetPowerBL(GameRules &gameRules);
 };
 

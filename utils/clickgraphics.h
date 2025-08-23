@@ -10,10 +10,18 @@
 class ClickGraphics : public QObject, public QGraphicsRectItem
 {
     Q_OBJECT
+
+private:
+    int row;
+    int column;
+    std::string color = "";
+    bool clicked = false;
+
 public:
     ClickGraphics(int row, int column, qreal x, qreal y, qreal w, qreal h, QGraphicsItem *parent = nullptr);
     void setColor(std::string color);
     void updateColor();
+    void revealPower();
     void resetClick();
 
 signals:
@@ -22,11 +30,6 @@ signals:
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
 
-private:
-    int row;
-    int column;
-    std::string color = "";
-    bool clicked = false;
 };
 
 #endif // CLICKGRAPHICS_H
