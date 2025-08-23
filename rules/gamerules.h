@@ -79,6 +79,7 @@ public:
     void enqueuePlayer(Players *player);
     void dequeuePlayer();
     Players *peekPlayer();
+    Players *peekEndPlayer();
     NodeFIFO *getFront();
 
     // getter and setter

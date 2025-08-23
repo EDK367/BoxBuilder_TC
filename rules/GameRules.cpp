@@ -147,6 +147,17 @@ Players *GameRules::peekPlayer()
     return nullptr;
 }
 
+Players *GameRules::peekEndPlayer()
+{
+    Players *temp = playersQueue.peakEnd();
+    if (temp)
+    {
+        return temp;
+    }
+
+    return nullptr;
+}
+
 NodeFIFO *GameRules::getFront()
 {
     return playersQueue.getFront();

@@ -60,6 +60,20 @@ Players *FIFO::peak()
     return nullptr;
 }
 
+Players *FIFO::peakEnd()
+{
+    if (!isEmpty())
+    {
+        return end->getPlayer();
+    }
+    return nullptr;
+}
+
+NodeFIFO *FIFO::getEnd()
+{
+    return end;
+}
+
 NodeFIFO *FIFO::getFront()
 {
     return front;

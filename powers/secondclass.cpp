@@ -3,8 +3,9 @@
 SecondClass::SecondClass() {}
 
 // poder maldito Clase B Trampra Oculta
-bool SecondClass::getPowerTS(GameRules &gameRules, NodeBoard *board, Players *playerCurrent)
+bool SecondClass::getPowerTS(GameRules &gameRules, NodeBoard *board, Players *playerCurrent, PowerManager::PowerEnum power)
 {
+    bool isEvasive = classA.getPowerES(power);
     if (!board)
     {
         return false;
@@ -28,7 +29,7 @@ bool SecondClass::getPowerTS(GameRules &gameRules, NodeBoard *board, Players *pl
                 if (linkUp && linkUp->getPower() == PowerManager::PowerEnum::TS)
                 {
                     Players *playerLink = linkUp->getPlayerLink();
-                    if (playerLink && playerLink != playerCurrent)
+                    if ((playerLink && playerLink != playerCurrent) && !isEvasive)
                     {
                         BoxGraphics *boxWin = info->getSquare();
                         if (boxWin)
@@ -40,6 +41,18 @@ bool SecondClass::getPowerTS(GameRules &gameRules, NodeBoard *board, Players *pl
                         resetTurns(gameRules, playerLink);
                         return true;
                     }
+                    if (isEvasive)
+                    {
+                        BoxGraphics *boxWin = info->getSquare();
+                        if (boxWin)
+                        {
+                            boxWin->insertPlayer(playerCurrent->getLetter(), playerCurrent->getColor());
+                        }
+                        linkUp->setPower(this->newPower);
+                        playerCurrent->addPoints(1);
+                        gameRules.dequeuePlayer();
+                        return true;
+                    }
                 }
 
                 // validacion izquierda
@@ -47,7 +60,7 @@ bool SecondClass::getPowerTS(GameRules &gameRules, NodeBoard *board, Players *pl
                 if (linkLeft && linkLeft->getPower() == PowerManager::PowerEnum::TS)
                 {
                     Players *playerLink = linkLeft->getPlayerLink();
-                    if (playerLink && playerLink != playerCurrent)
+                    if ((playerLink && playerLink != playerCurrent) && !isEvasive)
                     {
                         BoxGraphics *boxWin = info->getSquare();
                         if (boxWin)
@@ -57,6 +70,18 @@ bool SecondClass::getPowerTS(GameRules &gameRules, NodeBoard *board, Players *pl
                         linkLeft->setPower(this->newPower);
                         playerLink->addPoints(1);
                         resetTurns(gameRules, playerLink);
+                        return true;
+                    }
+                    if (isEvasive)
+                    {
+                        BoxGraphics *boxWin = info->getSquare();
+                        if (boxWin)
+                        {
+                            boxWin->insertPlayer(playerCurrent->getLetter(), playerCurrent->getColor());
+                        }
+                        linkLeft->setPower(this->newPower);
+                        playerCurrent->addPoints(1);
+                        gameRules.dequeuePlayer();
                         return true;
                     }
                 }
@@ -69,7 +94,7 @@ bool SecondClass::getPowerTS(GameRules &gameRules, NodeBoard *board, Players *pl
     if (linkDown && linkDown->getPower() == PowerManager::PowerEnum::TS)
     {
         Players *playerLink = linkDown->getPlayerLink();
-        if (playerLink && playerLink != playerCurrent)
+        if ((playerLink && playerLink != playerCurrent) && !isEvasive)
         {
             BoxGraphics *boxWin = info->getSquare();
             if (boxWin)
@@ -81,6 +106,18 @@ bool SecondClass::getPowerTS(GameRules &gameRules, NodeBoard *board, Players *pl
             resetTurns(gameRules, playerLink);
             return true;
         }
+        if (isEvasive)
+        {
+            BoxGraphics *boxWin = info->getSquare();
+            if (boxWin)
+            {
+                boxWin->insertPlayer(playerCurrent->getLetter(), playerCurrent->getColor());
+            }
+            linkDown->setPower(this->newPower);
+            playerCurrent->addPoints(1);
+            gameRules.dequeuePlayer();
+            return true;
+        }
     }
 
     // validar a la derecha con n
@@ -88,7 +125,7 @@ bool SecondClass::getPowerTS(GameRules &gameRules, NodeBoard *board, Players *pl
     if (linkRight && linkRight->getPower() == PowerManager::PowerEnum::TS)
     {
         Players *playerLink = linkRight->getPlayerLink();
-        if (playerLink && playerLink != playerCurrent)
+        if ((playerLink && playerLink != playerCurrent) && !isEvasive)
         {
             BoxGraphics *boxWin = info->getSquare();
             if (boxWin)
@@ -100,6 +137,42 @@ bool SecondClass::getPowerTS(GameRules &gameRules, NodeBoard *board, Players *pl
             resetTurns(gameRules, playerLink);
             return true;
         }
+        if (isEvasive)
+        {
+            BoxGraphics *boxWin = info->getSquare();
+            if (boxWin)
+            {
+                boxWin->insertPlayer(playerCurrent->getLetter(), playerCurrent->getColor());
+            }
+            linkRight->setPower(this->newPower);
+            playerCurrent->addPoints(1);
+            gameRules.dequeuePlayer();
+            return true;
+        }
+    }
+
+    if (isEvasive)
+    {
+        BoxGraphics *boxWin = info->getSquare();
+        if (boxWin)
+        {
+            boxWin->insertPlayer(playerCurrent->getLetter(), playerCurrent->getColor());
+        }
+        if (evasive.evasiveChance())
+        {
+
+            playerCurrent->addPoints(1);
+
+        } else {
+            Players *playerLast = gameRules.peekEndPlayer();
+            if (playerLast)
+            {
+                playerLast->addPoints(1);
+            }
+        }
+        gameRules.dequeuePlayer();
+
+        return true;
     }
 
     return false;

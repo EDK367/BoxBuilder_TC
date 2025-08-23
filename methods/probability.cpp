@@ -15,3 +15,15 @@ bool Probability::powerChance()
     }
     return false;
 }
+
+bool Probability::evasiveChance()
+{
+    random.setLimit(2);
+    unsigned int result = random();
+    if (result == 1)
+    {
+        return true;
+    }
+    return false;
+
+}

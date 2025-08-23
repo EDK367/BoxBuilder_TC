@@ -23,10 +23,11 @@ public:
     bool isEmpty();
     void dequeue();
     Players *peak();
+    Players *peakEnd();
 
     // get
     NodeFIFO *getFront();
-
+    NodeFIFO *getEnd();
 };
 
 #endif // FIFO_H

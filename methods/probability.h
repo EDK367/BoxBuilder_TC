@@ -10,6 +10,7 @@ private:
 public:
     Probability();
     bool powerChance();
+    bool evasiveChance();
 };
 
 #endif // PROBABILITY_H

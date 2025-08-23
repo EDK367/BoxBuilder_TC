@@ -422,7 +422,8 @@ bool viewPlay::verifyBoxCompletion()
                     }
                 }
 
-                if(!classB.getPowerTS(gameRules, nodeStart, player))
+                bool evasiveTS = classB.getPowerTS(gameRules, nodeStart, player, this->applyFirstPower);
+                if(!evasiveTS)
                 {
                     if (!classB.getPowerUF(gameRules, nodeStart, player) && !classB.getPowerAC(gameRules, nodeStart, player))
                     {
