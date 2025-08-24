@@ -30,6 +30,7 @@ viewPlay::viewPlay(QWidget *parent)
     , columns(3)
     , isBlockade(false)
     , board(nullptr)
+    , sortPlayersByPoints()
     , applyFirstPower()
     , classD()
     , classC()
@@ -72,11 +73,13 @@ void viewPlay::closeEvent(QCloseEvent *event) {
     event->accept();
 }
 
+// funcion para cargar las reglas de juego
 void viewPlay::chargeGameRules()
 {
     ArrayMess arrayMess;
     try {
 
+        // carga de los jugadores
         Players  *players = gameRules.getPlayersArray();
         int totalPlayers = gameRules.getTotalPlayers();
         arrayMess.shufflePlayers(players, totalPlayers);
@@ -87,7 +90,11 @@ void viewPlay::chargeGameRules()
             gameRules.enqueuePlayer(&players[i]);
         }
 
+        // enlaces total para que el juego termine
+        int totalLinkeds = this->rows * (this->columns - 1) + (this->rows - 1) * this->columns;
+        gameRules.setTotalLinked(totalLinkeds);
 
+        // carga de jugadores y creacion del tablero
         displayAllPlayers();
         board = NodeBoard::createBoard(rows, columns);
         chargeBoard();
@@ -218,6 +225,14 @@ void viewPlay::displayAllPlayers()
         }
         currentFifo = currentFifo->getNext();
     }
+    if (finishGame())
+    {
+        QMessageBox::information(
+            this,
+            "Partida Finalizada",
+            "Se ha terminado la partida"
+            );
+    }
 }
 
 // enlaces de nodos
@@ -248,6 +263,7 @@ void viewPlay::linkConnectorHorizontal(ClickGraphics *pointerConnector, int row,
             );
         gameRules.pushViewPower(powerController);
 
+
         if (this->applyFirstPower == PowerManager::PowerEnum::BL)
         {
             ControllerBL *controller = new ControllerBL;;
@@ -274,7 +290,7 @@ void viewPlay::linkConnectorHorizontal(ClickGraphics *pointerConnector, int row,
                 nodeE->getInfo()->setLinkLeft(nullptr);
 
                 gameRules.deleteNodeLinked(gameRules.getSizeNodeLinked() - 1);
-
+                gameRules.popViewPower(gameRules.getSizeViewPower() - 1);
                 pointerConnector->resetClick();
                 this->isBlockade = false;
                 displayAllPlayers();
@@ -286,6 +302,7 @@ void viewPlay::linkConnectorHorizontal(ClickGraphics *pointerConnector, int row,
     }
     gameRules.dequeuePlayer();
     displayAllPlayers();
+
 }
 
 // enlace vertical
@@ -341,6 +358,7 @@ void viewPlay::linkConnectorVertical(ClickGraphics *pointerConnector, int row, i
                 nodeE->getInfo()->setLinkUp(nullptr);
 
                 gameRules.deleteNodeLinked(gameRules.getSizeNodeLinked() - 1);
+                gameRules.popViewPower(gameRules.getSizeViewPower() - 1);
                 pointerConnector->resetClick();
                 this->isBlockade = false;
                 displayAllPlayers();
@@ -354,6 +372,28 @@ void viewPlay::linkConnectorVertical(ClickGraphics *pointerConnector, int row, i
     displayAllPlayers();
 }
 
+// verificar si ya se termino el juego
+bool viewPlay::finishGame()
+{
+    int totalPossibleLinks = gameRules.getTotalLinked();
+    int currentLinksCreated = gameRules.getSizeViewPower();
+    Players *playersArray = gameRules.getPlayersArray();
+    int totalPlayers = gameRules.getTotalPlayers();
+
+    std::cout << "Enlaces posibles: " << totalPossibleLinks << std::endl;
+    std::cout << "Enlaces creados: " << currentLinksCreated << std::endl;
+
+    if (currentLinksCreated >= totalPossibleLinks) {
+        sortPlayersByPoints.mergeSortPlayers(playersArray, 0, totalPlayers - 1);
+
+        ui->winLabel->setText(QString("El ganador fue: %1 con %2 puntos")
+                                  .arg(QChar(playersArray[0].getLetter()))
+                                  .arg(playersArray[0].getPoints()));
+        ui->winLabel->setVisible(true);
+        return true;
+    }
+    return false;
+}
 
 // verificacion si se obtuvo un win en un enlace
 bool viewPlay::verifyBoxCompletion()
@@ -462,6 +502,7 @@ bool viewPlay::verifyBoxCompletion()
     }
 
     classA.resetPowerBL(gameRules);
+
     return deleteCount > 0;
 }
 
@@ -491,7 +532,12 @@ void viewPlay::on_usePowerB_clicked()
 
 void viewPlay::on_pushButton_clicked()
 {
+    Players *pl = gameRules.getPlayersArray();
 
+    for (int i = 0; i < gameRules.getTotalPlayers(); ++i) {
+        qDebug() << pl[i].getLetter();
+
+    }
     /*NodeFIFO *current = gameRules.getFront();
 
     while (current)
@@ -507,7 +553,6 @@ void viewPlay::on_pushButton_clicked()
     random.setLimit(11);
     unsigned int result = random();
     //std::cout << result << std::endl;
-*/
 
     // vista de nodods enlazados
     for (int i = 0; i < gameRules.getSizeNodeLinked(); ++i) {
@@ -523,7 +568,7 @@ void viewPlay::on_pushButton_clicked()
             qDebug() << " PODER ( " <<  powerName;
             qDebug() << "  indice: " << i;
         }
-    }
+    }*/
 
     //NodeLinked *link = gameRules.getNodeLinked(0);
     //Node* start = link->getStartLinked();

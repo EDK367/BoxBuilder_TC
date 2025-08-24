@@ -14,7 +14,15 @@
    <string>Frame</string>
   </property>
   <property name="styleSheet">
-   <string notr="true"/>
+   <string notr="true">QWidget#nav {
+    background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                                     stop:0 #2a2a40, stop:1 #1a1a2a);
+    border-top: 2px solid #00ff00;
+    border-radius: 0;
+    padding: 8px;
+    margin: 0px;
+    box-shadow: 0px -2px 10px rgba(0, 255, 0, 0.3);
+}</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
@@ -39,11 +47,36 @@
      </property>
      <property name="styleSheet">
       <string notr="true">QWidget#nav {
-    background-color: #2a2a40;
+    background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                                     stop:0 #2a2a40, stop:1 #1a1a2a);
     border-top: 2px solid #00ff00;
     border-radius: 0;
+    padding: 8px;
+    margin: 0px;
+    box-shadow: 0px -2px 10px rgba(0, 255, 0, 0.3);
 }</string>
      </property>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <widget class="QLabel" name="winLabel">
+        <property name="styleSheet">
+         <string notr="true">QLabel {
+    font: bold 18px 'Segoe UI';  
+    color: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+                           stop:0 #FFD700, stop:1 #FFA500);
+    background-color: transparent;
+    border-radius: 10px;
+    padding: 5px; 
+    border: 3px solid #00ff00;;
+}
+</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </widget>
    </item>
    <item row="1" column="0">

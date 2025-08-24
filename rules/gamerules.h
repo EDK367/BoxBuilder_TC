@@ -28,7 +28,7 @@ private:
     ControllerVector<PowerController> controllerPower;
     int rows = 0;
     int columns = 0;
-
+    int totalLinked = 0;
     // constructor
     GameRules(int sizePlayers);
 
@@ -85,8 +85,11 @@ public:
     // getter and setter
     int getRows() const;
     int getColumns() const;
+    int getTotalLinked() const;
+
     void setRows(int rows);
     void setColumns(int columns);
+    void setTotalLinked(int totalLinked);
 };
 
 #endif // GAMERULES_H

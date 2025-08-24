@@ -184,6 +184,11 @@ int GameRules::getColumns() const
     return columns;
 }
 
+int GameRules::getTotalLinked() const
+{
+    return totalLinked;
+}
+
 void GameRules::setRows(int rows)
 {
     this->rows = rows;
@@ -194,6 +199,10 @@ void GameRules::setColumns(int columns)
     this->columns = columns;
 }
 
+void GameRules::setTotalLinked(int totalLinked)
+{
+    this->totalLinked = totalLinked;
+}
 
 
 

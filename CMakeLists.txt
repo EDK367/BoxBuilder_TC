@@ -50,6 +50,8 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         models/controller/controllerBL.h models/controller/controllerBL.cpp
         methods/controller/controllerVector.h methods/controller/controllerVector.cpp
         models/controller/powercontroller.h models/controller/powercontroller.cpp
+        methods/sortarrayplayers.h methods/sortarrayplayers.cpp
+
 
 
 

@@ -29,10 +29,10 @@ std::string PowerManager::getPowerColor(PowerEnum power)
         "#808080", // gris
         "#FF0000", // rojo
         "#0000FF", // azul
-        "#00FFFF", // cyan
         "#00FF00", // verde
+        "#00FFFF", // cyan
+        "#98FB98", // verde claro
         "#800080", // morado
-        "#98FB98", // verde
         "#FF69B4", // rosa
         "#8A2BE2", // azul violeta
         "#FF4500", // rojo naranja

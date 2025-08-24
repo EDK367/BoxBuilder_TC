@@ -11,6 +11,7 @@
 #include "powers/fourthclass.h"
 #include "powers/thirdclass.h"
 #include "methods/controller/controllerVector.h"
+#include "methods/sortarrayplayers.h"
 #include "powers/secondclass.h"
 #include "models/controller/controllerBL.h"
 #include "powers/firstclass.h"
@@ -32,6 +33,7 @@ private:
     GameRules &gameRules;
     RandomNative random;
     Probability probability;
+    SortArrayPlayers sortPlayersByPoints;
     NodeBoard ***board;
     PowerManager::PowerEnum applyFirstPower;
     FourthClass classD;
@@ -45,6 +47,7 @@ private:
     void chargeBoard();
     void displayAllPlayers();
     bool verifyBoxCompletion();
+    bool finishGame();
 
 protected:
     void closeEvent(QCloseEvent *event) override;
