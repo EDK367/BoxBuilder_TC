@@ -3,23 +3,23 @@
 SortArrayPlayers::SortArrayPlayers() {}
 
 // ordenar el arreglo a base de MergeSort
-void SortArrayPlayers::mergeSortPlayers(Players playersArray[], int start, int end)
+void SortArrayPlayers::mergeSortPlayers(Players playersArray[], int start, int end, int typeSort)
 {
     if (start < end)
     {
         int middle = start + (end - start) / 2;
 
         // recursividad
-        mergeSortPlayers(playersArray, start, middle);
-        mergeSortPlayers(playersArray, middle + 1, end);
+        mergeSortPlayers(playersArray, start, middle, typeSort);
+        mergeSortPlayers(playersArray, middle + 1, end, typeSort);
 
         // unir
-        merge(playersArray, start, middle, end);
+        merge(playersArray, start, middle, end, typeSort);
     }
 }
 
 // ordenamiento recursivo
-void SortArrayPlayers::merge(Players playersArray[], int start, int middle, int end)
+void SortArrayPlayers::merge(Players playersArray[], int start, int middle, int end, int typeSort)
 {
     // ciclos
     int i, j, k;
@@ -45,15 +45,69 @@ void SortArrayPlayers::merge(Players playersArray[], int start, int middle, int 
     // mezclar
     while (i < leftSize && j < rightSize)
     {
-        if (leftArray[i].getPoints() >= rightArray[j].getPoints())
+        if (typeSort == 1)
         {
-            playersArray[k] = leftArray[i];
-            i++;
-        } else {
-            playersArray[k] = rightArray[j];
-            j++;
+            if (leftArray[i].getPoints() >= rightArray[j].getPoints())
+            {
+                playersArray[k] = leftArray[i];
+                i++;
+            } else {
+                playersArray[k] = rightArray[j];
+                j++;
+            }
+            k++;
         }
-        k++;
+
+        if (typeSort == 2)
+        {
+            if (leftArray[i].getTotalBox() >= rightArray[j].getTotalBox())
+            {
+                playersArray[k] = leftArray[i];
+                i++;
+            } else {
+                playersArray[k] = rightArray[j];
+                j++;
+            }
+            k++;
+        }
+
+        if (typeSort == 3)
+        {
+            if (leftArray[i].getTotalBoxRow() >= rightArray[j].getTotalBoxRow())
+            {
+                playersArray[k] = leftArray[i];
+                i++;
+            } else {
+                playersArray[k] = rightArray[j];
+                j++;
+            }
+            k++;
+        }
+        if (typeSort == 4)
+        {
+            if (leftArray[i].getTotalBoxColumn() >= rightArray[j].getTotalBoxColumn())
+            {
+                playersArray[k] = leftArray[i];
+                i++;
+            } else {
+                playersArray[k] = rightArray[j];
+                j++;
+            }
+            k++;
+        }
+        if (typeSort == 5)
+        {
+            if (leftArray[i].getTotalPowers() >= rightArray[j].getTotalPowers())
+            {
+                playersArray[k] = leftArray[i];
+                i++;
+            } else {
+                playersArray[k] = rightArray[j];
+                j++;
+            }
+            k++;
+        }
+
     }
 
     // complementar

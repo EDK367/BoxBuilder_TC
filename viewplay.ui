@@ -21,7 +21,6 @@
     border-radius: 0;
     padding: 8px;
     margin: 0px;
-    box-shadow: 0px -2px 10px rgba(0, 255, 0, 0.3);
 }</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
@@ -53,7 +52,6 @@
     border-radius: 0;
     padding: 8px;
     margin: 0px;
-    box-shadow: 0px -2px 10px rgba(0, 255, 0, 0.3);
 }</string>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
@@ -67,7 +65,7 @@
     background-color: transparent;
     border-radius: 10px;
     padding: 5px; 
-    border: 3px solid #00ff00;;
+    border: 2px solid #00ff00;;
 }
 </string>
         </property>
@@ -175,7 +173,7 @@ QScrollArea#scrollBoard QScrollBar::handle:horizontal:hover {
       <item>
        <widget class="QWidget" name="optionsGame" native="true">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>

@@ -171,7 +171,7 @@ void viewPlay::chargeBoard()
                 {
                     random.setLimit(10);
                     unsigned int numberPower = random();
-                    PowerManager::PowerEnum power = gameRules.getPower(numberPower); // aca se usa el poder akeatoriuo ahora esta en 0 para test
+                    PowerManager::PowerEnum power = gameRules.getPower(numberPower);
                     if (power != PowerManager::PowerEnum::NONE) {
                         std::string powerStr = PowerManager::getPowerString(power);
                         boxPoint->insertPower(powerStr);
@@ -188,7 +188,7 @@ void viewPlay::chargeBoard()
 // mostrar todos los jugadores en cola
 void viewPlay::displayAllPlayers()
 {
-    // eliminar el puntero del poder al recargar jugadores
+    // eliminar el poder al recargar jugadores
     this->applyFirstPower = PowerManager::PowerEnum::NONE;
     ui->tablePlayers->clearContents();
     ui->tablePlayers->setRowCount(0);
@@ -232,6 +232,33 @@ void viewPlay::displayAllPlayers()
             "Partida Finalizada",
             "Se ha terminado la partida"
             );
+
+        Players *playersArray = gameRules.getPlayersArray();
+        int totalPlayers = gameRules.getTotalPlayers();
+
+        ui->tablePlayers->setRowCount(totalPlayers);
+        ui->tablePlayers->setColumnCount(7);
+
+        QStringList header;
+        header << "Letra" << "Color" << "Puntos" << "Cuadros" << "Filas" << "Columnas" << "Poderes";
+        ui->tablePlayers->setHorizontalHeaderLabels(header);
+
+        for (int row = 0; row < totalPlayers; ++row)
+        {
+            Players &player = playersArray[row];
+            ui->tablePlayers->setItem(row, 0, new QTableWidgetItem(QString(player.getLetter())));
+            QTableWidgetItem *colorItem = new QTableWidgetItem(QString::fromStdString(player.getColor()));
+            colorItem->setBackground(QBrush(QColor(QString::fromStdString(player.getColor()))));
+            ui->tablePlayers->setItem(row, 1, colorItem);
+            ui->tablePlayers->setItem(row, 2, new QTableWidgetItem(QString::number(player.getPoints())));
+            ui->tablePlayers->setItem(row, 3, new QTableWidgetItem(QString::number(player.getTotalBox())));
+            ui->tablePlayers->setItem(row, 4, new QTableWidgetItem(QString::number(player.getTotalBoxRow())));
+            ui->tablePlayers->setItem(row, 5, new QTableWidgetItem(QString::number(player.getTotalBoxColumn())));
+            ui->tablePlayers->setItem(row, 6, new QTableWidgetItem(QString::number(player.getTotalPowers() - 77)));
+        }
+        ui->tablePlayers->resizeColumnsToContents();
+        ui->tablePlayers->horizontalHeader()->setStretchLastSection(true);
+
     }
 }
 
@@ -375,23 +402,225 @@ void viewPlay::linkConnectorVertical(ClickGraphics *pointerConnector, int row, i
 // verificar si ya se termino el juego
 bool viewPlay::finishGame()
 {
+    // variables generales
+    Players *playersArray = gameRules.getPlayersArray();
     int totalPossibleLinks = gameRules.getTotalLinked();
     int currentLinksCreated = gameRules.getSizeViewPower();
-    Players *playersArray = gameRules.getPlayersArray();
     int totalPlayers = gameRules.getTotalPlayers();
+    // si ya estan todos los enlaces
+    if (currentLinksCreated >= totalPossibleLinks)
+    {
+        /*
+         * #SE VERIFICAN LOS PUNTOS GENRALES ESTO PARA LOS REPORTES
+         */
 
-    std::cout << "Enlaces posibles: " << totalPossibleLinks << std::endl;
-    std::cout << "Enlaces creados: " << currentLinksCreated << std::endl;
+        // variables de conteo
+        int *rowWins = new int[totalPlayers]();
+        int *colWins = new int[totalPlayers]();
 
-    if (currentLinksCreated >= totalPossibleLinks) {
-        sortPlayersByPoints.mergeSortPlayers(playersArray, 0, totalPlayers - 1);
+        // para filas
+        for (int i = 0; i < this->rows - 1; ++i)
+        {
+            int *boxCount = new int[totalPlayers]();
 
-        ui->winLabel->setText(QString("El ganador fue: %1 con %2 puntos")
-                                  .arg(QChar(playersArray[0].getLetter()))
-                                  .arg(playersArray[0].getPoints()));
+            for (int j = 0; j < this->columns - 1; ++j) {
+                if (board[i][j] != nullptr && board[i][j]->getInfo()->getPlayer() != nullptr)
+                {
+                    char playerLetter = board[i][j]->getInfo()->getPlayer()->getLetter();
+                    for (int k = 0; k < totalPlayers; ++k)
+                    {
+                        if (playersArray[k].getLetter() == playerLetter)
+                        {
+                            boxCount[k]++;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            int maxBoxes = -1, winnerIndex = -1;
+            bool isTie = false;
+
+            for (int k = 0; k < totalPlayers; ++k)
+            {
+                if (boxCount[k] > maxBoxes)
+                {
+                    maxBoxes = boxCount[k];
+                    winnerIndex = k;
+                    isTie = false;
+                } else if (boxCount[k] == maxBoxes)
+                {
+                    isTie = true;
+                }
+            }
+
+            if (!isTie && winnerIndex != -1 && maxBoxes > 0)
+            {
+                rowWins[winnerIndex]++;
+            }
+
+            delete[] boxCount;
+        }
+
+        // para columnas
+        for (int j = 0; j < this->columns - 1; ++j)
+        {
+            int *boxCount = new int[totalPlayers]();
+
+            for (int i = 0; i < this->rows - 1; ++i)
+            {
+                if (board[i][j] != nullptr && board[i][j]->getInfo()->getPlayer() != nullptr)
+                {
+                    char playerLetter = board[i][j]->getInfo()->getPlayer()->getLetter();
+                    for (int k = 0; k < totalPlayers; ++k)
+                    {
+                        if (playersArray[k].getLetter() == playerLetter)
+                        {
+                            boxCount[k]++;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            int maxBoxes = -1, winnerIndex = -1;
+            bool isTie = false;
+
+            for (int k = 0; k < totalPlayers; ++k)
+            {
+                if (boxCount[k] > maxBoxes) {
+                    maxBoxes = boxCount[k];
+                    winnerIndex = k;
+                    isTie = false;
+                }
+                else if (boxCount[k] == maxBoxes)
+                {
+                    isTie = true;
+                }
+            }
+
+            if (!isTie && winnerIndex != -1 && maxBoxes > 0)
+            {
+                colWins[winnerIndex]++;
+            }
+
+            delete[] boxCount;
+        }
+
+        for (int i = 0; i < totalPlayers; ++i)
+        {
+            playersArray[i].setPoints(playersArray[i].getPoints());
+            playersArray[i].setTotalBox(playersArray[i].getTotalBox());
+            playersArray[i].setTotalBoxRow(rowWins[i]);
+            playersArray[i].setTotalBoxColumn(colWins[i]);
+        }
+
+        qDebug() << "=== Puntos  ===";
+        for (int i = 0; i < totalPlayers; ++i)
+        {
+
+            qDebug() << "Jugador" << QChar(playersArray[i].getLetter()) << "-" << playersArray[i].getPoints() << "puntos";
+        }
+        qDebug() << "=== Cuadros  ===";
+        for (int i = 0; i < totalPlayers; ++i)
+        {
+
+            qDebug() << "Jugador" << QChar(playersArray[i].getLetter()) << "-" << playersArray[i].getTotalBox() << "filas";
+        }
+        qDebug() << "=== FILAS GANADAS ===";
+        for (int i = 0; i < totalPlayers; ++i)
+        {
+
+            qDebug() << "Jugador" << QChar(playersArray[i].getLetter()) << "-" << rowWins[i] << "filas";
+        }
+
+        qDebug() << "=== COLUMNAS GANADAS ===";
+        for (int i = 0; i < totalPlayers; ++i)
+        {
+
+            qDebug() << "Jugador" << QChar(playersArray[i].getLetter()) << "-" << colWins[i] << "columnas";
+        }
+
+        qDebug() << "=== Poderes Usados ===";
+        for (int i = 0; i < totalPlayers; ++i)
+        {
+            qDebug() << "Jugador" << QChar(playersArray[i].getLetter()) << "-" << playersArray[i].getTotalPowers() - 77 << "poderes";
+        }
+
+        // por puntos
+        sortPlayersByPoints.mergeSortPlayers(playersArray, 0, totalPlayers - 1, 1);
+        int firstPlayer =  playersArray[0].getPoints();
+        int secondPlayer = playersArray[1].getPoints();
+        if (firstPlayer != secondPlayer)
+        {
+            ui->winLabel->setText(QString("El ganador fue: %1 con %2 total de puntos")
+                                      .arg(QChar(playersArray[0].getLetter()))
+                                      .arg(playersArray[0].getTotalBox()));
+            ui->winLabel->setVisible(true);
+            return true;
+        }
+
+        // por cuadrados totales
+        sortPlayersByPoints.mergeSortPlayers(playersArray, 0, totalPlayers - 1, 2);
+        firstPlayer =  playersArray[0].getTotalBox();
+        secondPlayer = playersArray[1].getTotalBox();
+        if (firstPlayer != secondPlayer)
+        {
+            ui->winLabel->setText(QString("El ganador fue: %1 con %2 total de cuadros")
+                                      .arg(QChar(playersArray[0].getLetter()))
+                                      .arg(playersArray[0].getTotalBox()));
+            ui->winLabel->setVisible(true);
+            return true;
+        }
+
+        // por filas ganadas
+        sortPlayersByPoints.mergeSortPlayers(playersArray, 0, totalPlayers - 1, 3);
+        firstPlayer =  playersArray[0].getTotalBoxRow();
+        secondPlayer = playersArray[1].getTotalBoxRow();
+        if (firstPlayer != secondPlayer)
+        {
+            ui->winLabel->setText(QString("El ganador fue: %1 con %2 total de filas ganadas")
+                                      .arg(QChar(playersArray[0].getLetter()))
+                                      .arg(playersArray[0].getTotalBoxRow()));
+            ui->winLabel->setVisible(true);
+            return true;
+        }
+
+        // por columnas ganadas
+        sortPlayersByPoints.mergeSortPlayers(playersArray, 0, totalPlayers - 1, 4);
+        firstPlayer =  playersArray[0].getTotalBoxColumn();
+        secondPlayer = playersArray[1].getTotalBoxColumn();
+        if (firstPlayer != secondPlayer)
+        {
+            ui->winLabel->setText(QString("El ganador fue: %1 con %2 total de columnas ganadas")
+                                      .arg(QChar(playersArray[0].getLetter()))
+                                      .arg(playersArray[0].getTotalBoxColumn()));
+            ui->winLabel->setVisible(true);
+            return true;
+        }
+
+        // por total de podres usados
+        sortPlayersByPoints.mergeSortPlayers(playersArray, 0, totalPlayers - 1, 5);
+        firstPlayer =  playersArray[0].getTotalPowers();
+        secondPlayer = playersArray[1].getTotalPowers();
+        if (firstPlayer != secondPlayer)
+        {
+            ui->winLabel->setText(QString("El ganador fue: %1 con %2 total de poderes usados")
+                                      .arg(QChar(playersArray[0].getLetter()))
+                                      .arg(playersArray[0].getTotalPowers() - 77));
+            ui->winLabel->setVisible(true);
+            return true;
+        }
+
+        delete[] rowWins;
+        delete[] colWins;
+
+        ui->winLabel->setText("EMPATE TECNICO NADIE GANA");
         ui->winLabel->setVisible(true);
+
         return true;
     }
+
     return false;
 }
 
@@ -467,6 +696,8 @@ bool viewPlay::verifyBoxCompletion()
                 {
                     if (!classB.getPowerUF(gameRules, nodeStart, player) && !classB.getPowerAC(gameRules, nodeStart, player))
                     {
+                        nodeStart->getInfo()->setPlayer(player);
+                        nodeStart->getInfo()->getPlayer()->addTotalBox(1);
                         boxWin->insertPlayer(player->getLetter(), player->getColor());
                         player->addPoints(1);
                     }
@@ -524,6 +755,7 @@ void viewPlay::on_usePowerB_clicked()
 
     this->applyFirstPower = firstPower;
 
+    currentPlayer->addTotalPowers(1);
     if (classC.getThirdClass(gameRules, this->applyFirstPower))
     {
         displayAllPlayers();

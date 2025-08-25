@@ -2,6 +2,7 @@
 #define NODEINFO_H
 #include "../utils/boxgraphics.h"
 #include "../models/enum/PowerManager.h"
+#include "../models/players.h"
 #include "nodelinked.h"
 
 class NodeInfo
@@ -11,6 +12,7 @@ private:
     bool isConnectedDown;
     bool isConnectedLeft;
     bool isConnectedRight;
+    Players *player;
     // si posee un poder
     PowerManager::PowerEnum power;
     BoxGraphics *square;
@@ -32,6 +34,7 @@ public:
     bool getIsConnectedLeft() const;
     bool getIsConnectedRight() const;
 
+    Players *getPlayer() const;
     PowerManager::PowerEnum getPower() const;
     BoxGraphics *getSquare() const;
     NodeLinked *getLinkUp() const;
@@ -45,6 +48,8 @@ public:
     void setIsConnectedDown(bool value);
     void setIsConnectedLeft(bool value);
     void setIsConnectedRight(bool value);
+
+    void setPlayer(Players *player);
 
     void setPower(PowerManager::PowerEnum power);
     void setSquare(BoxGraphics *square);

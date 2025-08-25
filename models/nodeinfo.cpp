@@ -1,7 +1,7 @@
 #include "nodeinfo.h"
 
 NodeInfo::NodeInfo() : isConnectedUp(false), isConnectedDown(false),
-    isConnectedLeft(false), isConnectedRight(false), square(nullptr),
+    isConnectedLeft(false), isConnectedRight(false), player(nullptr), square(nullptr),
     power(PowerManager::PowerEnum::NONE),
     linkUp(nullptr), linkDown(nullptr), linkLeft(nullptr), linkRight(nullptr)
 {}
@@ -30,6 +30,11 @@ bool NodeInfo::getIsConnectedLeft() const
 bool NodeInfo::getIsConnectedRight() const
 {
     return isConnectedRight;
+}
+
+Players *NodeInfo::getPlayer() const
+{
+    return player;
 }
 
 PowerManager::PowerEnum NodeInfo::getPower() const
@@ -80,6 +85,11 @@ void NodeInfo::setIsConnectedLeft(bool value)
 void NodeInfo::setIsConnectedRight(bool value)
 {
     this->isConnectedRight = value;
+}
+
+void NodeInfo::setPlayer(Players *player)
+{
+    this->player = player;
 }
 
 void NodeInfo::setPower(PowerManager::PowerEnum power)

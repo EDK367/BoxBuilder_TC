@@ -8,6 +8,10 @@ private:
     char letter;
     std::string color;
     int points;
+    int totalBox;
+    int totalBoxRow;
+    int totalBoxColumn;
+    int totalPowers;
     LIFO powerStack;
 
 
@@ -22,15 +26,28 @@ public:
     char getLetter() const;
     std::string getColor() const;
     int getPoints() const;
+    int getTotalBox() const;
+    int getTotalBoxRow() const;
+    int getTotalBoxColumn() const;
+    int getTotalPowers() const;
     LIFO &getPowerStack();
+
 
     // setters
     void setLetter(char letter);
     void setColor(const std::string& color);
     void setPoints(int point);
+    void setTotalBox(int total);
 
+    void setTotalBoxRow(int totalRow);
+    void setTotalBoxColumn(int totalColumn);
+    void setTotalPowers(int totalPower);
     // metodos
     void addPoints(int point);
+    void addTotalBox(int total);
+    void addTotalBoxRow(int totalRow);
+    void addTotalBoxColumn(int totalColumn);
+    void addTotalPowers(int totalPower);
     void addPower(PowerManager::PowerEnum power);
     PowerManager::PowerEnum usePower();
     bool isPowerStack() const;

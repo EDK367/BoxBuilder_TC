@@ -34,6 +34,8 @@ bool SecondClass::getPowerTS(GameRules &gameRules, NodeBoard *board, Players *pl
                         BoxGraphics *boxWin = info->getSquare();
                         if (boxWin)
                         {
+                            info->setPlayer(playerLink);
+                            info->getPlayer()->addTotalBox(1);
                             boxWin->insertPlayer(playerLink->getLetter(), playerLink->getColor());
                         }
                         linkUp->setPower(this->newPower);
@@ -46,6 +48,8 @@ bool SecondClass::getPowerTS(GameRules &gameRules, NodeBoard *board, Players *pl
                         BoxGraphics *boxWin = info->getSquare();
                         if (boxWin)
                         {
+                            info->setPlayer(playerCurrent);
+                            info->getPlayer()->addTotalBox(1);
                             boxWin->insertPlayer(playerCurrent->getLetter(), playerCurrent->getColor());
                         }
                         linkUp->setPower(this->newPower);
@@ -65,6 +69,8 @@ bool SecondClass::getPowerTS(GameRules &gameRules, NodeBoard *board, Players *pl
                         BoxGraphics *boxWin = info->getSquare();
                         if (boxWin)
                         {
+                            info->setPlayer(playerLink);
+                            info->getPlayer()->addTotalBox(1);
                             boxWin->insertPlayer(playerLink->getLetter(), playerLink->getColor());
                         }
                         linkLeft->setPower(this->newPower);
@@ -77,6 +83,8 @@ bool SecondClass::getPowerTS(GameRules &gameRules, NodeBoard *board, Players *pl
                         BoxGraphics *boxWin = info->getSquare();
                         if (boxWin)
                         {
+                            info->setPlayer(playerCurrent);
+                            info->getPlayer()->addTotalBox(1);
                             boxWin->insertPlayer(playerCurrent->getLetter(), playerCurrent->getColor());
                         }
                         linkLeft->setPower(this->newPower);
@@ -99,6 +107,8 @@ bool SecondClass::getPowerTS(GameRules &gameRules, NodeBoard *board, Players *pl
             BoxGraphics *boxWin = info->getSquare();
             if (boxWin)
             {
+                info->setPlayer(playerLink);
+                info->getPlayer()->addTotalBox(1);
                 boxWin->insertPlayer(playerLink->getLetter(), playerLink->getColor());
             }
             linkDown->setPower(this->newPower);
@@ -111,6 +121,8 @@ bool SecondClass::getPowerTS(GameRules &gameRules, NodeBoard *board, Players *pl
             BoxGraphics *boxWin = info->getSquare();
             if (boxWin)
             {
+                info->setPlayer(playerCurrent);
+                info->getPlayer()->addTotalBox(1);
                 boxWin->insertPlayer(playerCurrent->getLetter(), playerCurrent->getColor());
             }
             linkDown->setPower(this->newPower);
@@ -130,6 +142,8 @@ bool SecondClass::getPowerTS(GameRules &gameRules, NodeBoard *board, Players *pl
             BoxGraphics *boxWin = info->getSquare();
             if (boxWin)
             {
+                info->setPlayer(playerLink);
+                info->getPlayer()->addTotalBox(1);
                 boxWin->insertPlayer(playerLink->getLetter(), playerLink->getColor());
             }
             linkRight->setPower(this->newPower);
@@ -142,6 +156,8 @@ bool SecondClass::getPowerTS(GameRules &gameRules, NodeBoard *board, Players *pl
             BoxGraphics *boxWin = info->getSquare();
             if (boxWin)
             {
+                info->setPlayer(playerCurrent);
+                info->getPlayer()->addTotalBox(1);
                 boxWin->insertPlayer(playerCurrent->getLetter(), playerCurrent->getColor());
             }
             linkRight->setPower(this->newPower);
@@ -156,6 +172,8 @@ bool SecondClass::getPowerTS(GameRules &gameRules, NodeBoard *board, Players *pl
         BoxGraphics *boxWin = info->getSquare();
         if (boxWin)
         {
+            info->setPlayer(playerCurrent);
+            info->getPlayer()->addTotalBox(1);
             boxWin->insertPlayer(playerCurrent->getLetter(), playerCurrent->getColor());
         }
         if (evasive.evasiveChance())
@@ -208,6 +226,8 @@ bool SecondClass::getPowerUF(GameRules &gameRules, NodeBoard *board, Players *pl
                         BoxGraphics *boxWin = info->getSquare();
                         if (boxWin)
                         {
+                            info->setPlayer(playerLink);
+                            info->getPlayer()->addTotalBox(1);
                             boxWin->insertPlayer(playerLink->getLetter(), playerLink->getColor());
                         }
                         linkUp->setPower(this->newPower);
@@ -225,6 +245,8 @@ bool SecondClass::getPowerUF(GameRules &gameRules, NodeBoard *board, Players *pl
                         BoxGraphics *boxWin = info->getSquare();
                         if (boxWin)
                         {
+                            info->setPlayer(playerLink);
+                            info->getPlayer()->addTotalBox(1);
                             boxWin->insertPlayer(playerLink->getLetter(), playerLink->getColor());
                         }
                         linkLeft->setPower(this->newPower);
@@ -244,6 +266,8 @@ bool SecondClass::getPowerUF(GameRules &gameRules, NodeBoard *board, Players *pl
                 BoxGraphics *boxWin = info->getSquare();
                 if (boxWin)
                 {
+                    info->setPlayer(playerLink);
+                    info->getPlayer()->addTotalBox(1);
                     boxWin->insertPlayer(playerLink->getLetter(), playerLink->getColor());
                 }
                 linkDown->setPower(this->newPower);
@@ -262,6 +286,8 @@ bool SecondClass::getPowerUF(GameRules &gameRules, NodeBoard *board, Players *pl
                 BoxGraphics *boxWin = info->getSquare();
                 if (boxWin)
                 {
+                    info->setPlayer(playerLink);
+                    info->getPlayer()->addTotalBox(1);
                     boxWin->insertPlayer(playerLink->getLetter(), playerLink->getColor());
                 }
                 linkRight->setPower(this->newPower);
@@ -304,6 +330,8 @@ bool SecondClass::getPowerAC(GameRules &gameRules, NodeBoard *board, Players *pl
                         BoxGraphics *boxWin = info->getSquare();
                         if (boxWin)
                         {
+                            info->setPlayer(playerLink);
+                            info->getPlayer()->addTotalBox(1);
                             boxWin->insertPlayer(playerLink->getLetter(), playerLink->getColor());
                         }
                         linkUp->setPower(this->newPower);
@@ -321,6 +349,8 @@ bool SecondClass::getPowerAC(GameRules &gameRules, NodeBoard *board, Players *pl
                         BoxGraphics *boxWin = info->getSquare();
                         if (boxWin)
                         {
+                            info->setPlayer(playerLink);
+                            info->getPlayer()->addTotalBox(1);
                             boxWin->insertPlayer(playerLink->getLetter(), playerLink->getColor());
                         }
                         linkLeft->setPower(this->newPower);
@@ -340,6 +370,8 @@ bool SecondClass::getPowerAC(GameRules &gameRules, NodeBoard *board, Players *pl
                 BoxGraphics *boxWin = info->getSquare();
                 if (boxWin)
                 {
+                    info->setPlayer(playerLink);
+                    info->getPlayer()->addTotalBox(1);
                     boxWin->insertPlayer(playerLink->getLetter(), playerLink->getColor());
                 }
                 linkDown->setPower(this->newPower);
@@ -358,6 +390,8 @@ bool SecondClass::getPowerAC(GameRules &gameRules, NodeBoard *board, Players *pl
                 BoxGraphics *boxWin = info->getSquare();
                 if (boxWin)
                 {
+                    info->setPlayer(playerLink);
+                    info->getPlayer()->addTotalBox(1);
                     boxWin->insertPlayer(playerLink->getLetter(), playerLink->getColor());
                 }
                 linkRight->setPower(this->newPower);
