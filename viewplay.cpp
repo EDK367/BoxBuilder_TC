@@ -266,7 +266,7 @@ void viewPlay::displayAllPlayers()
 // enlace horizontal
 void viewPlay::linkConnectorHorizontal(ClickGraphics *pointerConnector, int row, int column)
 {
-    //qDebug() << "Nodo clickeado en horizontal - Fila:" << row << "Columna:" << column;
+
     Players *player = gameRules.peekPlayer();
     if (player)
     {   
@@ -335,7 +335,6 @@ void viewPlay::linkConnectorHorizontal(ClickGraphics *pointerConnector, int row,
 // enlace vertical
 void viewPlay::linkConnectorVertical(ClickGraphics *pointerConnector, int row, int column)
 {
-    //qDebug() << "Nodo clickeado en vertical - Fila:" << row << "Columna:" << column;
     Players *player = gameRules.peekPlayer();
     if (player)
     {
@@ -515,38 +514,6 @@ bool viewPlay::finishGame()
             playersArray[i].setTotalBoxColumn(colWins[i]);
         }
 
-        qDebug() << "=== Puntos  ===";
-        for (int i = 0; i < totalPlayers; ++i)
-        {
-
-            qDebug() << "Jugador" << QChar(playersArray[i].getLetter()) << "-" << playersArray[i].getPoints() << "puntos";
-        }
-        qDebug() << "=== Cuadros  ===";
-        for (int i = 0; i < totalPlayers; ++i)
-        {
-
-            qDebug() << "Jugador" << QChar(playersArray[i].getLetter()) << "-" << playersArray[i].getTotalBox() << "filas";
-        }
-        qDebug() << "=== FILAS GANADAS ===";
-        for (int i = 0; i < totalPlayers; ++i)
-        {
-
-            qDebug() << "Jugador" << QChar(playersArray[i].getLetter()) << "-" << rowWins[i] << "filas";
-        }
-
-        qDebug() << "=== COLUMNAS GANADAS ===";
-        for (int i = 0; i < totalPlayers; ++i)
-        {
-
-            qDebug() << "Jugador" << QChar(playersArray[i].getLetter()) << "-" << colWins[i] << "columnas";
-        }
-
-        qDebug() << "=== Poderes Usados ===";
-        for (int i = 0; i < totalPlayers; ++i)
-        {
-            qDebug() << "Jugador" << QChar(playersArray[i].getLetter()) << "-" << playersArray[i].getTotalPowers() - 77 << "poderes";
-        }
-
         // por puntos
         sortPlayersByPoints.mergeSortPlayers(playersArray, 0, totalPlayers - 1, 1);
         int firstPlayer =  playersArray[0].getPoints();
@@ -555,7 +522,7 @@ bool viewPlay::finishGame()
         {
             ui->winLabel->setText(QString("El ganador fue: %1 con %2 total de puntos")
                                       .arg(QChar(playersArray[0].getLetter()))
-                                      .arg(playersArray[0].getTotalBox()));
+                                      .arg(playersArray[0].getPoints()));
             ui->winLabel->setVisible(true);
             return true;
         }
@@ -762,55 +729,6 @@ void viewPlay::on_usePowerB_clicked()
     }
 }
 
-void viewPlay::on_pushButton_clicked()
-{
-    Players *pl = gameRules.getPlayersArray();
-
-    for (int i = 0; i < gameRules.getTotalPlayers(); ++i) {
-        qDebug() << pl[i].getLetter();
-
-    }
-    /*NodeFIFO *current = gameRules.getFront();
-
-    while (current)
-    {
-        Players *player = current->getPlayer();
-        if (player)
-        {
-             std::cout << player->getLetter() << std::endl;
-        }
-        current = current->getNext();
-    }
-
-    random.setLimit(11);
-    unsigned int result = random();
-    //std::cout << result << std::endl;
-
-    // vista de nodods enlazados
-    for (int i = 0; i < gameRules.getSizeNodeLinked(); ++i) {
-        NodeLinked* link = gameRules.getNodeLinked(i);
-        if (link) {
-            Node* start = link->getStartLinked();
-            Node* end = link->getEndLinked();
-
-            qDebug() << "Conexion";
-            qDebug() << "  Desde: (" << start->getX() << "," << start->getY() << ")";
-            qDebug() << "  Hasta: (" << end->getX() << "," << end->getY() << ")";
-            std::string powerName = PowerManager::getPowerString(link->getPower());
-            qDebug() << " PODER ( " <<  powerName;
-            qDebug() << "  indice: " << i;
-        }
-    }*/
-
-    //NodeLinked *link = gameRules.getNodeLinked(0);
-    //Node* start = link->getStartLinked();
-    //Node* end = link->getEndLinked();
-    //bool power = link->getPower();
-
-    //NodeBoard *node = board[start->getX()][end->getY()];
-
-}
-
 void viewPlay::on_activiteButton_clicked()
 {
     for (int i = 0; i < gameRules.getSizeViewPower(); ++i) {
@@ -838,6 +756,23 @@ void viewPlay::on_desactiveteButton_clicked()
 
         clickPointer->setColor(color);
         clickPointer->updateColor();
+    }
+}
+
+// mecanica extra donde se puede usar pase pero descontando un punto
+void viewPlay::on_pasePowerB_clicked()
+{
+    Players *currentPlayer = gameRules.getFront()->getPlayer();
+
+    if (currentPlayer)
+    {
+        this->applyFirstPower = PowerManager::PowerEnum::PS;
+        currentPlayer->addPoints(-1);
+        currentPlayer->addTotalPowers(1);
+        if (classC.getThirdClass(gameRules, this->applyFirstPower))
+        {
+            displayAllPlayers();
+        }
     }
 }
 

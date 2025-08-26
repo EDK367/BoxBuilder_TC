@@ -54,12 +54,12 @@ protected:
     void showEvent(QShowEvent *event) override;
 
 private slots:
-    void on_pushButton_clicked();
     void linkConnectorHorizontal(ClickGraphics *pointerConnector, int row, int column);
     void linkConnectorVertical(ClickGraphics *pointerConnector, int row, int column);
     void on_usePowerB_clicked();
     void on_activiteButton_clicked();
     void on_desactiveteButton_clicked();
+    void on_pasePowerB_clicked();
 };
 
 #endif // VIEWPLAY_H
