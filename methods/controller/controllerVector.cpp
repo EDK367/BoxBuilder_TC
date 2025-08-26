@@ -9,10 +9,7 @@ ControllerVector<T>::ControllerVector() : array(nullptr), size(0) {}
 // destructor generico
 template <typename T>
 ControllerVector<T>::~ControllerVector() {
-    for (int i = 0; i < size; ++i) {
-        delete array[i];
-    }
-    delete[] array;
+    clear();
 }
 
 // push para vector generico
@@ -72,6 +69,18 @@ T* ControllerVector<T>::getElement(int index) const {
     }
     return array[index];
 }
+
+// eliminar todo el vector
+template <typename T>
+void ControllerVector<T>::clear() {
+    for (int i = 0; i < size; ++i) {
+        delete array[i];
+    }
+    delete[] array;
+    array = nullptr;
+    size = 0;
+}
+
 
 // verificar tamaño del vector generico
 template <typename T>

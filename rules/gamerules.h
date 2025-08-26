@@ -44,6 +44,7 @@ public:
     // eliminar instancia
     static void deleteInstance();
 
+    void removeNodeLinked(NodeLinked* linkToRemove);
     // destructor
     ~GameRules();
 

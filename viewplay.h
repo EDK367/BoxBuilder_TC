@@ -15,6 +15,7 @@
 #include "powers/secondclass.h"
 #include "models/controller/controllerBL.h"
 #include "powers/firstclass.h"
+#include "powers/specialclass.h"
 
 namespace Ui {
 class viewPlay;
@@ -40,6 +41,7 @@ private:
     ThirdClass classC;
     SecondClass classB;
     FirstClass classA;
+    SpecialClass classS;
     int rows;
     int columns;
     bool isBlockade;
@@ -60,6 +62,7 @@ private slots:
     void on_activiteButton_clicked();
     void on_desactiveteButton_clicked();
     void on_pasePowerB_clicked();
+    void on_specialButton_clicked();
 };
 
 #endif // VIEWPLAY_H

@@ -17,6 +17,7 @@ public:
     void sortByStart();
 
     T *getElement(int index) const;
+    void clear();
     int getSize() const;
 };
 

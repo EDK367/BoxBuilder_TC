@@ -1,6 +1,4 @@
 #include "gamerules.h"
-// para test
-#include <iostream>
 
 // instancia
 GameRules *GameRules::instance = nullptr;
@@ -8,7 +6,6 @@ GameRules *GameRules::instance = nullptr;
 // constructor
 GameRules::GameRules(int sizePlayers) : sizePlayers(sizePlayers)
 {
-    std::cout << "Creacion de game rules" << std::endl;
     arrayPlayers = new Players[sizePlayers];
 }
 
@@ -43,6 +40,18 @@ void GameRules::deleteInstance()
     {
         delete instance;
         instance = nullptr;
+    }
+}
+
+void GameRules::removeNodeLinked(NodeLinked* nodeLinked)
+{
+    for (int i = 0; i < nodeVectors.getSize(); ++i)
+    {
+        if (nodeVectors.getNode(i) == nodeLinked)
+        {
+            nodeVectors.pop(i);
+            break;
+        }
     }
 }
 

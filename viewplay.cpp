@@ -3,6 +3,7 @@
 #include <QMessageBox>
 #include <QLabel>
 #include <QGridLayout>
+#include <QIntValidator>
 #include <QRadioButton>
 #include <iostream>
 #include <QGraphicsScene>
@@ -36,6 +37,7 @@ viewPlay::viewPlay(QWidget *parent)
     , classC()
     , classB()
     , classA()
+    , classS()
 {
     ui->setupUi(this);
 
@@ -125,9 +127,25 @@ void viewPlay::chargeBoard()
                 nodeSize, nodeSize
                 );
 
+
             nodePointer->setBrush(Qt::black);
             nodePointer->setPen(QPen(Qt::cyan, 2));
             sceneBoard->addItem(nodePointer);
+
+            QString coordText = QString("(%1,%2)").arg(i).arg(j);
+            QGraphicsTextItem *textItem = new QGraphicsTextItem(coordText, nodePointer);
+            textItem->setDefaultTextColor(Qt::white);
+            QFont font;
+            font.setPointSize(8);
+            font.setBold(true);
+            textItem->setFont(font);
+
+            QRectF rect = nodePointer->rect();
+            QRectF textRect = textItem->boundingRect();
+            qreal xPos = rect.left() + (rect.width() - textRect.width()) / 2;
+            qreal yPos = rect.top() + (rect.height() - textRect.height()) / 2;
+            textItem->setPos(xPos, yPos);
+
 
             // conexion de nodo en vertical
             if (i < rows - 1)
@@ -546,7 +564,7 @@ bool viewPlay::finishGame()
         secondPlayer = playersArray[1].getTotalBoxRow();
         if (firstPlayer != secondPlayer)
         {
-            ui->winLabel->setText(QString("El ganador fue: %1 con %2 total de filas ganadas")
+            ui->winLabel->setText(QString("El ganador fue: %1 con %2 filas ganadas")
                                       .arg(QChar(playersArray[0].getLetter()))
                                       .arg(playersArray[0].getTotalBoxRow()));
             ui->winLabel->setVisible(true);
@@ -559,7 +577,7 @@ bool viewPlay::finishGame()
         secondPlayer = playersArray[1].getTotalBoxColumn();
         if (firstPlayer != secondPlayer)
         {
-            ui->winLabel->setText(QString("El ganador fue: %1 con %2 total de columnas ganadas")
+            ui->winLabel->setText(QString("El ganador fue: %1 con %2 columnas ganadas")
                                       .arg(QChar(playersArray[0].getLetter()))
                                       .arg(playersArray[0].getTotalBoxColumn()));
             ui->winLabel->setVisible(true);
@@ -572,7 +590,7 @@ bool viewPlay::finishGame()
         secondPlayer = playersArray[1].getTotalPowers();
         if (firstPlayer != secondPlayer)
         {
-            ui->winLabel->setText(QString("El ganador fue: %1 con %2 total de poderes usados")
+            ui->winLabel->setText(QString("El ganador fue: %1 con %2 poderes usados")
                                       .arg(QChar(playersArray[0].getLetter()))
                                       .arg(playersArray[0].getTotalPowers() - 77));
             ui->winLabel->setVisible(true);
@@ -639,6 +657,10 @@ bool viewPlay::verifyBoxCompletion()
             BoxGraphics *boxWin = nodeStart->getInfo()->getSquare();
             Players *player = gameRules.peekPlayer();
 
+            if (!boxWin->getState())
+            {
+                continue;
+            }
             // verificacion de bloqueo
             if (!classB.getPowerLS(this->applyFirstPower))
             {
@@ -773,6 +795,75 @@ void viewPlay::on_pasePowerB_clicked()
         {
             displayAllPlayers();
         }
+    }
+}
+
+void viewPlay::on_specialButton_clicked()
+{
+    // solo poder especial
+    if ((this->applyFirstPower != PowerManager::PowerEnum::NT) && (this->applyFirstPower != PowerManager::PowerEnum::EX))
+    {
+        QMessageBox::warning(
+            this,
+            "Error",
+            "ESTE BOTON SOLO PUEDE USARSE CON UN PODER DE CLASE ESPECIAL."
+            );
+        return;
+
+    }
+
+    QString xText = ui->xEdit->text();
+    QString yText = ui->yEdit->text();
+
+    // validaciones
+    if (xText.isEmpty() || yText.isEmpty())
+    {
+        QMessageBox::warning(
+            this,
+            "Error",
+            "Debe llenar todos los campos."
+            );
+        return;
+    }
+
+    QIntValidator validator(0, INT_MAX, this);
+    int pos = 0;
+
+    if (validator.validate(xText, pos) != QValidator::Acceptable)
+    {
+        QMessageBox::warning(
+            this,
+            "Error",
+            "La posicion X debe ser un numero no negativo.");
+        return;
+    }
+
+    pos = 0;
+    if (validator.validate(yText, pos) != QValidator::Acceptable)
+    {
+        QMessageBox::warning(
+            this,
+            "Error",
+            "La posicion Y debe ser un numero no negativo."
+            );
+        return;
+    }
+    int xPosition = xText.toInt();
+    int yPosition = yText.toInt();
+
+    NodeBoard* targetNode = this->board[xPosition][yPosition];
+    if (targetNode && classS.getPowerEX(gameRules, targetNode))
+    {
+
+       QMessageBox::information(this, "Dominio", "Se ha destruido el dominio");
+    }
+    else
+    {
+        QMessageBox::warning(
+            this,
+            "Error",
+            "No se pudo eliminar el nodo en la posición especificada."
+            );
     }
 }
 

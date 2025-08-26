@@ -51,6 +51,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         methods/controller/controllerVector.h methods/controller/controllerVector.cpp
         models/controller/powercontroller.h models/controller/powercontroller.cpp
         methods/sortarrayplayers.h methods/sortarrayplayers.cpp
+        powers/specialclass.h powers/specialclass.cpp
 
 
 
