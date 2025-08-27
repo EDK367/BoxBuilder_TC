@@ -38,8 +38,20 @@ MainWindow::MainWindow(QWidget *parent)
     ui->tableWidget->horizontalHeader()->setStretchLastSection(true);
 
     // cambio de opt en widgets
+    connect(ui->mainB, &QPushButton::clicked, this, [=]() {
+        ui->panelW->setCurrentWidget(ui->mainW);
+    });
+
     connect(ui->playB, &QPushButton::clicked, this, [=]() {
         ui->panelW->setCurrentWidget(ui->playW);
+    });
+
+    connect(ui->powerB, &QPushButton::clicked, this, [=]() {
+        ui->panelW->setCurrentWidget(ui->powersW);
+    });
+
+    connect(ui->infoB, &QPushButton::clicked, this, [=]() {
+        ui->panelW->setCurrentWidget(ui->infoW);
     });
 
 
@@ -354,7 +366,7 @@ void MainWindow::on_pushButton_clicked()
     // Jugador C
     {
         QString letter = "C";
-        QColor color = Qt::red;  // Color rojo
+        QColor color = Qt::red;
         QString colorHex = color.name();
 
         int row = ui->tableWidget->rowCount();
@@ -391,7 +403,7 @@ void MainWindow::on_pushButton_clicked()
     // Jugador D
     {
         QString letter = "D";
-        QColor color = Qt::blue;  // Color azul
+        QColor color = Qt::blue;
         QString colorHex = color.name();
 
         int row = ui->tableWidget->rowCount();
@@ -429,5 +441,45 @@ void MainWindow::on_pushButton_clicked()
 
     ui->rowSize->setText("5");
     ui->columnSize->setText("5");
+}
+
+
+void MainWindow::on_powerB_clicked()
+{
+    ui->powerTable->setRowCount(10);
+    ui->powerTable->setColumnCount(2);
+    QStringList headers = {"Poder", "Color Hex"};
+    ui->powerTable->setHorizontalHeaderLabels(headers);
+
+    struct Poder {
+        QString nombre;
+        QString hex;
+        QString css;
+        QString textColor;
+    };
+
+    QList<Poder> poderes = {
+        {"Bloqueo (BL)", "#808080"},
+        {"Trampa Secreta (TS)", "#FF0000"},
+        {"Doble Línea (DL)", "#0000FF"},
+        {"Pase (PS)", "#00FF00"},
+        {"Llave Secreta (LS)", "#00FFFF"},
+        {"Escurridizo (ES)", "#98FB98"},
+        {"Unión a Futuro (UF)", "#800080"},
+        {"A Qué Costo (AC)", "#FF69B4"},
+        {"Nuevas Tierras (NT)", "#8A2BE2"},
+        {"Explosivos (EX)", "#FF4500"}
+    };
+
+    for (int i = 0; i < poderes.size(); i++) {
+        QTableWidgetItem *nombreItem = new QTableWidgetItem(poderes[i].nombre);
+        ui->powerTable->setItem(i, 0, nombreItem);
+        QTableWidgetItem *hexItem = new QTableWidgetItem(poderes[i].hex);
+        hexItem->setBackground(QColor(poderes[i].hex));
+        hexItem->setForeground(QColor(poderes[i].textColor));
+        ui->powerTable->setItem(i, 1, hexItem);
+    }
+
+     ui->powerTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 }
 

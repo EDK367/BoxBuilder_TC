@@ -1,0 +1,9 @@
+C:/Users/denil/OneDrive/Escritorio/BoxBuilderTC/build/Desktop_Qt_6_9_1_MinGW_64_bit-Build/CMakeFiles/BoxBuilderTC.dir
+C:/Users/denil/OneDrive/Escritorio/BoxBuilderTC/build/Desktop_Qt_6_9_1_MinGW_64_bit-Build/CMakeFiles/edit_cache.dir
+C:/Users/denil/OneDrive/Escritorio/BoxBuilderTC/build/Desktop_Qt_6_9_1_MinGW_64_bit-Build/CMakeFiles/rebuild_cache.dir
+C:/Users/denil/OneDrive/Escritorio/BoxBuilderTC/build/Desktop_Qt_6_9_1_MinGW_64_bit-Build/CMakeFiles/list_install_components.dir
+C:/Users/denil/OneDrive/Escritorio/BoxBuilderTC/build/Desktop_Qt_6_9_1_MinGW_64_bit-Build/CMakeFiles/install.dir
+C:/Users/denil/OneDrive/Escritorio/BoxBuilderTC/build/Desktop_Qt_6_9_1_MinGW_64_bit-Build/CMakeFiles/install/local.dir
+C:/Users/denil/OneDrive/Escritorio/BoxBuilderTC/build/Desktop_Qt_6_9_1_MinGW_64_bit-Build/CMakeFiles/install/strip.dir
+C:/Users/denil/OneDrive/Escritorio/BoxBuilderTC/build/Desktop_Qt_6_9_1_MinGW_64_bit-Build/CMakeFiles/BoxBuilderTC_autogen_timestamp_deps.dir
+C:/Users/denil/OneDrive/Escritorio/BoxBuilderTC/build/Desktop_Qt_6_9_1_MinGW_64_bit-Build/CMakeFiles/BoxBuilderTC_autogen.dir

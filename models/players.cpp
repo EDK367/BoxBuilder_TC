@@ -121,7 +121,7 @@ void Players::addPower(PowerManager::PowerEnum power)
 
 PowerManager::PowerEnum Players::usePower()
 {
-    powerStack.pop();
+    return powerStack.pop();
 }
 
 bool Players::isPowerStack() const

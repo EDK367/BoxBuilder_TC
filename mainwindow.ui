@@ -35,7 +35,7 @@
 }</string>
          </property>
          <property name="currentIndex">
-          <number>0</number>
+          <number>3</number>
          </property>
          <widget class="QWidget" name="playW">
           <property name="styleSheet">
@@ -51,36 +51,6 @@
              <property name="sizeConstraint">
               <enum>QLayout::SizeConstraint::SetMinAndMaxSize</enum>
              </property>
-             <item row="3" column="2">
-              <widget class="QLabel" name="boardSize">
-               <property name="styleSheet">
-                <string notr="true">QLabel {
-    font-size: 26px;
-    font-weight: bold;
-    color: rgb(255, 0, 0);
-}
-</string>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="0" colspan="3">
-              <widget class="QLabel" name="numberPlayersL">
-               <property name="styleSheet">
-                <string notr="true">QLabel {
-    font-size: 26px;
-    font-weight: bold;
-    color: #FFFFFF;
-}
-</string>
-               </property>
-               <property name="text">
-                <string>Cantidad De Jugadores:</string>
-               </property>
-              </widget>
-             </item>
              <item row="6" column="1">
               <widget class="QLabel" name="forL">
                <property name="styleSheet">
@@ -93,6 +63,21 @@
                </property>
                <property name="text">
                 <string>X</string>
+               </property>
+              </widget>
+             </item>
+             <item row="6" column="0">
+              <widget class="QLineEdit" name="rowSize">
+               <property name="styleSheet">
+                <string notr="true">QLineEdit {
+    background-color: #1E1E1E;
+    color: #00FFAA;
+    border: 2px solid #00FFAA;
+    border-radius: 6px;
+    padding: 6px;
+    font-size: 16px;
+}
+</string>
                </property>
               </widget>
              </item>
@@ -111,6 +96,21 @@
                </property>
               </widget>
              </item>
+             <item row="3" column="0" colspan="2">
+              <widget class="QLabel" name="sizeL">
+               <property name="styleSheet">
+                <string notr="true">QLabel {
+    font-size: 26px;
+    font-weight: bold;
+    color: #FFFFFF;
+}
+</string>
+               </property>
+               <property name="text">
+                <string>Tamaño de Tablero:</string>
+               </property>
+              </widget>
+             </item>
              <item row="6" column="2">
               <widget class="QLineEdit" name="columnSize">
                <property name="styleSheet">
@@ -123,6 +123,21 @@
     font-size: 16px;
 }
 </string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="2">
+              <widget class="QLabel" name="boardSize">
+               <property name="styleSheet">
+                <string notr="true">QLabel {
+    font-size: 26px;
+    font-weight: bold;
+    color: rgb(255, 0, 0);
+}
+</string>
+               </property>
+               <property name="text">
+                <string/>
                </property>
               </widget>
              </item>
@@ -238,23 +253,52 @@ QScrollBar::handle:horizontal:hover {
                </property>
               </widget>
              </item>
-             <item row="6" column="0">
-              <widget class="QLineEdit" name="rowSize">
+             <item row="1" column="0">
+              <widget class="QPushButton" name="pushButton">
                <property name="styleSheet">
-                <string notr="true">QLineEdit {
-    background-color: #1E1E1E;
-    color: #00FFAA;
-    border: 2px solid #00FFAA;
-    border-radius: 6px;
-    padding: 6px;
+                <string notr="true">QPushButton {
+    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, 
+                                      stop:0 #1a1a2e, stop:0.5 #16213e, stop:1 #0f3460);
+    color: #FFD700;
     font-size: 16px;
+    font-weight: bold;
+    font-family: 'Segoe UI', sans-serif;
+    border-radius: 12px;
+    padding: 14px 28px;
+    border: 2px solid #FFD700;
+    min-width: 120px;
+    min-height: 40px;
+}
+
+QPushButton:hover {
+    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, 
+                                      stop:0 #2a2a4e, stop:0.5 #1e3a5f, stop:1 #134074);
+    color: #fffacd;
+    border: 2px solid #fffacd;
+}
+
+QPushButton:pressed {
+    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, 
+                                      stop:0 #FFD700, stop:1 #ffcc00);
+    color: #0f3460;
+    border: 2px solid #0f3460;
+    padding: 15px 27px 13px 29px;
+}
+
+QPushButton:disabled {
+    background-color: #2c3e50;
+    color: #7f8c8d;
+    border: 2px solid #7f8c8d;
 }
 </string>
                </property>
+               <property name="text">
+                <string>Partida Rapida</string>
+               </property>
               </widget>
              </item>
-             <item row="3" column="0" colspan="2">
-              <widget class="QLabel" name="sizeL">
+             <item row="0" column="0" colspan="3">
+              <widget class="QLabel" name="numberPlayersL">
                <property name="styleSheet">
                 <string notr="true">QLabel {
     font-size: 26px;
@@ -264,7 +308,7 @@ QScrollBar::handle:horizontal:hover {
 </string>
                </property>
                <property name="text">
-                <string>Tamaño de Tablero:</string>
+                <string>Cantidad De Jugadores:</string>
                </property>
               </widget>
              </item>
@@ -309,50 +353,6 @@ QPushButton:disabled {
                </property>
                <property name="text">
                 <string>Ingresar Jugadores</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="0">
-              <widget class="QPushButton" name="pushButton">
-               <property name="styleSheet">
-                <string notr="true">QPushButton {
-    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, 
-                                      stop:0 #1a1a2e, stop:0.5 #16213e, stop:1 #0f3460);
-    color: #FFD700;
-    font-size: 16px;
-    font-weight: bold;
-    font-family: 'Segoe UI', sans-serif;
-    border-radius: 12px;
-    padding: 14px 28px;
-    border: 2px solid #FFD700;
-    min-width: 120px;
-    min-height: 40px;
-}
-
-QPushButton:hover {
-    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, 
-                                      stop:0 #2a2a4e, stop:0.5 #1e3a5f, stop:1 #134074);
-    color: #fffacd;
-    border: 2px solid #fffacd;
-}
-
-QPushButton:pressed {
-    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, 
-                                      stop:0 #FFD700, stop:1 #ffcc00);
-    color: #0f3460;
-    border: 2px solid #0f3460;
-    padding: 15px 27px 13px 29px;
-}
-
-QPushButton:disabled {
-    background-color: #2c3e50;
-    color: #7f8c8d;
-    border: 2px solid #7f8c8d;
-}
-</string>
-               </property>
-               <property name="text">
-                <string>PushButton</string>
                </property>
               </widget>
              </item>
@@ -404,10 +404,230 @@ QPushButton:disabled {
            </item>
           </layout>
          </widget>
-         <widget class="QWidget" name="main">
+         <widget class="QWidget" name="powersW">
           <property name="styleSheet">
-           <string notr="true">background-color: rgb(85, 170, 255)</string>
+           <string notr="true">QWidget#optionsGame {
+    background-color: #2a2a40;
+    border-radius: 8px;
+    padding: 10px;
+}</string>
           </property>
+          <layout class="QHBoxLayout" name="horizontalLayout_3">
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_2">
+             <item>
+              <widget class="QTableWidget" name="powerTable">
+               <property name="styleSheet">
+                <string notr="true">QHeaderView::section {
+    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 #1a1a2e, stop:1 #2c2c44);
+    color: #FFD700;
+    padding: 6px;
+    font-weight: bold;
+    border: 1px solid #FFD700;
+    font-size: 13px;
+    text-align: center;
+    min-height: 35px; 
+}
+
+QPushButton {
+    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 #1a1a2e, stop:1 #2c2c44);
+    color: #FFD700;
+    border: 2px solid #FFD700;
+    border-radius: 6px;
+    padding: 4px 12px;
+    font-weight: bold;
+    font-size: 12px;
+}
+
+QPushButton:hover {
+    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 #2c2c44, stop:1 #3a3a5a);
+    color: #fff700;
+}
+
+QPushButton:pressed {
+    background-color: #FFD700;
+    color: #1a1a2e;
+}
+QTableWidget QTableCornerButton::section {
+    background-color: #1a1a2e;
+    border: 1px solid #FFD700;
+}
+
+QTableWidget {
+    border: 2px solid #FFD700;
+    border-radius: 8px;
+    gridline-color: #FFD700;
+    background-color: #0f0f1a;
+    alternate-background-color: #1a1a2e;
+    selection-background-color: #FFD700;
+    selection-color: black;
+    color: #ecf0f1;
+    font-size: 12px;
+    outline: 0;
+}
+
+QTableWidget::item {
+    padding: 1px;
+}
+
+QTableWidget::item:hover {
+    background-color: #333355;
+    color: #FFD700;
+}
+
+QScrollBar:vertical {
+    width: 15px;
+    background: #0f0f1a;
+    border-left: 1px solid #FFD700;
+    border-radius: 6px;
+}
+
+QScrollBar::handle:vertical {
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #FFD700, stop:1 #f1c40f);
+    min-height: 20px;
+    border-radius: 6px;
+}
+
+QScrollBar::handle:vertical:hover {
+    background: #ffea00;
+}
+
+QScrollBar:horizontal {
+    height: 12px;
+    background: #0f0f1a;
+    border-top: 1px solid #FFD700;
+    border-radius: 6px;
+}
+
+QScrollBar::handle:horizontal {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #FFD700, stop:1 #f1c40f);
+    min-width: 20px;
+    border-radius: 6px;
+}
+
+QScrollBar::handle:horizontal:hover {
+    background: #ffea00;
+}
+</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="infoW">
+          <property name="styleSheet">
+           <string notr="true">QWidget#optionsGame {
+    background-color: #2a2a40;
+    border-radius: 8px;
+    padding: 10px;
+}</string>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_3">
+           <item>
+            <widget class="QLabel" name="label">
+             <property name="styleSheet">
+              <string notr="true">QLabel {
+    color: #FFD700;
+    font-size: 18px;
+    font-weight: bold;
+    letter-spacing: 2px;
+}</string>
+             </property>
+             <property name="text">
+              <string>
+📖 Descripción
+BoxBuilderTC es una versión avanzada 
+de Dots and Boxes, 
+donde la estrategia y los poderes
+ especiales hacen
+ cada partida única.
+🎯 Objetivo
+Cerrar más cuadrados que tus rivales y usar
+ los poderes sabiamente para ganar.
+🛠️ Estructuras de Datos Utilizadas
+Listas enlazadas → representación
+ del tablero
+Pilas → administración de poderes especiales 
+Colas → gestión de turnos de jugadores
+🎨 Personalización del Juego
+Selección del tamaño del tablero
+Nombres personalizados para los jugadores
+Colores únicos para cada jugador
+🏆 Condiciones de Victoria
+El ganador se determina evaluando:
+Más puntos acumulados
+Mayor cantidad de cuadrados cerrados
+Más filas y columnas completas
+Uso estratégico y efectivo de los poderes
+👨‍💻 Desarrollado por: Erikson Orozco (EDK367)</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="mainW">
+          <property name="styleSheet">
+           <string notr="true">QWidget#optionsGame {
+    background-color: #2a2a40;
+    border-radius: 8px;
+    padding: 10px;
+}</string>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_2">
+           <item>
+            <widget class="QLabel" name="box">
+             <property name="styleSheet">
+              <string notr="true">QLabel {
+    color: #00ff00;
+    font-size: 32px;
+    font-weight: bold;
+    letter-spacing: 2px;
+}</string>
+             </property>
+             <property name="text">
+              <string>BoxBuilderTC</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="frase">
+             <property name="styleSheet">
+              <string notr="true">QLabel {
+    font-size: 26px;
+    font-weight: bold;
+    color: #FFFFFF;
+}
+</string>
+             </property>
+             <property name="text">
+              <string>¿Quién será el rey del tablero hoy?</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="label_3">
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="label_4">
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="label_5">
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </widget>
         </widget>
        </item>
@@ -432,17 +652,11 @@ QPushButton:disabled {
     padding: 10px;
 }</string>
          </property>
-         <widget class="QPushButton" name="playB">
-          <property name="geometry">
-           <rect>
-            <x>170</x>
-            <y>90</y>
-            <width>201</width>
-            <height>81</height>
-           </rect>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">QPushButton {
+         <layout class="QVBoxLayout" name="verticalLayout">
+          <item>
+           <widget class="QPushButton" name="mainB">
+            <property name="styleSheet">
+             <string notr="true">QPushButton {
     background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, 
                                       stop:0 #1a1a2e, stop:0.5 #16213e, stop:1 #0f3460);
     color: #FFD700;
@@ -477,11 +691,145 @@ QPushButton:disabled {
     border: 2px solid #7f8c8d;
 }
 </string>
-          </property>
-          <property name="text">
-           <string>Jugar</string>
-          </property>
-         </widget>
+            </property>
+            <property name="text">
+             <string>Pantalla Principal</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="playB">
+            <property name="styleSheet">
+             <string notr="true">QPushButton {
+    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, 
+                                      stop:0 #1a1a2e, stop:0.5 #16213e, stop:1 #0f3460);
+    color: #FFD700;
+    font-size: 16px;
+    font-weight: bold;
+    font-family: 'Segoe UI', sans-serif;
+    border-radius: 12px;
+    padding: 14px 28px;
+    border: 2px solid #FFD700;
+    min-width: 120px;
+    min-height: 40px;
+}
+
+QPushButton:hover {
+    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, 
+                                      stop:0 #2a2a4e, stop:0.5 #1e3a5f, stop:1 #134074);
+    color: #fffacd;
+    border: 2px solid #fffacd;
+}
+
+QPushButton:pressed {
+    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, 
+                                      stop:0 #FFD700, stop:1 #ffcc00);
+    color: #0f3460;
+    border: 2px solid #0f3460;
+    padding: 15px 27px 13px 29px;
+}
+
+QPushButton:disabled {
+    background-color: #2c3e50;
+    color: #7f8c8d;
+    border: 2px solid #7f8c8d;
+}
+</string>
+            </property>
+            <property name="text">
+             <string>Jugar Nueva Partida</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="powerB">
+            <property name="styleSheet">
+             <string notr="true">QPushButton {
+    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, 
+                                      stop:0 #1a1a2e, stop:0.5 #16213e, stop:1 #0f3460);
+    color: #FFD700;
+    font-size: 16px;
+    font-weight: bold;
+    font-family: 'Segoe UI', sans-serif;
+    border-radius: 12px;
+    padding: 14px 28px;
+    border: 2px solid #FFD700;
+    min-width: 120px;
+    min-height: 40px;
+}
+
+QPushButton:hover {
+    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, 
+                                      stop:0 #2a2a4e, stop:0.5 #1e3a5f, stop:1 #134074);
+    color: #fffacd;
+    border: 2px solid #fffacd;
+}
+
+QPushButton:pressed {
+    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, 
+                                      stop:0 #FFD700, stop:1 #ffcc00);
+    color: #0f3460;
+    border: 2px solid #0f3460;
+    padding: 15px 27px 13px 29px;
+}
+
+QPushButton:disabled {
+    background-color: #2c3e50;
+    color: #7f8c8d;
+    border: 2px solid #7f8c8d;
+}
+</string>
+            </property>
+            <property name="text">
+             <string>Poderes</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="infoB">
+            <property name="styleSheet">
+             <string notr="true">QPushButton {
+    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, 
+                                      stop:0 #1a1a2e, stop:0.5 #16213e, stop:1 #0f3460);
+    color: #FFD700;
+    font-size: 16px;
+    font-weight: bold;
+    font-family: 'Segoe UI', sans-serif;
+    border-radius: 12px;
+    padding: 14px 28px;
+    border: 2px solid #FFD700;
+    min-width: 120px;
+    min-height: 40px;
+}
+
+QPushButton:hover {
+    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, 
+                                      stop:0 #2a2a4e, stop:0.5 #1e3a5f, stop:1 #134074);
+    color: #fffacd;
+    border: 2px solid #fffacd;
+}
+
+QPushButton:pressed {
+    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, 
+                                      stop:0 #FFD700, stop:1 #ffcc00);
+    color: #0f3460;
+    border: 2px solid #0f3460;
+    padding: 15px 27px 13px 29px;
+}
+
+QPushButton:disabled {
+    background-color: #2c3e50;
+    color: #7f8c8d;
+    border: 2px solid #7f8c8d;
+}
+</string>
+            </property>
+            <property name="text">
+             <string>Información</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </widget>
        </item>
       </layout>
@@ -524,9 +872,6 @@ QPushButton:disabled {
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
- <tabstops>
-  <tabstop>playB</tabstop>
- </tabstops>
  <resources/>
  <connections/>
 </ui>
