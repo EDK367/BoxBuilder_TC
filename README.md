@@ -1,60 +1,75 @@
 # BoxBuilderTC
 
-BoxBuilderTC es una aplicación desarrollada en C++ utilizando Qt y CMake que simula un entorno gráfico para la construcción y simulación de cajas. El proyecto integra múltiples módulos, demostrando conceptos de diseño modular, interacción gráfica y manejo eficiente de recursos.
+BoxBuilderTC es una aplicación en C++ que utiliza Qt y CMake para ofrecer una experiencia gráfica robusta en la construcción y simulación de cajas. Este proyecto ejemplifica el uso de diseño modular, integración de funciones 100% nativas y prácticas modernas de compilación en entornos multiplataforma.
+
+---
 
 ## Índice
 
 - [Introducción](#introducción)
 - [Características](#características)
 - [Requisitos](#requisitos)
-- [Instalación](#instalación)
+- [Instalación y Configuración](#instalación-y-configuración-Se-Usara-Windows-Como-Demostración)
 - [Compilación](#compilación)
 - [Ejecución](#ejecución)
 - [Uso con Qt Creator](#uso-con-qt-creator)
 - [Estructura del Proyecto](#estructura-del-proyecto)
 - [Solución de Problemas](#solución-de-problemas)
-- [Contribución](#contribución)
-- [Licencia](#licencia)
+- [Contribuir](#contribuir)
+
+---
 
 ## Introducción
 
-El proyecto BoxBuilderTC es una muestra práctica del uso de Qt para la creación de interfaces gráficas en C++ y de CMake para la gestión del proceso de compilación. La aplicación ofrece una interfaz intuitiva para diseñar, simular y manipular elementos gráficos y estructuras de cajas. Está pensada para fines demostrativos y educativos.
+El proyecto BoxBuilderTC demuestra cómo combinar C++ con Qt para la creación de interfaces gráficas avanzadas, y CMake para la automatización de la compilación. Diseñado para ser un ejemplo educativo, permite a los desarrolladores entender la integración de múltiples módulos y la configuración de entornos de desarrollo complejos. Debido a su complejidad y requesitos se tienen apartado hechos sin ninguna libreria de c++ como lo es un vector dinamico el cual utiliza solo punteros a base de un arreglo los cuales no son dinamicos. 
+
+---
 
 ## Características
 
-- **Interfaz Gráfica Avanzada:** Utiliza Qt para crear una interfaz amigable e interactiva.
-- **Modularidad:** El código está organizado en varios módulos que separan la lógica, la interfaz y el manejo de datos.
-- **Compatibilidad Multiplataforma:** Compilable con diferentes compiladores y entornos, incluyendo MinGW y Visual Studio.
-- **Uso de CMake:** Facilita la configuración y generación de proyectos para múltiples plataformas y entornos de desarrollo.
+- **Interfaz Gráfica Avanzada:** Desarrollada con Qt, la aplicación ofrece una experiencia de usuario intuitiva y visualmente atractiva.
+- **Diseño Modular:** El código está organizado en módulos separados para la lógica de negocio, la interfaz de usuario y la gestión de recursos.
+- **Compatibilidad Multiplataforma:** Aunque optimizado para Windows, la arquitectura permite una fácil adaptación a otros sistemas operativos.
+- **Automatización de la Compilación:** Gracias a CMake, el proyecto se configura de manera eficiente para diferentes entornos y compiladores.
+
+---
 
 ## Requisitos
 
-- **Qt:** Se recomienda utilizar Qt 6.9.1 o superior.
+- **Qt:** Versión 6.9.1 o superior.
 - **CMake:** Versión 3.0 o superior.
-- **Compilador de C++:** Puede ser MinGW o Visual Studio, según tu entorno.
-- **Sistema Operativo:** Preparado para entornos Windows, aunque el proyecto es portable a otros sistemas.
+- **Compilador de C++:** Puede utilizarse MinGW para Windows (Recomendable) aunque QT ofrece un entorno para Linux (GCC/G++) o Visual Studio (No recomendable).
+- **Sistema Operativo:** Este documento utiliza Windows, aunque el proyecto puede ser compilado en otros sistemas operativos.
 
-## Instalación
+---
 
-1. **Descarga o Clona el Repositorio:**
+## Instalación y Configuración
 
-   Descarga el repositorio o clónalo desde GitHub:
+1. **Clonar o Descargar el Repositorio:**
+
+   Utiliza Git para clonar el repositorio:
 
    ```bash
-   git clone https://github.com/tu_usuario/BoxBuilderTC.git
+   git clone https://github.com/EDK367/BoxBuilder_TC.git
    ```
 
-2. **Navega a la Carpeta del Proyecto:**
+2. **Navegar al Directorio del Proyecto:**
 
-   En una terminal, dirígete al directorio del proyecto:
+   Abre una terminal en la carpeta donde se encuentra el proyecto:
 
    ```powershell
-   cd ruta\a\BoxBuilderTC
+   cd ruta\a\BoxBuilder_TC
    ```
+
+3. **Configurar Variables de Entorno (Opcional):**
+
+   Asegúrate de que las rutas de Qt y CMake estén correctamente configuradas en el PATH del sistema.
+
+---
 
 ## Compilación
 
-Es recomendable utilizar un directorio de compilación separado para mantener el árbol de fuentes limpio:
+Se recomienda crear un directorio de compilación separado para evitar mezclar el código fuente con los archivos generados:
 
 1. **Crear un Directorio de Compilación:**
 
@@ -63,9 +78,9 @@ Es recomendable utilizar un directorio de compilación separado para mantener el
    cd build
    ```
 
-2. **Configuración con CMake:**
+2. **Configurar el Proyecto con CMake:**
 
-   Dependiendo del compilador, ejecuta:
+   Dependiendo de tu compilador, ejecuta uno de los siguientes comandos:
 
    - Para MinGW:
 
@@ -87,67 +102,125 @@ Es recomendable utilizar un directorio de compilación separado para mantener el
      mingw32-make
      ```
 
-   - Con Visual Studio:
+   - Con Visual Studio: Abre la solución (.sln) generada en el directorio de compilación y compílala desde el IDE.
 
-     Abre la solución (.sln) generada y compila desde el IDE.
+<!-- Instrucciones para Linux -->
+## Compilación en Linux
+
+Para compilar el proyecto en Linux, sigue estos pasos:
+
+1. Abre una terminal en el directorio raíz del proyecto.
+2. Crea un directorio de compilación:
+   ```bash
+   mkdir build && cd build
+   ```
+3. Configura el proyecto con CMake:
+   ```bash
+   cmake ..
+   ```
+4. Compila el proyecto:
+   ```bash
+   make
+   ```
+
+## Ejecución en Linux
+
+El ejecutable se generará en el directorio "build". Para ejecutarlo, usa:
+   ```bash
+   ./BoxBuilderTC
+   ```
+<!-- Fin instrucciones para Linux -->
+
+---
 
 ## Ejecución
 
-Una vez compilado, el ejecutable se ubicará en el directorio de salida. Por ejemplo, para MinGW, el ejecutable podría estar en:
+Una vez completada la compilación, el ejecutable se ubicará en el directorio de salida. Un ejemplo típico para MinGW es:
 
 ```
 build\Desktop_Qt_6_9_1_MinGW_64_bit-Build\BoxBuilderTC.exe
 ```
 
-Ejecuta la aplicación desde la terminal:
+Después de compilar el proyecto, se genera el builder (el ejecutable) en el directorio de compilación. Sigue estos pasos para que el .exe funcione:
 
-```powershell
-.\Desktop_Qt_6_9_1_MinGW_64_bit-Build\BoxBuilderTC.exe
-```
+1. **Generar el Builder:**
+   - Compila el proyecto según las instrucciones de la sección de compilación.
+   - Verifica que el builder se haya generado en el directorio de compilación, por ejemplo:
+     ```
+     build\Desktop_Qt_6_9_1_MinGW_64_bit-Build\BoxBuilderTC.exe
+     ```
 
-O ejecútala directamente desde el explorador de archivos.
+2. **Mover el Ejecutable a una Carpeta Temporal:**
+   - Desde el directorio `build`, crea una carpeta llamada `release`:
+     ```powershell
+     mkdir build\release
+     ```
+   - Copia el ejecutable a la carpeta `release`:
+     ```powershell
+     copy build\Desktop_Qt_6_9_1_MinGW_64_bit-Build\BoxBuilderTC.exe build\release\
+     ```
+     Esto lo puedes hacer en cualquier carpeta
+
+3. **Navegar a Qt y Ejecutar windeployqt:**
+   - Abre la terminal que viene con Qt (Qt Command Prompt), la cual configura automáticamente el entorno de Qt.
+   - En esa terminal, navega hasta el directorio `build\release` (reemplaza "ruta\al\proyecto" con la ruta real de tu proyecto):
+   - O busca la carpeta Qt en tu Computadora y luego navegas hasta la ruta donde esta el .exe
+     ```powershell
+     cd ruta\al\proyecto\build\release
+     ```
+   - Ejecuta el siguiente comando para empaquetar la aplicación con todas sus dependencias Qt:
+     ```powershell
+     windeployqt BoxBuilderTC.exe
+     ```
+   - Este comando copiará las librerías necesarias junto al ejecutable, permitiendo que la aplicación funcione en cualquier sistema Windows sin tener Qt instalado.
+   - Es necesario este paso para generar el .exe (Se necesita pasar toda la carpeta no solo el .exe)
+
+Para más detalles sobre este proceso, consulta el siguiente video (Se muestra tambien como hacer un .exe para linux): [Video Guía](https://youtu.be/hCXAgB6y8eA?si=O1ffBFfwhxNGbs5P)
+
+---
 
 ## Uso con Qt Creator
 
-Si prefieres utilizar Qt Creator, sigue estos pasos:
+Para compilar y ejecutar el proyecto utilizando Qt Creator:
 
 1. Abre Qt Creator.
 2. Selecciona **Archivo > Abrir Archivo o Proyecto...** y localiza el archivo `CMakeLists.txt` del proyecto.
-3. Configura el kit de compilación adecuado (MinGW o MSVC) según tu entorno.
-4. Compila y ejecuta el proyecto directamente desde la interfaz de Qt Creator.
+3. Configura el kit de compilación adecuado (MinGW o MSVC) en función de tu entorno.
+4. Compila y ejecuta el proyecto desde la interfaz de Qt Creator.
+
+---
 
 ## Estructura del Proyecto
 
-La organización del proyecto está diseñada para separar la lógica de la interfaz y la configuración de compilación:
+- **CMakeLists.txt:** Configuración principal para CMake.
+- **main.cpp:** Archivo de entrada de la aplicación.
+- **mainWindow.cpp/h:** Implementación de la ventana principal e interfaz de usuario.
+- **viewplay.cpp/h, viewplay.ui:** Módulos para vistas y controles específicos.
+- **Otros módulos:** Código adicional organizado para separar funcionalidades y lógica de negocio.
 
-- **CMakeLists.txt**: Archivo principal de configuración para CMake.
-- **main.cpp**: Punto de entrada de la aplicación.
-- **mainWindow.cpp/h**: Archivos responsables de la interfaz principal.
-- **viewplay.cpp/h, viewplay.ui**: Módulos adicionales para manejar vistas y controles específicos.
-- **Otros módulos:** Archivos adicionales organizados para manejar funcionalidades específicas, siguiendo buenas prácticas de modularización.
+---
 
 ## Solución de Problemas
 
-### Qt o CMake no están en el PATH
+### Problemas de Compilación
 
-Asegúrate de que las rutas de instalación de Qt y CMake se encuentren en las variables de entorno del sistema.
+- Verifica que el compilador configurado sea compatible con tu entorno (MinGW o Visual Studio).
+- Asegúrate de que las rutas de Qt y CMake estén correctamente establecidas en las variables de entorno.
+- Puede elimninar el archivo build de la carpeta BoxBuilderTc y crear una nueva con el mismo nombre "build"
 
-### Error de Compilación
+### Dependencias No Encontradas
 
-Verifica que el compilador seleccionado sea compatible y que el kit de desarrollo esté correctamente configurado en Qt Creator o en la terminal.
+Si encuentras errores relacionados con librerías o dependencias, revisa la documentación de Qt y CMake para confirmar que todas las dependencias están instaladas y configuradas adecuadamente.
 
-### Problemas con Dependencias
+---
 
-Si se presentan errores relacionados con bibliotecas o dependencias, revisa la documentación de Qt y CMake para asegurarte de que todas las dependencias están correctamente instaladas y configuradas.
+## Contribuir
 
-## Contribución
-
-¡Las contribuciones son bienvenidas!
+Las contribuciones son bienvenidas. Para colaborar en el proyecto:
 
 1. Haz un fork del repositorio.
-2. Crea una rama para tu nueva funcionalidad o corrección.
-3. Realiza tus cambios y envía un Pull Request, explicando detalladamente lo que has realizado.
+2. Crea una rama para nuevas funcionalidades o correcciones.
+3. Realiza tus cambios y envía un Pull Request con una descripción detallada de las modificaciones realizadas.
 
-## Licencia
+---
 
-Distribuido bajo la [Licencia MIT](LICENSE). Consulta el archivo de licencia para más detalles.

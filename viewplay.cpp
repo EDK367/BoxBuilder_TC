@@ -5,7 +5,6 @@
 #include <QGridLayout>
 #include <QIntValidator>
 #include <QRadioButton>
-#include <iostream>
 #include <QGraphicsScene>
 #include <QGraphicsView>
 #include <QGraphicsRectItem>

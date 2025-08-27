@@ -14,7 +14,6 @@
 #include "models/players.h"
 #include "rules/gamerules.h"
 #include "viewplay.h"
-#include <iostream>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent),

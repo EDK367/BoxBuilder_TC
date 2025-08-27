@@ -8,7 +8,6 @@
 #include "../methods/nodevector.h"
 #include "../models/players.h"
 #include "../utils/clickgraphics.h"
-#include <iostream>
 
 // primera clase de podres, clase A
 class FirstClass

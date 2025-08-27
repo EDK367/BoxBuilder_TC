@@ -9,7 +9,6 @@
 #include "../models/players.h"
 #include "../utils/boxgraphics.h"
 #include "firstclass.h"
-#include <iostream>
 
 // segunda clase de poderes, classe B
 class SecondClass
